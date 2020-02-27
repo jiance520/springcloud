@@ -65,7 +65,7 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://10.0.0.31:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
   #配置中心访问出错，路径不对：修改所有的注册中心，增加下面配置
   instance:
     instance-id: ${spring.cloud.client.ip-address}:${server.port}

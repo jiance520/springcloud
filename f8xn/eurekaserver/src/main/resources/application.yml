@@ -57,7 +57,8 @@ eureka:
   instance:
     #指定运行jar包的服务器ip，10.0.0.31或106.13.100.117,或本地localhost。
     #注意在注册中心查看局域网IP是VM虚拟机的还是Hyper-V的虚拟IP，显示什么，就用哪个访问。
-    #如169.254.114.241:8761。可以自己使用一个网络来创建容器，以固定IP。
+    #如169.254.114.241:8761。
+    #指定网络来固定IP，同样不能内网http访问。如docker run -d -it -p 8761:8761 --network=host --name eurekaserver f8xn/eurekaserver:latest
     #linux容器，有可能读取的不是虚拟机IP，而是容器的子网IP。
     hostname: localhost
     #hostname: 106.13.100.117
