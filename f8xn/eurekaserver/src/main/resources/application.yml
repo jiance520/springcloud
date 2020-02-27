@@ -56,14 +56,15 @@ spring:
 eureka:
   instance:
     #指定运行jar包的服务器ip，10.0.0.31或106.13.100.117,或本地localhost。
-    #局域网访问必须指定内网IP，公网可以不指定！
+    #注意在注册中心查看局域网IP是VM虚拟机的还是Hyper-V的虚拟IP，显示什么，就用哪个访问。
+    #如169.254.114.241:8761。
     hostname: localhost
     #hostname: 106.13.100.117
   client:
     #是否将自己注册到Eureka Server上，默认为true
-    registerWithEureka: false
+    registerWithEureka: true
     #是否从Eureka Server上获取注册信息，默认为true
-    fetchRegistry: false
+    fetchRegistry: true
     #test时报错：com.sun.jersey.api.client.ClientHandlerException: 把以上两个true改成false。
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
