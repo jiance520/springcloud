@@ -56,6 +56,7 @@ spring:
 eureka:
   instance:
     #指定运行jar包的服务器ip，10.0.0.31或106.13.100.117,或本地localhost。
+    #局域网访问必须指定内网IP，公网可以不指定！
     hostname: localhost
     #hostname: 106.13.100.117
   client:
