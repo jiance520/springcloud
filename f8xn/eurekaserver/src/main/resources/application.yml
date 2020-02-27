@@ -62,9 +62,9 @@ eureka:
     #hostname: 106.13.100.117
   client:
     #是否将自己注册到Eureka Server上，默认为true
-    registerWithEureka: true
+    registerWithEureka: false
     #是否从Eureka Server上获取注册信息，默认为true
-    fetchRegistry: true
+    fetchRegistry: false
     #test时报错：com.sun.jersey.api.client.ClientHandlerException: 把以上两个true改成false。
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
