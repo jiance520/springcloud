@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="productservice:war exploded">
+    <output-path>$PROJECT_DIR$/f8xn/productservice/target/productservice</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>productservice</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="productservice" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/f8xn/productservice/target/productservice/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="productservice/web/Web" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="apigateway:war exploded">
+    <output-path>$PROJECT_DIR$/f8xn/apigateway/target/apigateway</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>apigateway</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="apigateway" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/f8xn/apigateway/target/apigateway/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="apigateway/web/Web" />
+    </root>
+  </artifact>
+</component>

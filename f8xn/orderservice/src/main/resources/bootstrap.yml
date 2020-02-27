@@ -1,0 +1,352 @@
+server:
+  port: 8781
+
+spring:
+  application:
+    name: orderservice
+  profiles:
+    active: dev
+
+---
+
+#开发环境
+#默认端口8080，Edit...配置的VM options:-Dserver.port=8781>git:http://localhost:9100/master/apigateway-dev.yml高于>bootstrap.yml/application.yml
+server:
+  port: 8781
+
+#服务的名称,不在git指定，在boostrap.yml指定
+spring:
+  application:
+    name: orderservice
+  profiles: dev
+
+  #引用类带mysql相关？，必须配置以下数据库内容！。
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #用于6以上版本mysql，MySQL 5.5.45+，6+版本默认要求建立SSL连接。
+    url: jdbc:mysql://localhost:3306/epet?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: root
+
+  #rabbitmq+控制类注解@RefreshScope用于从git自动更新配置文件bootstrap.xml
+  rabbitmq:
+    #host: 10.0.0.11
+    host: 106.13.100.117
+    port: 5672
+    username: guest
+    password: guest
+  #安装redis，不设置密码，并配置redis链接信息，总共0-15个database。用于熔断降级服务异常报警通知
+  #redisTemplate.opsForValue().set(saveOrderkye,"save-order-fail",20,TimeUnit.SECONDS);
+  redis:
+    database: 0
+    host: 106.13.100.117
+    port: 6378
+    timeout: 2000
+#zipkin服务所在地址
+  zipkin:
+    base-url: http://106.13.100.117:9411
+    sender:
+      type: web
+#配置采样百分比,开发环境可以设置为1，表示全部，生产就用默认
+  sleuth:
+    sampler:
+      probability: 1
+#先调用 http://localhost:9000/apigateway/order/api/v1/order/save?user_id=5&product_id=3&token=232serer
+#或者先调用http://localhost:8781/api/v1/order/save?product_id=5&user_id=5
+#再查看链路http://106.13.100.117:9411/zipkin/?serviceName=orderservice&spanName=all&remoteServiceName=all&lookback=900000&startTs=1579771369657&endTs=1579772269657&annotationQuery=&minDuration=&limit=10&sortOrder=duration-desc
+#控制台会看到2020-01-23 17:37:38.269  INFO [orderservice,78bf6f4c4943cd02,e76e112b557f8372,true] 19324 --- [derController-3] n.x.o.s.impl.ProductOrderServiceImpl
+#SpringCloud整合sleuth，使用zipkin时不显示服务,https://www.cnblogs.com/Dandwj/p/11179141.html,需要加
+      #sender:
+      #　　type: web
+  #指定从哪个配置中心读取，读取git配置，必须把application.yml改为bootstrap.yml,不在git指定，在boostrap.yml指定
+  #本地配置和远程GIT部署https://blog.csdn.net/t610654893/article/details/82893000
+  cloud:
+    config:
+      discovery:
+        service-id: configserver
+        enabled: false
+      #指定git的配置文件
+      #profile: dev
+#以下是https://gitee.com/f8xn/springcloud/edit/master/apigateway-dev.yml增加的，变量env只起标识作用
+#env: dev/test
+#branch: master/test
+
+#  mvc:
+#    static-path-pattern: /**
+#    favicon:
+#      enabled: false
+#    view:
+#      prefix: /templates #classpath:/templates/
+#      suffix: .html
+#  thymeleaf:
+#    cache: false #关闭缓存
+#    mode: HTML #LEGACYHTML5
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml
+#  configuration:
+#    auto-mapping-behavior: full
+#    #解决spring boot整合mybatis时 返回map value为空字段不显示
+#    call-setters-on-nulls: true
+#  #可有可无的配置
+#  #引用类时，可简写，配置mapper.xml文件中，如com.entity.User在User,resultType="user"写成User
+#  type-aliases-package: com.entity
+
+#指定注册中心地址,不在git指定，在boostrap.yml指定
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  #配置中心访问出错，路径不对：修改所有的注册中心，增加下面配置
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    prefer-ip-address: true
+
+#通用版本配置，自定义负载均衡策略https://blog.csdn.net/rickiyeat/article/details/64918756
+productservice:
+  ribbon:
+    #随机方式，变色有效！
+    #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+    #轮循方式，变色有效！
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+    #响应时间长方式
+    #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
+    #NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+
+#系统默认连接超进10秒，读取超时60秒。订单服务application.yml修改超时时间，默认Options超时是60秒。
+#但是系统hystrix默认超时是1秒，以hystrix的connectTimeout为准
+
+#timeoutInMilliseconds超时，必须小于readTimeout超时！
+# hystrix=true readTimeout= 3000 系统1000 prod=1500 timeoutInMilliseconds=500 无fallback，order调用控制类saveOrderFail,控制台输出报警，页面显示saveOrderFail返回值, product调用findById
+# hystrix=true readTimeout= 3000 系统1000 prod=800 timeoutInMilliseconds=500 无fallback，order调用控制类saveOrderFail,控制台输出报警，页面显示saveOrderFail返回值, product调用findById
+# hystrix=true readTimeout= 3000 系统1000 prod=300 timeoutInMilliseconds=500 无fallback，order调用控制类service save order,控制台不输出报警，页面显示save返回值
+# hystrix=true readTimeout= 100 系统1000 prod=300 timeoutInMilliseconds=500 有fallback，order调用控制类saveOrderFail,控制台输出报警，页面显示saveOrderFail返回值, product调用findById
+#无论怎么设置超时，超时超过系统默认的1秒就失败！
+
+#通用版本，全局超时设置
+#https://www.jianshu.com/p/e05b90423f91?utm_source=oschina-app
+feign:
+  #开启feign支持hystrix，(开启的是熔断和超时限制，注意，一定要开启，但旧版本默认支持，新版本默认关闭。)
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default: #全局超时
+        #connectTimeout和readTimeout必须同时配置，要不然不会生效，还是以ribbon为准，
+        connectTimeout: 1000
+        #readTimeout不影响系统默认值D:\OneDrive\repository\com\netflix\hystrix\hystrix-core\1.5.18\hystrix-core-1.5.18.jar!\com\netflix\hystrix\HystrixCommandProperties.default_executionTimeoutInMilliseconds=1000
+        readTimeout: 900
+        loggerLevel: basic
+
+#feign，对指定的FeignClient服务使用超时
+#feign:
+#  hystrix:
+#    enabled: true
+#  client:
+#    config:
+#      productservice: #指定设置超时的服务名@FeignClient(name = "productservice")
+#        connectTimeout: 5000  # 相当于Request.Options
+#        readTimeout: 5000     # 相当于Request.Options
+#        # 配置Feign的日志级别，相当于代码配置方式中的Logger
+#        loggerLevel: full
+#        # Feign的错误解码器，相当于代码配置方式中的ErrorDecoder
+#        errorDecoder: com.example.SimpleErrorDecoder
+#        # 配置重试，相当于代码配置方式中的Retryer
+#        retryer: com.example.SimpleRetryer
+#        # 配置拦截器，相当于代码配置方式中的RequestInterceptor
+#        requestInterceptors:
+#          - com.example.FooRequestInterceptor
+#          - com.example.BarRequestInterceptor
+#        decode404: false
+
+#通用版本配置hystrix
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          #方式1，默认true即可，允许使用超时限制，不建议关闭超时限制false。，变色有效！
+          enabled: true
+        #execution.isolation.thread.timeoutInMilliseconds=4000
+        #设置超时时间
+        isolation:
+          #方式2，修改允许超时时间时长。
+          #方式一，设置超时方式为thread线程池隔离。超时1秒。会影响系统默认值。
+          thread:
+            #变色的配置，有效！
+            timeoutInMilliseconds: 800
+          #方式二，设置超时方式为信号量。SEMAPHORE默认并发数10。
+          #strategy: SEMAPHORE
+
+#暴露全部的监控信息，被调用的服务接口才要加？
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#信号量，达到最大差发数时，后续请求被拒绝，默认10
+#execution.isolation.semaphore.maxConcurrentRequests
+
+---
+
+#测试环境
+server:
+  port: 8781
+
+spring:
+  application:
+    name: orderservice
+  profiles: test
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/epet?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: root
+  rabbitmq:
+    host: 106.13.100.117
+    port: 5672
+    username: guest
+    password: guest
+  redis:
+    database: 0
+    host: 106.13.100.117
+    port: 6378
+    timeout: 2000
+  zipkin:
+    base-url: http://106.13.100.117:9411
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
+  cloud:
+    config:
+      discovery:
+        service-id: configserver
+        enabled: false
+      #profile: test
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://106.13.100.117:8761/eureka/
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    prefer-ip-address: true
+
+productservice:
+  ribbon:
+    #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+    #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
+    #NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 1000
+        readTimeout: 900
+        loggerLevel: basic
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 800
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+---
+
+#测试环境
+server:
+  port: 8781
+
+spring:
+  application:
+    name: orderservice
+  profiles: prod
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.13.100.117:3306/epet?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: autof8Ol10
+  rabbitmq:
+    host: 106.13.100.117
+    port: 5672
+    username: guest
+    password: guest
+  redis:
+    database: 0
+    host: 106.13.100.117
+    port: 6378
+    timeout: 2000
+  zipkin:
+    base-url: http://106.13.100.117:9411
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1
+  cloud:
+    config:
+      discovery:
+        service-id: configserver
+        enabled: false
+      #profile: prod
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://106.13.100.117:8761/eureka/
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    prefer-ip-address: true
+
+productservice:
+  ribbon:
+    #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+    #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
+    #NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 1000
+        readTimeout: 900
+        loggerLevel: basic
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 800
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+

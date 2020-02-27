@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="orderservice:war">
+    <output-path>$PROJECT_DIR$/f8xn/orderservice/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>orderservice</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="orderservice.war">
+      <element id="artifact" artifact-name="orderservice:war exploded" />
+    </root>
+  </artifact>
+</component>

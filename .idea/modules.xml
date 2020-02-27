@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/f8xn/apigateway/apigateway.iml" filepath="$PROJECT_DIR$/f8xn/apigateway/apigateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../f8xn/common/common.iml" filepath="$PROJECT_DIR$/../f8xn/common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/f8xn/configserver/configserver.iml" filepath="$PROJECT_DIR$/f8xn/configserver/configserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/f8xn/eurekaserver/eurekaserver.iml" filepath="$PROJECT_DIR$/f8xn/eurekaserver/eurekaserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/f8xn/f8xn.iml" filepath="$PROJECT_DIR$/f8xn/f8xn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/f8xn/orderservice/orderservice.iml" filepath="$PROJECT_DIR$/f8xn/orderservice/orderservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/f8xn/productservice/productservice.iml" filepath="$PROJECT_DIR$/f8xn/productservice/productservice.iml" />
+    </modules>
+  </component>
+</project>

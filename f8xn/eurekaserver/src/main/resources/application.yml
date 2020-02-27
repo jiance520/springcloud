@@ -1,0 +1,139 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eurekaserver
+  profiles:
+    active: dev
+---
+
+#development environment,#开发环境，一般使用本地配置和本地数据库。
+#默认端口8080，Edit...配置的VM options:-Dserver.port=8761>git:http://localhost:9100/master/apigateway-dev.yml高于>bootstrap.yml/application.yml
+server:
+  port: 8761
+
+#服务的名称,不在git指定，在boostrap.yml指定
+spring:
+  application:
+    name: eurekaserver
+  profiles: dev
+  #启动eureka提示：Cannot determine local hostname
+#  cloud:
+#    inetutils:
+#      timeout-seconds: 10
+
+  #引用类带mysql相关？，必须配置以下数据库内容！。
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #用于6以上版本mysql，MySQL 5.5.45+，6+版本默认要求建立SSL连接。
+    url: jdbc:mysql://localhost:3306/epet?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: root
+
+#  mvc:
+#    static-path-pattern: /**
+#    favicon:
+#      enabled: false
+#    view:
+#      prefix: /templates #classpath:/templates/
+#      suffix: .html
+#  thymeleaf:
+#    cache: false #关闭缓存
+#    mode: HTML #LEGACYHTML5
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml
+#  configuration:
+#    auto-mapping-behavior: full
+#    #解决spring boot整合mybatis时 返回map value为空字段不显示
+#    call-setters-on-nulls: true
+#  #可有可无的配置
+#  #引用类时，可简写，配置mapper.xml文件中，如com.entity.User在User,resultType="user"写成User
+#  type-aliases-package: com.entity
+
+#指定注册中心地址,不在git指定，在boostrap.yml指定
+eureka:
+  instance:
+    #指定运行jar包的服务器ip，10.0.0.31或106.13.100.117,或本地localhost。
+    hostname: localhost
+    #hostname: 106.13.100.117
+  client:
+    #是否将自己注册到Eureka Server上，默认为true
+    registerWithEureka: false
+    #是否从Eureka Server上获取注册信息，默认为true
+    fetchRegistry: false
+    #test时报错：com.sun.jersey.api.client.ClientHandlerException: 把以上两个true改成false。
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      #defaultZone: http://localhost:8761/eureka/
+  server:
+    enable-self-preservation: true
+    #默认true开启。注册中心页面会有红色字体提醒。注册的服务变少。
+    #检测接口是否存活使用系统接口/actuator/health.
+#    自我保护机制的工作机制是如果在15分钟内超过85%的客户端节点都没有正常的心跳，那么Eureka就认为客户端与注册中心出现了网络故障，Eureka Server自动进入自我保护机制，此时会出现以下几种情况：
+#    1、Eureka Server不再从注册列表中移除因为长时间没收到心跳而应该过期的服务。\
+#    2、Eureka Server仍然能够接受新服务的注册和查询请求，但是不会被同步到其它节点上，保证当前节点依然可用。\
+#    3、当网络稳定时，当前Eureka Server新的注册信息会被同步到其它节点中。
+
+---
+
+#test environment,#测试环境，除了跟生产环境数据库不一样，尽量全部一样！
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eurekaserver
+  profiles: test
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/epet?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: root
+#  cloud:
+#    inetutils:
+#      timeout-seconds: 10
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    enable-self-preservation: true
+
+---
+
+#production environment,生产环境，真实场景，有效数据测试。
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eurekaserver
+  profiles: prod
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.13.100.117:3306/epet?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: autof8Ol10
+#  cloud:
+#    inetutils:
+#      timeout-seconds: 10
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    enable-self-preservation: true

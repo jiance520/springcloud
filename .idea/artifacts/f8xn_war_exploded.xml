@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="f8xn:war exploded">
+    <output-path>$PROJECT_DIR$/f8xn/target/f8xn</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>f8xn</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="f8xn" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/f8xn/target/f8xn/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="f8xn/web/Web" />
+    </root>
+  </artifact>
+</component>

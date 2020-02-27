@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="apigateway:war">
+    <output-path>$PROJECT_DIR$/f8xn/apigateway/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>apigateway</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="apigateway.war">
+      <element id="artifact" artifact-name="apigateway:war exploded" />
+    </root>
+  </artifact>
+</component>
