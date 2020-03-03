@@ -1,0 +1,2 @@
+java -jar D:\workspace\idea\springcloud\f8xn\autof8\src\main\resources\mybatisGenerator\mybatis-generator-core-1.3.2.jar -configfile D:\workspace\idea\springcloud\f8xn\autof8\src\main\resources\mybatisGenerator\generator.xml -overwrite
+exit

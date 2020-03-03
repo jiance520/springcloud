@@ -11,6 +11,7 @@
       <list>
         <option value="$PROJECT_DIR$/f8xn/pom.xml" />
         <option value="$PROJECT_DIR$/../f8xn/common/pom.xml" />
+        <option value="$PROJECT_DIR$/f8xn/autof8/pom.xml" />
       </list>
     </option>
   </component>

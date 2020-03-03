@@ -726,3 +726,107 @@
 2020-02-27 23:14:16 freemarker.log._Log4jLoggerFactory$Log4jLogger.debug(_Log4jLoggerFactory.java:44) _Log4jLoggerFactory.java DEBUG "eureka/header.ftl"("zh_CN_#Hans", UTF-8, parsed) cached copy not yet stale; using cached.
 2020-02-27 23:14:16 freemarker.log._Log4jLoggerFactory$Log4jLogger.debug(_Log4jLoggerFactory.java:44) _Log4jLoggerFactory.java DEBUG "spring.ftl"("zh_CN_#Hans", UTF-8, parsed) cached copy not yet stale; using cached.
 2020-02-27 23:14:16 freemarker.log._Log4jLoggerFactory$Log4jLogger.debug(_Log4jLoggerFactory.java:44) _Log4jLoggerFactory.java DEBUG "eureka/navbar.ftl"("zh_CN_#Hans", UTF-8, parsed) cached copy not yet stale; using cached.
+2020-03-03 15:47:11 com.JdbcUtil.getConn(JdbcUtil.java:57) JdbcUtil.java DEBUG 开始执行
+2020-03-03 15:47:11 com.JdbcUtil.getConn(JdbcUtil.java:59) JdbcUtil.java DEBUG 加载驱动成功
+2020-03-03 15:47:11 com.JdbcUtil.getConn(JdbcUtil.java:61) JdbcUtil.java DEBUG 连接成功
+2020-03-03 15:47:11 com.JdbcUtil.executeQueryRS(JdbcUtil.java:148) JdbcUtil.java DEBUG 开始查询结果集
+2020-03-03 15:47:11 com.JdbcUtil.executeQueryRS(JdbcUtil.java:156) JdbcUtil.java DEBUG 查询结果集成功
+2020-03-03 15:47:11 com.JdbcUtil.exectueQuery(JdbcUtil.java:180) JdbcUtil.java DEBUG 开始查询List集合
+2020-03-03 15:47:11 com.JdbcUtil.exectueQuery(JdbcUtil.java:198) JdbcUtil.java DEBUG 查询List成功
+2020-03-03 15:47:11 com.JdbcUtil.closeAll(JdbcUtil.java:339) JdbcUtil.java DEBUG 全部关闭成功：Tue Mar 03 15:47:11 CST 2020
+2020-03-03 15:59:19 com.JdbcUtil.getConn(JdbcUtil.java:57) JdbcUtil.java DEBUG 开始执行
+2020-03-03 15:59:19 com.JdbcUtil.getConn(JdbcUtil.java:59) JdbcUtil.java DEBUG 加载驱动成功
+2020-03-03 15:59:19 com.JdbcUtil.getConn(JdbcUtil.java:61) JdbcUtil.java DEBUG 连接成功
+2020-03-03 15:59:19 com.JdbcUtil.executeQueryRS(JdbcUtil.java:148) JdbcUtil.java DEBUG 开始查询结果集
+2020-03-03 15:59:19 com.JdbcUtil.executeQueryRS(JdbcUtil.java:156) JdbcUtil.java DEBUG 查询结果集成功
+2020-03-03 15:59:19 com.JdbcUtil.exectueQuery(JdbcUtil.java:180) JdbcUtil.java DEBUG 开始查询List集合
+2020-03-03 15:59:19 com.JdbcUtil.exectueQuery(JdbcUtil.java:198) JdbcUtil.java DEBUG 查询List成功
+2020-03-03 15:59:19 com.JdbcUtil.closeAll(JdbcUtil.java:339) JdbcUtil.java DEBUG 全部关闭成功：Tue Mar 03 15:59:19 CST 2020
+2020-03-03 15:59:55 com.JdbcUtil.getConn(JdbcUtil.java:57) JdbcUtil.java DEBUG 开始执行
+2020-03-03 15:59:55 com.JdbcUtil.getConn(JdbcUtil.java:59) JdbcUtil.java DEBUG 加载驱动成功
+2020-03-03 15:59:55 com.JdbcUtil.getConn(JdbcUtil.java:61) JdbcUtil.java DEBUG 连接成功
+2020-03-03 15:59:55 com.JdbcUtil.executeQueryRS(JdbcUtil.java:148) JdbcUtil.java DEBUG 开始查询结果集
+2020-03-03 15:59:55 com.JdbcUtil.executeQueryRS(JdbcUtil.java:156) JdbcUtil.java DEBUG 查询结果集成功
+2020-03-03 15:59:55 com.JdbcUtil.exectueQuery(JdbcUtil.java:180) JdbcUtil.java DEBUG 开始查询List集合
+2020-03-03 15:59:55 com.JdbcUtil.exectueQuery(JdbcUtil.java:198) JdbcUtil.java DEBUG 查询List成功
+2020-03-03 15:59:55 com.JdbcUtil.closeAll(JdbcUtil.java:339) JdbcUtil.java DEBUG 全部关闭成功：Tue Mar 03 15:59:55 CST 2020
+2020-03-03 16:01:05 com.JdbcUtil.getConn(JdbcUtil.java:57) JdbcUtil.java DEBUG 开始执行
+2020-03-03 16:01:06 com.JdbcUtil.getConn(JdbcUtil.java:59) JdbcUtil.java DEBUG 加载驱动成功
+2020-03-03 16:01:06 com.JdbcUtil.getConn(JdbcUtil.java:61) JdbcUtil.java DEBUG 连接成功
+2020-03-03 16:01:06 com.JdbcUtil.executeQueryRS(JdbcUtil.java:148) JdbcUtil.java DEBUG 开始查询结果集
+2020-03-03 16:01:06 com.JdbcUtil.executeQueryRS(JdbcUtil.java:156) JdbcUtil.java DEBUG 查询结果集成功
+2020-03-03 16:01:06 com.JdbcUtil.exectueQuery(JdbcUtil.java:180) JdbcUtil.java DEBUG 开始查询List集合
+2020-03-03 16:01:06 com.JdbcUtil.exectueQuery(JdbcUtil.java:198) JdbcUtil.java DEBUG 查询List成功
+2020-03-03 16:01:06 com.JdbcUtil.closeAll(JdbcUtil.java:339) JdbcUtil.java DEBUG 全部关闭成功：Tue Mar 03 16:01:06 CST 2020
+2020-03-03 16:02:38 com.JdbcUtil.getConn(JdbcUtil.java:57) JdbcUtil.java DEBUG 开始执行
+2020-03-03 16:02:38 com.JdbcUtil.getConn(JdbcUtil.java:59) JdbcUtil.java DEBUG 加载驱动成功
+2020-03-03 16:02:39 com.JdbcUtil.getConn(JdbcUtil.java:61) JdbcUtil.java DEBUG 连接成功
+2020-03-03 16:02:39 com.JdbcUtil.executeQueryRS(JdbcUtil.java:148) JdbcUtil.java DEBUG 开始查询结果集
+2020-03-03 16:02:39 com.JdbcUtil.executeQueryRS(JdbcUtil.java:156) JdbcUtil.java DEBUG 查询结果集成功
+2020-03-03 16:02:39 com.JdbcUtil.exectueQuery(JdbcUtil.java:180) JdbcUtil.java DEBUG 开始查询List集合
+2020-03-03 16:02:39 com.JdbcUtil.exectueQuery(JdbcUtil.java:198) JdbcUtil.java DEBUG 查询List成功
+2020-03-03 16:02:39 com.JdbcUtil.closeAll(JdbcUtil.java:339) JdbcUtil.java DEBUG 全部关闭成功：Tue Mar 03 16:02:39 CST 2020
+2020-03-03 16:16:39 com.JdbcUtil.getConn(JdbcUtil.java:57) JdbcUtil.java DEBUG 开始执行
+2020-03-03 16:16:39 com.JdbcUtil.getConn(JdbcUtil.java:59) JdbcUtil.java DEBUG 加载驱动成功
+2020-03-03 16:16:40 com.JdbcUtil.getConn(JdbcUtil.java:61) JdbcUtil.java DEBUG 连接成功
+2020-03-03 16:16:40 com.JdbcUtil.executeQueryRS(JdbcUtil.java:148) JdbcUtil.java DEBUG 开始查询结果集
+2020-03-03 16:16:40 com.JdbcUtil.executeQueryRS(JdbcUtil.java:156) JdbcUtil.java DEBUG 查询结果集成功
+2020-03-03 16:16:40 com.JdbcUtil.exectueQuery(JdbcUtil.java:180) JdbcUtil.java DEBUG 开始查询List集合
+2020-03-03 16:16:40 com.JdbcUtil.exectueQuery(JdbcUtil.java:198) JdbcUtil.java DEBUG 查询List成功
+2020-03-03 16:16:40 com.JdbcUtil.closeAll(JdbcUtil.java:339) JdbcUtil.java DEBUG 全部关闭成功：Tue Mar 03 16:16:40 CST 2020
+2020-03-03 16:20:27 com.JdbcUtil.getConn(JdbcUtil.java:57) JdbcUtil.java DEBUG 开始执行
+2020-03-03 16:20:27 com.JdbcUtil.getConn(JdbcUtil.java:59) JdbcUtil.java DEBUG 加载驱动成功
+2020-03-03 16:20:28 com.JdbcUtil.getConn(JdbcUtil.java:61) JdbcUtil.java DEBUG 连接成功
+2020-03-03 16:20:28 com.JdbcUtil.executeQueryRS(JdbcUtil.java:148) JdbcUtil.java DEBUG 开始查询结果集
+2020-03-03 16:20:28 com.JdbcUtil.executeQueryRS(JdbcUtil.java:156) JdbcUtil.java DEBUG 查询结果集成功
+2020-03-03 16:20:28 com.JdbcUtil.exectueQuery(JdbcUtil.java:180) JdbcUtil.java DEBUG 开始查询List集合
+2020-03-03 16:20:28 com.JdbcUtil.exectueQuery(JdbcUtil.java:198) JdbcUtil.java DEBUG 查询List成功
+2020-03-03 16:20:28 com.JdbcUtil.closeAll(JdbcUtil.java:339) JdbcUtil.java DEBUG 全部关闭成功：Tue Mar 03 16:20:28 CST 2020
+2020-03-03 16:20:43 com.JdbcUtil.getConn(JdbcUtil.java:57) JdbcUtil.java DEBUG 开始执行
+2020-03-03 16:20:43 com.JdbcUtil.getConn(JdbcUtil.java:59) JdbcUtil.java DEBUG 加载驱动成功
+2020-03-03 16:20:43 com.JdbcUtil.getConn(JdbcUtil.java:61) JdbcUtil.java DEBUG 连接成功
+2020-03-03 16:20:43 com.JdbcUtil.executeQueryRS(JdbcUtil.java:148) JdbcUtil.java DEBUG 开始查询结果集
+2020-03-03 16:20:43 com.JdbcUtil.executeQueryRS(JdbcUtil.java:156) JdbcUtil.java DEBUG 查询结果集成功
+2020-03-03 16:20:43 com.JdbcUtil.exectueQuery(JdbcUtil.java:180) JdbcUtil.java DEBUG 开始查询List集合
+2020-03-03 16:20:43 com.JdbcUtil.exectueQuery(JdbcUtil.java:198) JdbcUtil.java DEBUG 查询List成功
+2020-03-03 16:20:43 com.JdbcUtil.closeAll(JdbcUtil.java:339) JdbcUtil.java DEBUG 全部关闭成功：Tue Mar 03 16:20:43 CST 2020
+2020-03-03 16:21:29 com.JdbcUtil.getConn(JdbcUtil.java:57) JdbcUtil.java DEBUG 开始执行
+2020-03-03 16:21:29 com.JdbcUtil.getConn(JdbcUtil.java:59) JdbcUtil.java DEBUG 加载驱动成功
+2020-03-03 16:21:30 com.JdbcUtil.getConn(JdbcUtil.java:61) JdbcUtil.java DEBUG 连接成功
+2020-03-03 16:21:30 com.JdbcUtil.executeQueryRS(JdbcUtil.java:148) JdbcUtil.java DEBUG 开始查询结果集
+2020-03-03 16:21:30 com.JdbcUtil.executeQueryRS(JdbcUtil.java:156) JdbcUtil.java DEBUG 查询结果集成功
+2020-03-03 16:21:30 com.JdbcUtil.exectueQuery(JdbcUtil.java:180) JdbcUtil.java DEBUG 开始查询List集合
+2020-03-03 16:21:30 com.JdbcUtil.exectueQuery(JdbcUtil.java:198) JdbcUtil.java DEBUG 查询List成功
+2020-03-03 16:21:30 com.JdbcUtil.closeAll(JdbcUtil.java:339) JdbcUtil.java DEBUG 全部关闭成功：Tue Mar 03 16:21:30 CST 2020
+2020-03-03 16:23:04 com.JdbcUtil.getConn(JdbcUtil.java:57) JdbcUtil.java DEBUG 开始执行
+2020-03-03 16:23:04 com.JdbcUtil.getConn(JdbcUtil.java:59) JdbcUtil.java DEBUG 加载驱动成功
+2020-03-03 16:23:04 com.JdbcUtil.getConn(JdbcUtil.java:61) JdbcUtil.java DEBUG 连接成功
+2020-03-03 16:23:04 com.JdbcUtil.executeQueryRS(JdbcUtil.java:148) JdbcUtil.java DEBUG 开始查询结果集
+2020-03-03 16:23:04 com.JdbcUtil.executeQueryRS(JdbcUtil.java:156) JdbcUtil.java DEBUG 查询结果集成功
+2020-03-03 16:23:04 com.JdbcUtil.exectueQuery(JdbcUtil.java:180) JdbcUtil.java DEBUG 开始查询List集合
+2020-03-03 16:23:04 com.JdbcUtil.exectueQuery(JdbcUtil.java:198) JdbcUtil.java DEBUG 查询List成功
+2020-03-03 16:23:04 com.JdbcUtil.closeAll(JdbcUtil.java:339) JdbcUtil.java DEBUG 全部关闭成功：Tue Mar 03 16:23:04 CST 2020
+2020-03-03 17:00:03 com.JdbcUtil.getConn(JdbcUtil.java:57) JdbcUtil.java DEBUG 开始执行
+2020-03-03 17:00:03 com.JdbcUtil.getConn(JdbcUtil.java:59) JdbcUtil.java DEBUG 加载驱动成功
+2020-03-03 17:00:03 com.JdbcUtil.getConn(JdbcUtil.java:61) JdbcUtil.java DEBUG 连接成功
+2020-03-03 17:00:03 com.JdbcUtil.executeQueryRS(JdbcUtil.java:148) JdbcUtil.java DEBUG 开始查询结果集
+2020-03-03 17:00:03 com.JdbcUtil.executeQueryRS(JdbcUtil.java:156) JdbcUtil.java DEBUG 查询结果集成功
+2020-03-03 17:00:03 com.JdbcUtil.exectueQuery(JdbcUtil.java:180) JdbcUtil.java DEBUG 开始查询List集合
+2020-03-03 17:00:03 com.JdbcUtil.exectueQuery(JdbcUtil.java:198) JdbcUtil.java DEBUG 查询List成功
+2020-03-03 17:00:03 com.JdbcUtil.closeAll(JdbcUtil.java:339) JdbcUtil.java DEBUG 全部关闭成功：Tue Mar 03 17:00:03 CST 2020
+2020-03-03 20:58:34 com.JdbcUtil.getConn(JdbcUtil.java:57) JdbcUtil.java DEBUG 开始执行
+2020-03-03 20:58:34 com.JdbcUtil.getConn(JdbcUtil.java:59) JdbcUtil.java DEBUG 加载驱动成功
+2020-03-03 20:58:35 com.JdbcUtil.getConn(JdbcUtil.java:61) JdbcUtil.java DEBUG 连接成功
+2020-03-03 20:58:35 com.JdbcUtil.executeQueryRS(JdbcUtil.java:148) JdbcUtil.java DEBUG 开始查询结果集
+2020-03-03 20:58:35 com.JdbcUtil.executeQueryRS(JdbcUtil.java:156) JdbcUtil.java DEBUG 查询结果集成功
+2020-03-03 20:58:35 com.JdbcUtil.exectueQuery(JdbcUtil.java:180) JdbcUtil.java DEBUG 开始查询List集合
+2020-03-03 20:58:35 com.JdbcUtil.exectueQuery(JdbcUtil.java:198) JdbcUtil.java DEBUG 查询List成功
+2020-03-03 20:58:35 com.JdbcUtil.closeAll(JdbcUtil.java:339) JdbcUtil.java DEBUG 全部关闭成功：Tue Mar 03 20:58:35 CST 2020
+2020-03-03 23:10:17 com.JdbcUtil.getConn(JdbcUtil.java:57) JdbcUtil.java DEBUG 开始执行
+2020-03-03 23:10:17 com.JdbcUtil.getConn(JdbcUtil.java:59) JdbcUtil.java DEBUG 加载驱动成功
+2020-03-03 23:10:17 com.JdbcUtil.getConn(JdbcUtil.java:61) JdbcUtil.java DEBUG 连接成功
+2020-03-03 23:10:17 com.JdbcUtil.executeQueryRS(JdbcUtil.java:148) JdbcUtil.java DEBUG 开始查询结果集
+2020-03-03 23:10:17 com.JdbcUtil.executeQueryRS(JdbcUtil.java:156) JdbcUtil.java DEBUG 查询结果集成功
+2020-03-03 23:10:17 com.JdbcUtil.exectueQuery(JdbcUtil.java:180) JdbcUtil.java DEBUG 开始查询List集合
+2020-03-03 23:10:17 com.JdbcUtil.exectueQuery(JdbcUtil.java:198) JdbcUtil.java DEBUG 查询List成功
+2020-03-03 23:10:17 com.JdbcUtil.closeAll(JdbcUtil.java:339) JdbcUtil.java DEBUG 全部关闭成功：Tue Mar 03 23:10:17 CST 2020

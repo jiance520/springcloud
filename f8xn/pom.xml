@@ -13,6 +13,7 @@
     <module>apigateway</module>
     <module>productservice</module>
     <module>orderservice</module>
+    <module>autof8</module>
   </modules>
   <packaging>pom</packaging>
 
