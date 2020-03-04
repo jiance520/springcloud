@@ -24,7 +24,7 @@
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.1.12.RELEASE</version>
     <!--<version>2.1.4.RELEASE</version>会报错-->
-    <!--    <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+    <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
   </parent>
 
   <properties>
