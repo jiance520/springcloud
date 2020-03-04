@@ -12,9 +12,11 @@ spring.thymeleaf.mode: HTML
 #关闭缓存
 spring.thymeleaf.cache: false
 spring.mvc.static-path-pattern: /**
-#classpath:/templates/
-spring.mvc.view.prefix: /templates
-spring.mvc.view.suffix: .html
+#/表springmvc的web启动页的根目录webapp，/templates表springboot启动页面的根目录resources/templates(默认是static静态资源目录)，
+spring.mvc.view.prefix: /
+#表示web启动首页的格式必须是.jsp结尾。此时web.xml里的<welcome-file-list>顺序无效
+#如果多种配置文件，会随机读取application.yml(springboot-html)、application.properties(sprinbmvc-jsp)，bootstrap.yml是springcloud的配置
+spring.mvc.view.suffix: .jsp
 spring.mvc.favicon.enabled: false
 #旧版驱动mysql.5.1.47，已废弃
 #spring.datasource.driver-class-name: com.mysql.jdbc.Driver
@@ -22,8 +24,8 @@ spring.mvc.favicon.enabled: false
 #mysql-connector-java 6比m5多了useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
 spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
 #用于6以上版本mysql，MySQL 5.5.45+，6+版本默认要求建立SSL连接。
-spring.datasource.name: milmajordb2012127
-spring.datasource.url: jdbc:mysql://localhost:3306/milmajordb2012127?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+spring.datasource.name: epet
+spring.datasource.url: jdbc:mysql://localhost:3306/epet?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
 spring.datasource.username: root
 spring.datasource.password: root
 #druid连接池的配置信息# 初始化大小，最小，最大

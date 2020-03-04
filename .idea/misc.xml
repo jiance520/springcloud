@@ -11,8 +11,13 @@
       <list>
         <option value="$PROJECT_DIR$/f8xn/pom.xml" />
         <option value="$PROJECT_DIR$/f8xn/autof8/pom.xml" />
-        <option value="$PROJECT_DIR$/f8xn/common/pom.xml" />
+        <option value="$PROJECT_DIR$/common/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/f8xn/untitled/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />

@@ -7,5 +7,11 @@
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/milmajordb2012127</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="epet@localhost" uuid="304f4b67-4db3-413b-900c-e28b3b35815c">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/epet</jdbc-url>
+    </data-source>
   </component>
 </project>

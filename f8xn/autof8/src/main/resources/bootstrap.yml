@@ -23,7 +23,7 @@ spring:
     name: autof8
   profiles: dev
   datasource:
-    name: milmajordb2012127
+    name: epet
     driver-class-name: com.mysql.cj.jdbc.Driver
     #用于6以上版本mysql，MySQL 5.5.45+，6+版本默认要求建立SSL连接。
     url: jdbc:mysql://localhost:3306/${spring.datasource.name}?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
@@ -51,11 +51,11 @@ spring:
       probability: 1
   #指定从哪个配置中心读取，读取git配置，必须把application.yml改为bootstrap.yml,不在git指定，在boostrap.yml指定
   #本地配置和远程GIT部署https://blog.csdn.net/t610654893/article/details/82893000
-  cloud:
-    config:
-      discovery:
-        service-id: configserver
-        enabled: false
+#  cloud:
+#    config:
+#      discovery:
+#        service-id: configserver
+#        enabled: false
       #指定git的配置文件
       #profile: dev
 #以下是https://gitee.com/f8xn/springcloud/edit/master/apigateway-dev.yml增加的，变量env只起标识作用
@@ -113,7 +113,7 @@ spring:
   profiles: test
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/milmajordb2012127?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/epet?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
     type: com.alibaba.druid.pool.DruidDataSource
     username: root
     password: root
@@ -162,7 +162,7 @@ spring:
   profiles: prod
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://106.13.100.117:3306/milmajordb2012127?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://106.13.100.117:3306/epet?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
     type: com.alibaba.druid.pool.DruidDataSource
     username: root
     password: autof8Ol10

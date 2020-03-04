@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/f8xn/apigateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/f8xn/autof8/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/f8xn/common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/f8xn/configserver/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/f8xn/eurekaserver/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/f8xn/orderservice/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/f8xn/productservice/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/f8xn/src/main/java" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

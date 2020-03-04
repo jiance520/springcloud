@@ -32,15 +32,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--使用jar或pom方式，都可以引入common的工具类和pom中的依赖！(重点)-->
-            <!--可使用dependencyManagement，也可不使用直接引入。-->
-            <dependency>
-                <groupId>f8xn</groupId>
-                <artifactId>common</artifactId>
-                <version>1.0-SNAPSHOT</version>
-                <!-- 不能加  <type>pom</type>-->
-                <!-- 不能加  <scope>import</scope>-->
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -100,10 +91,6 @@
         </dependency>
 
         <!--以下自己加的，加了f8xn,控制台不输出启动记录！-->
-        <!--<dependency>
-            <groupId>f8xn</groupId>
-            <artifactId>common</artifactId>
-        </dependency>-->
         <!--Warning:java: 未知的枚举常量 javax.annotation.meta.When.MAYBE-->
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
@@ -168,6 +155,13 @@
         <!--            <artifactId>shiro-spring</artifactId>-->
         <!--            <version>1.4.0</version>-->
         <!--        </dependency>-->
+        <!--jsp页面使用jstl标签-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <!--provided，类似compile，期望JDK、容器或使用者会提供这个依赖。如servlet.jar-->
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

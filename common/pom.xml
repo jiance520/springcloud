@@ -4,17 +4,22 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <artifactId>f8xn</artifactId>
-    <groupId>top.f8xn</groupId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
-
+  <groupId>top.f8xn</groupId>
   <artifactId>common</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <!--如果是启动springboot，不需要打包common,如果是install打包其它module,并且依赖了common，必须先install打包common-->
+  <packaging>jar</packaging>
 
-  <!--<packaging>jar</packaging>-->
-  <name>${project.artifactId}</name>
+  <name>${project.artifactId} f8xn</name>
+
+  <!--不能继续父模块f8xn，又被父模块使用，会无法打包-->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.1.12.RELEASE</version>
+    <!--<version>2.1.4.RELEASE</version>会报错-->
+    <!--    <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+  </parent>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -26,7 +31,7 @@
   </properties>
 
   <dependencyManagement>
-    <dependencies>
+    <!--<dependencies>
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
@@ -34,10 +39,51 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-    </dependencies>
+    </dependencies>-->
   </dependencyManagement>
 
   <dependencies>
+    <!-- Sprig Boot/SpringJUnit支持 测试支持,spring-boot-starter-test中已经集成了junit4.12，org.springframework:spring-test-->
+    <!--spring-boot-starter-test 和org.springframework.boot:spring-boot-test两者的依赖包一样-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <!--test，只在测试时使用，用于编译和运行测试代码。不会随项目发布。-->
+      <scope>test</scope>
+    </dependency>
+    <!-- web支持，SpringMVC， Servlet支持等 -->
+    <!--要加，否则接口不返回数据，rundashboard不显示端口？-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <!--mysql 6以下版本已废弃-->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>6.0.6</version>
+    </dependency>
+    <!-- 阿里巴巴连接池druid -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.1.20</version>
+    </dependency>
+    <!--log4j会导致警告，但是Logger.getLogger(JdbcUtil.class.getName()要用以下依赖-->
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
+    </dependency>
+    <!-- SpringBoot的Mybatis启动器 -->
+    <dependency>
+      <groupId>org.mybatis.spring.boot</groupId>
+      <artifactId>mybatis-spring-boot-starter</artifactId>
+      <!--<version>1.3.2</version>-->
+      <version>2.1.1</version>
+    </dependency>
+
+
     <!--poi导出导入excel-->
     <dependency>
       <groupId>com.alibaba</groupId>
