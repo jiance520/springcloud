@@ -22,8 +22,8 @@ public class OneUpdate {
     //private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(OneUpdate.class.getName());
     private String jarName = "";//mysql-connector-java-6.0.6.jar
     private String propertiesName="";//application.properties
-    private String resourcesPath="";//D:/workspace/idea/guo/zufang/src/main/resources
-    private String jarLocation="";//D:/workspace/idea/guo/zufang/src/main/resources/mybatisGenerator/mysql-connector-java-6.0.6.jar
+    private String resourcesPath="";//D:\workspace\idea\guo\zufang\src\main\resources
+    private String jarLocation="";//D:\workspace\idea\guo\zufang\src\main\resources\mybatisGenerator\mysql-connector-java-6.0.6.jar
     @Value("${spring.datasource.driver-class-name}")
     private String driverClass;//com.mysql.jdbc.Driver
     @Value("${spring.datasource.url}")
@@ -42,10 +42,10 @@ public class OneUpdate {
     private String password;//root
     @Value("${server.servlet.context-path}")
     private String projectName;//zufang,工程名不一定是数据库名，所以generator.xml要检查。
-    private String generatorPath = "D:/workspace/idea/springcloud/f8xn/src/resources/mybatisGenerator/";// D:/workspace/idea/springcloud/f8xn/src/resources/mybatisGenerator/，不能是路径\\
+    private String generatorPath = "";//D:\workspace\idea\guo\zufang\src\main\resources\mybatisGenerator\
     private String jarMybatis = "mybatis-generator-core-1.3.2.jar";
     private boolean flagDel = false;//重构是否删除原来的dao、entity、mapper.xml。false不删除
-    private String cmd = "";//"cmd /k start D:/workspace/idea/guo/zufang/src/main/resources/mybatisGenerator/run.bat";
+    private String cmd = "";//"cmd /k start D:\\workspace\\idea\\guo\\zufang\\src\\main\\resources\\mybatisGenerator\\run.bat";
     private String comName = "";//guo 、com
     private String daoFolderName = "";//dao
     private String daoLastName = "";//Dao、Mapper
@@ -56,9 +56,9 @@ public class OneUpdate {
     private String[] tableNameArr = null;
     //oneUpdateURL=file:/D:/workspace/idea/guo/zufang/target/classes/guo/utils/
     private URL oneUpdateURL = OneUpdate.class.getResource("");//当前类所在的本地URL。
-    private String daoPath = "";//D:/workspace/idea/guo/zufang/src/main/java/guo/dao
-    private String iServicePath = "";//D:/workspace/idea/guo/zufang/src/main/java/guo/service
-    private String servicePath = "";//D:/workspace/idea/guo/zufang/src/main/java/guo/service/impl
+    private String daoPath = "";//D:\workspace\idea\guo\zufang\src\main\java\guo\dao
+    private String iServicePath = "";//D:\workspace\idea\guo\zufang\src\main\java\guo\service
+    private String servicePath = "";//D:\workspace\idea\guo\zufang\src\main\java\guo\service\impl
     private String actionPath = "";
     public OneUpdate(){
         super();
@@ -405,7 +405,7 @@ public class OneUpdate {
                 unicode2=bufferedReader.read();
             }
             String runBatStr = stringBufferRun.toString();
-            runBatStr = runBatStr.replaceAll("java[\\s\\w\\-\\.:/\n\\\\]*-overwrite[\\sa-z\n]*","java -jar "+generatorPath+jarMybatis+" -configfile "+generatorPath+"generator.xml -overwrite\nexit");
+            runBatStr = runBatStr.replaceAll("java[\\s\\w\\-\\.:/\n]*-overwrite[\\sa-z\n]*","java -jar "+generatorPath+jarMybatis+" -configfile "+generatorPath+"generator.xml -overwrite\nexit");
             System.out.println("-----runBatStr:"+runBatStr);
             fileWriter = new FileWriter(runFile);
             bufferedWriter = new BufferedWriter(fileWriter);

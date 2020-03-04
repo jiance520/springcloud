@@ -11,8 +11,8 @@
         <module name="common" />
         <module name="apigateway" />
         <module name="autof8" />
-        <module name="configserver" />
         <module name="eurekaserver" />
+        <module name="configserver" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">

@@ -62,25 +62,28 @@ spring:
 #env: dev/test
 #branch: master/test
 
-#  mvc:
-#    static-path-pattern: /**
-#    favicon:
-#      enabled: false
-#    view:
-#      prefix: /templates #classpath:/templates/
-#      suffix: .html
+  mvc:
+    static-path-pattern: /**
+    favicon:
+      enabled: false
+    view:
+      prefix: /templates #classpath:/templates/
+      suffix: .html
 #  thymeleaf:
 #    cache: false #关闭缓存
 #    mode: HTML #LEGACYHTML5
-#mybatis:
-#  mapper-locations: classpath:mapper/*.xml
-#  configuration:
-#    auto-mapping-behavior: full
-#    #解决spring boot整合mybatis时 返回map value为空字段不显示
-#    call-setters-on-nulls: true
-#  #可有可无的配置
-#  #引用类时，可简写，配置mapper.xml文件中，如com.entity.User在User,resultType="user"写成User
-#  type-aliases-package: com.entity
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    auto-mapping-behavior: full
+    #解决spring boot整合mybatis时 返回map value为空字段不显示
+    call-setters-on-nulls: true
+  #可有可无的配置
+  #引用类时，可简写，配置mapper.xml文件中，如com.entity.User在User,resultType="user"写成User
+  type-aliases-package: com.entity
+
+#logging:
+#  level: info
 
 #指定注册中心地址,不在git指定，在boostrap.yml指定
 eureka:
@@ -98,7 +101,6 @@ management:
     web:
       exposure:
         include: "*"
-
 ---
 
 #测试环境

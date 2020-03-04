@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">  
+<generatorConfiguration>  
+   <!-- classPathEntry:数据库的JDBC驱动,换成你自己的驱动位置 -->  
+   <classPathEntry location="D:/workspace/idea/springcloud/f8xn/src/resources/mybatisGenerator/mysql-connector-java-5.1.20.jar" />
+ 
+   <!-- flat阻止将text类型生产单独的类 -->
+   <context id="DB2Tables" targetRuntime="MyBatis3" defaultModelType="flat">        
+       <!-- 去除自动生成的注释 -->  
+        <commentGenerator>  
+          <property name="suppressAllComments" value="true" />  
+        </commentGenerator>
+          <!--在 xml 中 &符号是作为实体字符形式存在的，修改如下：&amp; &amp;nullNamePatternMatchesAll=true用于高驱动版本,不要使用6以上版本。 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/milmajordb2012127?useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf-8" userId="root" password="root">
+       </jdbcConnection>  
+        
+        <javaTypeResolver>  
+	    <!--  默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer 否则把JDBC DECIMAL 和 NUMERIC 类型解析为java.math.BigDecimal  -->  
+           <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+       <!-- targetProject:自动生成代码的位置 -->  <!-- 生成实体类地址 -->
+       <javaModelGenerator targetPackage="com.entity" targetProject="D:/workspace/idea/springcloud/f8xn/autof8/src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->       
+	    <property name="enableSubPackages" value="false" />  
+	    <!-- 从数据库返回的值被清理前后的空格  --> 
+            <property name="trimStrings" value="true" />  
+       </javaModelGenerator>
+       <!-- 生成mapper.xml文件位置 -->
+       <sqlMapGenerator targetPackage="resources.mapper" targetProject="D:/workspace/idea/springcloud/f8xn/autof8/src/main">
+            <property name="enableSubPackages" value="false" />  
+        </sqlMapGenerator>
+       <!--自动 生成mapper.xml对应client，也就是接口dao -->
+       <javaClientGenerator targetPackage="com.dao" targetProject="D:/workspace/idea/springcloud/f8xn/autof8/src/main/java" type="XMLMAPPER">
+           <property name="enableSubPackages" value="true" />
+       </javaClientGenerator>
+
+       <table schema="milmajordb2012127" tableName="T_user"
+            domainObjectName="T_user" enableCountByExample="false"
+            enableUpdateByExample="false" enableDeleteByExample="false"  
+            enableSelectByExample="false" selectByExampleQueryId="false">
+       </table>  
+<!-- tableName:用于自动生成代码的数据库表；domainObjectName:对应于数据库表的javaBean类名 -->
+       
+   </context>
+</generatorConfiguration> 

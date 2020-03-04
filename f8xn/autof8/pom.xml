@@ -34,13 +34,13 @@
       </dependency>
       <!--使用jar或pom方式，都可以引入common的工具类和pom中的依赖！(重点)-->
       <!--可使用dependencyManagement，也可不使用直接引入。-->
-      <dependency>
+      <!--<dependency>
         <groupId>f8xn</groupId>
         <artifactId>common</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <!-- 不能加  <type>pom</type>-->
-        <!-- 不能加  <scope>import</scope>-->
-      </dependency>
+        &lt;!&ndash; 不能加  <type>pom</type>&ndash;&gt;
+        &lt;!&ndash; 不能加  <scope>import</scope>&ndash;&gt;
+      </dependency>-->
     </dependencies>
   </dependencyManagement>
 
@@ -100,10 +100,10 @@
     </dependency>
 
     <!--以下自己加的，加了f8xn,控制台不输出启动记录！-->
-    <dependency>
+    <!--<dependency>
         <groupId>f8xn</groupId>
         <artifactId>common</artifactId>
-    </dependency>
+    </dependency>-->
     <!--Warning:java: 未知的枚举常量 javax.annotation.meta.When.MAYBE-->
     <dependency>
       <groupId>com.google.code.findbugs</groupId>

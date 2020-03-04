@@ -14,6 +14,7 @@
     <module>productservice</module>
     <module>orderservice</module>
     <module>autof8</module>
+    <module>common</module>
   </modules>
   <packaging>pom</packaging>
 
@@ -45,13 +46,12 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <!--可使用dependencyManagement，也可不使用直接引入。-->
+      <!--可使用dependencyManagement，也可不使用直接引入,右键add deppendences来添加。-->
+      <!--添加groupId=f8xn的控制台都无启动日志,加groupId=top.f8xn的控制台有启动日志-->
       <dependency>
-        <groupId>f8xn</groupId>
+        <groupId>top.f8xn</groupId>
         <artifactId>common</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <!-- 不能加  <type>pom</type>-->
-        <!-- 不能加  <scope>import</scope>-->
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -73,14 +73,6 @@
       <artifactId>spring-boot-starter-web</artifactId>
       <!--<version>2.1.12.RELEASE</version>-->
     </dependency>
-    <!--可使用dependencyManagement，也可不使用直接引入。-->
-    <!--<dependency>
-      <groupId>f8xn</groupId>
-      <artifactId>common</artifactId>
-      <version>1.0-SNAPSHOT</version>
-      &lt;!&ndash; 不能加  <type>pom</type>&ndash;&gt;
-      &lt;!&ndash; 不能加  <scope>import</scope>&ndash;&gt;
-    </dependency>-->
     <!--mysql 6以下版本已废弃-->
     <dependency>
       <groupId>mysql</groupId>
@@ -103,20 +95,16 @@
     <dependency>
       <groupId>org.mybatis.spring.boot</groupId>
       <artifactId>mybatis-spring-boot-starter</artifactId>
-      <version>1.3.2</version>
+      <!--<version>1.3.2</version>-->
+      <version>2.1.1</version>
     </dependency>
-    <!--插件idea-mybatis-generator(org.apache.ibatis.annotations.Param;)可有可无-->
-    <!--<dependency>
-      <groupId>org.mybatis</groupId>
-      <artifactId>mybatis</artifactId>
-      <version>3.4.6</version>
-    </dependency>-->
-    <!--mybatis-generator-core自动生成工具mybatisGenerator-mysql-->
-    <!--<dependency>
-      <groupId>org.mybatis.generator</groupId>
-      <artifactId>mybatis-generator-core</artifactId>
-      <version>1.3.7</version>
-    </dependency>-->
+    <!--可使用dependencyManagement，也可不使用直接引入,右键add deppendences来添加。-->
+    <!--添加groupId=f8xn的控制台都无启动日志,加groupId=top.f8xn的控制台有启动日志-->
+    <dependency>
+      <groupId>top.f8xn</groupId>
+      <artifactId>common</artifactId>
+<!--      <version>1.0-SNAPSHOT</version>-->
+    </dependency>
   </dependencies>
 
   <build>
