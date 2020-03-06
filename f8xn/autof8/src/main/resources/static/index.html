@@ -20,38 +20,50 @@
     </style>
 </head>
 <body class="text-center">
-    <form class="form-signin">
+    <form class="form-signin" name="t_user" enctype="multipart/form-data">
         <h1 class="h3 mb-3 font-weight-normal">接口测试1</h1>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="tablename" class="sr-only">表名</label>
+        <input type="text" id="tablename" class="form-control" placeholder="表名" value="t_user" required autofocus>
+        <label for="name" class="sr-only">用户名</label>
+        <input type="text" id="name" class="form-control" placeholder="用户名" value="tom" required autofocus>
+        <label for="id" class="sr-only">id</label>
+        <input type="text" id="id" class="form-control" placeholder="id" value="2" required autofocus>
+        <label for="password" class="sr-only">密码</label>
+        <input type="password" id="password" class="form-control" placeholder="密码" value="123" required autofocus>
         <button class="btn btn-lg btn-primary btn-block" type="submit">提交测试</button>
     </form>
     <p>
         <input type="button" class="ajax2" value="$.ajax测试"/>
-        <!--<input type="button" class="post2" value="$.post测试"/>-->
+        <input type="button" class="post2" value="$.post测试"/>
     </p>
 </body>
 <script type="text/javascript">
     $(document).ready(function(){
-        //alert(0);
+        // alert(0);
         $('.ajax2').click(function(){
-            //alert($(this).val());
-            //发送ajax;
-            $.ajax({
-                type:"POST",
-                url:"http://192.168.52.69:8080/milmajordb2012127/zzllInsertSelective",
-                data:{},//"name=John&location=Boston",
-                async:false,/* 默认异步，是true,false是先执行ajax,再执行后面的内容 */
-                dataType:"json",//text,json.html
-                success:function(data){
-                    alert("ajax-data:"+data);
-                }
-            });
-            //alert('end ajax');/* 异步时先弹出 */
+            alert($(this).val());
+            $('.form-signin').submit(function () {
+                var form = new FormData($(".form-signin")[0]);
+                form.append("t_user",$('[name="t_user"]').html());
+                //发送ajax;
+                $.ajax({
+                    type:"POST",
+                    url:"http://localhost:8081/autof8/insertOne",
+                    data:form,//"name=John&location=Boston",
+                    async:false,/* 默认异步，是true,false是先执行ajax,再执行后面的内容 */
+                    //dataType:"json",//text,json.html
+                    processData:false,
+                    contentType:false,
+                    success:function(data){
+                        alert("ajax-data:"+data);
+                    }
+                });
+                //alert('end ajax');/* 异步时先弹出 */
+            })
         });
         $('.post2').click(function(){
-            var str = 'http://192.168.52.69:8080/milmajordb2012127/zzllInsertSelective';
-            $.post(str,{name:'Tom',location:'USA'},function(data){/* function(data){}相当于success部分,data=msg */
+            var str = 'http://localhost:8081/autof8/insertOne';
+            $.post(str,{tablename:"t_user",id:"2",name:'tom',password:'123'},function(data){/* function(data){}相当于success部分,data=msg */
                 alert("服务器信息"+data);
             },'text');
         });

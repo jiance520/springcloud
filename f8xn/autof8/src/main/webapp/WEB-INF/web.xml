@@ -16,6 +16,16 @@
   <!--<param-name>webPath</param-name>-->
   <!--<param-value></param-value>-->
   <!--</context-param>-->
+
+  <!--用于log4j2-->
+  <!--<context-param>
+    <param-name>log4jConfiguration</param-name>
+    <param-value>/WEB-INF/conf/log4j2.xml</param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
+  </listener>-->
+
   <!--服务器监听-->
   <!--<listener>-->
   <!--<listener-class>com.action.ApplicationListener</listener-class>-->
@@ -26,23 +36,23 @@
     <filter-class>com.action.SessionFilter</filter-class>
   </filter>-->
   <!--编码格式过滤转换-->
-  <filter>
+  <!--<filter>
     <filter-name>codeFilter</filter-name>
     <filter-class>com.action.CodeFilter</filter-class>
     <init-param>
       <param-name>codestr</param-name>
       <param-value>UTF-8</param-value>
     </init-param>
-  </filter>
+  </filter>-->
 
   <!--<filter-mapping>
     <filter-name>sessionFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>-->
-  <filter-mapping>
+  <!--<filter-mapping>
     <filter-name>codeFilter</filter-name>
     <url-pattern>/*</url-pattern>
-  </filter-mapping>
+  </filter-mapping>-->
 
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

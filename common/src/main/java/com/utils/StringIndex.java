@@ -280,8 +280,8 @@ public class StringIndex {
     }
     public static void main(String[] args) {
         StringIndex stringIndex = new StringIndex();
-//        String str = "D:/workspace/idea/guo/zufang/src/main/java/guo/utils/";
-        String str = "D:/workspace/idea/guo/zufang/src/main/java/guo/dao/";
+//        String str = "D:/workspace/idea/com/zufang/src/main/java/com/utils/";
+        String str = "D:/workspace/idea/com/zufang/src/main/java/com/dao/";
 //        String str = "01/34567/9012345678/0123/56789/1234";
 //        System.out.println("-----test:"+str.substring(stringIndex.indexOf(str,"/",9)+1,stringIndex.indexOf(str,"/",10)));
 //        System.out.println("-----stringindex:"+stringIndex.lastIndexOf(str,"/",3));

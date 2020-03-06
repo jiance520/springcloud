@@ -69,7 +69,20 @@
       <artifactId>druid</artifactId>
       <version>1.1.20</version>
     </dependency>
-    <!--log4j会导致警告，但是Logger.getLogger(JdbcUtil.class.getName()要用以下依赖-->
+    <!--日志方式一自带的-->
+    <!--spring-boot-starter-parent包括starter，spring-boot-starter包含spring-boot-starter-logging，Spring Boot默认的日志框架 logback。
+    Thymeleaf依赖中同样包含了spring-boot-starter，最终我只要引入Thymeleaf即可。-->
+    <!--启动tomcat会默认映射到resources的static或templates目录，而不是webapp-->
+    <!--所有的项目都要添加依赖spring-boot-starter-logging-->
+    <!--<dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-logging</artifactId>
+    </dependency>-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+    <!--日志方式二，用于Logger.getLogger(getClass()，使用最多1万，2012年-->
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>

@@ -1,7 +1,8 @@
 package com.utils;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -16,19 +17,19 @@ import java.util.*;
  */
 @Component
 public class JdbcUtil {//工具类，针对不同的数据库，使用同样的jdbc方法。
-	private static Logger logger = Logger.getLogger(JdbcUtil.class.getName());
-//	private static String driver = "com.mysql.cj.jdbc.Driver";//
+	private static final Logger logger = LoggerFactory.getLogger(JdbcUtil.class);
+	//private static Logger logger = Logger.getLogger(JdbcUtil.class.getName());
 	private static String driver = "com.mysql.cj.jdbc.Driver";//
-	private static String url = "jdbc:mysql://localhost:3306/epet?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
+	private static String url = "jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
 	private static String user = "root";
 	private static String password = "root";
 	private static Connection conn = null;
 	private static PreparedStatement pst = null;
 	private static ResultSet rst = null;
 	private static CallableStatement cst = null;
-//	MySQL数据库的root用户的epet数据库
+//	MySQL数据库的root用户的shiro数据库
 //		private static String driver = "com.mysql.cj.jdbc.Driver";//前后不能有空格
-//		private static String url = "jdbc:mysql://localhost:3306/epet";
+//		private static String url = "jdbc:mysql://localhost:3306/shiro";
 //		private static String user= "root";
 //		private static String pwd= "root";
 //		private static Connection con = null;
@@ -82,7 +83,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 			if(params!=null){
 				for (int i = 0; i < params.length; i++) {
 					pst.setObject(i+1,params[i]);
-					logger.debug(params[i]);
+					logger.debug(params[i].toString());
 				}
 			}
 	/*在此 PreparedStatement 对象中执行 SQL 语句，
@@ -342,7 +343,8 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 	public static void main(String[] args) {
 //		nullList("PRODUCT");
 //		OracleTypes,用于向数据规定数据类型。
-//		Object object = JdbcUtil.exectueQuery("select * from dog");
-//		System.out.println("-----test:"+object);
+		Object object = JdbcUtil.exectueQuery("select * from t_user");
+		logger.debug(object.toString());
+		System.out.println("-----test:"+object);
 	}
 }

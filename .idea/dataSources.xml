@@ -13,5 +13,11 @@
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/epet</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="shiro@localhost" uuid="307d1540-1b49-4805-8b68-e0a9a69eec14">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/shiro</jdbc-url>
+    </data-source>
   </component>
 </project>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--scan:当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true,scanPeriod="60"每60秒扫描一次，可以无此属性。-->
+<!--debug="false" 支持在$ java -jar springTest.jar 加两横debug，可以无此属性。-->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!--<contextName>设置上下文名称为Common...(比如用在日志记录中标识日志是当前Common输出的),默认名称为“default”,可以无此节点-->
+    <contextName>CC</contextName>
+    <!--<property> 设置变量，可以使“${}”来使用变量，可以无此属性。-->
+    <!--<property name="logback.logdir" value="D:\workspace\idea\springcloud\f8xn\autof8"/>-->
+
+    <!--必须的节点-->
+    <!--class="ch.qos.logback.core.ConsoleAppender"指定日志输出策略是输出到控制台-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <!--控制台输出使用layout，文件输出使用encoder，class可有可无。-->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!--指定控制台的输出内容和格式，对启动类无效,%d{HH:mm:ss.SSS}，为空表示默认已加-->
+            <!--<pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>-->
+            <pattern>%contextName [%p]%d-%msg%n</pattern>
+        </layout>
+    </appender>
+    <!--必需的节点-->
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <file>logs.log</file>
+        <append>true</append>
+        <encoder>
+            <!--指定日志文件的输出内容和格式，对启动类无效，%contextName表示取这个节点的值CommonController-->
+            <pattern>%contextName [%p]%d-%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--#输出到文件 RollingFileAppender,指定文件保留天数和大小，并切分为每天一个文件-->
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--如果只是想要 Error 级别的日志，那么需要过滤一下，默认是 info 级别的，ThresholdFilter-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+        <!--日志名称，如果没有File 属性，那么只会使用FileNamePattern的文件路径规则
+            如果同时有<File>和<FileNamePattern>，那么当天日志是<File>，明天会自动把今天
+            的日志改名为今天的日期。即，<File> 的日志都是当天的。
+        -->
+        <File>${logback.logdir}/error.log</File>
+        <!--滚动策略，按照时间滚动 TimeBasedRollingPolicy-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--文件路径,定义了日志的切分方式——把每一天的日志归档到一个文件中,以防止日志填满整个磁盘空间-->
+            <FileNamePattern>${logback.logdir}/error.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!--只保留最近5天的日志-->
+            <maxHistory>5</maxHistory>
+            <!--用来指定日志文件的上限大小，那么到了这个值，就会删除旧的日志-->
+            <totalSizeCap>10MB</totalSizeCap>
+        </rollingPolicy>
+        <!--日志输出编码格式化-->
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--root必需节点，level:用来设置打印级别，大小写无关，appender打印到控制台和文件-->
+    <root level="debug">
+        <appender-ref ref="console" />
+        <appender-ref ref="file" />
+    </root>
+
+    <!--多环境日志输出，可有可无-->
+    <!-- 测试环境+开发环境. 多个使用逗号隔开. -->
+    <!--当然如果你把additivity="false"改成additivity="true"的话，日志就会打印两次，
+    因为打印信息向上级传递，节点logger本身打印一次，节点root接到后又打印一次。-->
+    <!--logger指定哪个Controller类使用-->
+    <springProfile name="test,dev">
+        <logger name="com.com.action.CommonController" level="DEBUG" additivity="false">
+            <appender-ref ref="console"/>
+        </logger>
+    </springProfile>
+    <!-- 生产环境. -->
+    <!--<logger name="com.action.CommonController" />不加其它参数，默认使用root的打印配置，并且会和root都打印，也就是两次-->
+    <springProfile name="prod">
+        <logger name="com.com.action.CommonController" level="INFO" additivity="false">
+            <appender-ref ref="console"/>
+        </logger>
+    </springProfile>
+    <!-- 取application.yml中的值，使用springProperty，如取logdir属性(日志存放路径)，如果没有配置，默认是defaultValue="logs" -->
+    <springProperty scope="context" name="logdir" source="logback.logdir" defaultValue="logs" />
+</configuration>
+
+<!--%d{HH: mm:ss.SSS}——日志输出时间-->
+<!--%thread——输出日志的进程名字，这在Web应用以及异步任务处理中很有用-->
+<!--%-5level——日志级别，并且使用5个字符靠左对齐-->
+<!--%logger{36}——日志输出者的名字-->
+<!--%msg——日志消息-->
+<!--%n——平台的换行符-->
+<!--ThresholdFilter为系统定义的拦截器，例如我们用ThresholdFilter来过滤掉ERROR级别以下的日志不输出到文件中。-->
+<!--如果不用记得注释掉，不然你控制台会发现没日志~-->
+<!--一种日志是mybatis之类的系统日志，一种是自己手动加的logger.info-->

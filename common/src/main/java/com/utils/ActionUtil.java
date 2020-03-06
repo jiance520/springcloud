@@ -54,7 +54,7 @@ public class ActionUtil implements ApplicationContextAware {
 
         Object invoke = null;
         try {
-            Class<?> entityClass = Class.forName("guo.entity."+tableName);
+            Class<?> entityClass = Class.forName("com.entity."+tableName);
             Constructor<?> entityConstructor = entityClass.getDeclaredConstructor();
             Object backBean = MapToBeanUtil.backBean(entityConstructor.newInstance(), jsonMap);
             if(tableName!=null&&!"".equals(tableName)){
@@ -63,7 +63,7 @@ public class ActionUtil implements ApplicationContextAware {
                     mapperFileStrArr[i]=mapperFileStrArr[i].replaceAll("Mapper.class","");
                     if(mapperFileStrArr[i].equals(tableName)){
                         if(actionType.equals(selectByPrimaryKey)){
-                            Class<?> cs = Class.forName("guo.service.impl."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
+                            Class<?> cs = Class.forName("com.service.impl."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
                             //Constructor<?> c = cs.getDeclaredConstructor();
 
                             //非自增主键，手写主键，数据库实际有主键
@@ -84,7 +84,7 @@ public class ActionUtil implements ApplicationContextAware {
                             System.out.println("-----invoke查询:"+invoke.toString());
                         }
                         else if(actionType.equals(insertSelective)){
-                            Class<?> cs = Class.forName("guo.service.impl."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
+                            Class<?> cs = Class.forName("com.service.impl."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
                             Method method = cs.getDeclaredMethod(insertSelective,entityClass);
                             System.out.println("-----method:"+method.toString());
                             String serviceBeanStr = mapperFileStrArr[i]+"Service";
@@ -93,7 +93,7 @@ public class ActionUtil implements ApplicationContextAware {
                             System.out.println("-----invoke插入:"+invoke.toString());
                         }
                         else if(actionType.equals(updateByPrimaryKeySelective)){
-                            Class<?> cs = Class.forName("guo.service.impl."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
+                            Class<?> cs = Class.forName("com.service.impl."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
                             Method method = cs.getDeclaredMethod(updateByPrimaryKeySelective,entityClass);
                             System.out.println("-----method:"+method.toString());
                             String serviceBeanStr = mapperFileStrArr[i]+"Service";
@@ -102,7 +102,7 @@ public class ActionUtil implements ApplicationContextAware {
                             System.out.println("-----invoke修改:"+invoke.toString());
                         }
                         else if(actionType.equals(deleteByPrimaryKey)){
-                            Class<?> cs = Class.forName("guo.service.impl."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
+                            Class<?> cs = Class.forName("com.service.impl."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
                             Class fieldType = null;
                             if(mapPrimaryName!=null&&!"".equals(mapPrimaryName)){
                                 fieldType = MapToBeanUtil.mapAttrKeyType(backBean,beanIdName);//属性必须包含在实体类的bean中，否则抛异常,中止执行！
@@ -161,7 +161,7 @@ public class ActionUtil implements ApplicationContextAware {
         ArrayList arrIdVal = new ArrayList();
         Object invoke = null;
         try {
-            Class<?> entityClass = Class.forName("guo.entity."+tableName);
+            Class<?> entityClass = Class.forName("com.entity."+tableName);
             Constructor<?> entityConstructor = entityClass.getDeclaredConstructor();
             Object backBean = MapToBeanUtil.backBean(entityConstructor.newInstance(), jsonMap);
             int primaryNum = 0;
@@ -189,7 +189,7 @@ public class ActionUtil implements ApplicationContextAware {
                     mapperFileStrArr[i]=mapperFileStrArr[i].replaceAll("Mapper.class","");
                     if(mapperFileStrArr[i].equals(tableName)){
                         if(actionType.equals(selectByPrimaryKey)){
-                            Class<?> cs = Class.forName("guo.service.impl."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
+                            Class<?> cs = Class.forName("com.service.impl."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
                             //Constructor<?> c = cs.getDeclaredConstructor();
 
                             //非自增主键，手写主键，数据库实际有主键
@@ -207,7 +207,7 @@ public class ActionUtil implements ApplicationContextAware {
                             System.out.println("-----invoke查询:"+invoke.toString());
                         }
                         else if(actionType.equals(insertSelective)){
-                            Class<?> cs = Class.forName("guo.service.impl."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
+                            Class<?> cs = Class.forName("com.service.impl."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
                             Method method = cs.getDeclaredMethod(insertSelective,entityClass);
                             System.out.println("-----method:"+method.toString());
                             String serviceBeanStr = mapperFileStrArr[i]+"Service";
@@ -216,7 +216,7 @@ public class ActionUtil implements ApplicationContextAware {
                             System.out.println("-----invoke插入:"+invoke.toString());
                         }
                         else if(actionType.equals(updateByPrimaryKeySelective)){
-                            Class<?> cs = Class.forName("guo.service.impl."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
+                            Class<?> cs = Class.forName("com.service.impl."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
                             Method method = cs.getDeclaredMethod(updateByPrimaryKeySelective,entityClass);
                             System.out.println("-----method:"+method.toString());
                             String serviceBeanStr = mapperFileStrArr[i]+"Service";
@@ -225,7 +225,7 @@ public class ActionUtil implements ApplicationContextAware {
                             System.out.println("-----invoke修改:"+invoke.toString());
                         }
                         else if(actionType.equals(deleteByPrimaryKey)){
-                            Class<?> cs = Class.forName("guo.service.impl."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
+                            Class<?> cs = Class.forName("com.service.impl."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
                             Class fieldKeyType1 = MapToBeanUtil.mapAttrKeyType(backBean,arrBeanIdName.get(0));
                             Class fieldKeyType2 = MapToBeanUtil.mapAttrKeyType(backBean,arrBeanIdName.get(1));
 

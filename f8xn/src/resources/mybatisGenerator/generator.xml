@@ -11,7 +11,7 @@
           <property name="suppressAllComments" value="true" />  
         </commentGenerator>
           <!--在 xml 中 &符号是作为实体字符形式存在的，修改如下：&amp; &amp;nullNamePatternMatchesAll=true用于高驱动版本,不要使用6以上版本。 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/epet?useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf-8" userId="root" password="root">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/shiro?useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf-8" userId="root" password="root">
        </jdbcConnection>  
         
         <javaTypeResolver>  
@@ -35,8 +35,8 @@
            <property name="enableSubPackages" value="true" />
        </javaClientGenerator>
 
-       <table schema="epet" tableName="Dog"
-            domainObjectName="Dog" enableCountByExample="false"
+       <table schema="shiro" tableName="T_user"
+            domainObjectName="T_user" enableCountByExample="false"
             enableUpdateByExample="false" enableDeleteByExample="false"  
             enableSelectByExample="false" selectByExampleQueryId="false">
        </table>  
