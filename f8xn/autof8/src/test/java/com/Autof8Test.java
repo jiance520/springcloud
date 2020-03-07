@@ -3,6 +3,7 @@ package com;
 
 import com.service.IT_userService;
 import com.utils.JdbcUtil;
+import com.utils.OneUpdate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +33,19 @@ public class Autof8Test {
     @Transactional
     @Rollback
     public void contextLoads() {
-        //测试前，一定要注入Bean,包括JdbcUtil
-//        String str = JdbcUtil.executeUpdate("INSERT INTO t_user VALUES(2,tom,123)");
+        //测试前，一定要注入Bean,不包括JdbcUtil
+        String name = "tom";
+        String password = "123";
+        //String sql = "INSERT INTO t_user VALUES(2,?,?)";
+        //String sql = "INSERT INTO t_user VALUES(2,\"tom\",\"123\")";
+        //int i = JdbcUtil.executeUpdate(sql,name,password);
+        //int i = JdbcUtil.executeUpdate(sql);
+//        System.out.println("-----i:"+i);
         Object object = JdbcUtil.exectueQuery("select * from t_user");
         logger.debug("--logger---test:"+object);
-        System.out.println("---test:"+object);
-        Object object2 = it_userService.selectByPrimaryKey(1);
-        System.out.println("---test:"+object2.toString());
+//        System.out.println("---test:"+object);
+//        Object object2 = it_userService.selectByPrimaryKey(1);
+//        System.out.println("---test:"+object2.toString());
     }
 
 }

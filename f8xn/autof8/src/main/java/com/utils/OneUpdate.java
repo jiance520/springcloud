@@ -18,14 +18,14 @@ import java.util.regex.Pattern;
 //@Configuration构造函数的入参，必须用存在的属性？
 //@PropertySource("classpath:/application.properties")自定义配置文件
 public class OneUpdate {
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private static final Logger logger = LoggerFactory.getLogger(OneUpdate.class);
     //private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(OneUpdate.class.getName());
-    private String jarName = "";//mysql-connector-java-6.0.6.jar
+    private String jarName = "";//mysql-connector-java-5.1.47.jar
     private String propertiesName="";//application.properties
     private String resourcesPath="";//D:/workspace/idea/com/zufang/src/main/resources
-    private String jarLocation="";//D:/workspace/idea/com/zufang/src/main/resources/mybatisGenerator/mysql-connector-java-6.0.6.jar
+    private String jarLocation="";//D:/workspace/idea/com/zufang/src/main/resources/mybatisGenerator/mysql-connector-java-5.1.47.jar
     @Value("${spring.datasource.driver-class-name}")
-    private String driverClass;//com.mysql.jdbc.Driver
+    private String driverClass;//com.mysql.cj.jdbc.Driver
     @Value("${spring.datasource.url}")
     private String connectionURL;//jdbc:mysql://localhost:3306/src?characterEncoding=utf8
     @Value("spring.datasource.name")
@@ -379,7 +379,7 @@ public class OneUpdate {
             generatorXmlStr = generatorXmlStr.replaceAll("location=\"[\\u4e00-\\u9fa5\\w\\.\\-:/\\\\]+\\.jar\"","location=\""+jarLocation+"\"");
             if(connectionURL.contains("mysql-connector-java-6")||connectionURL.contains("mysql-connector-java-8")){
                 //generatorXmlStr = generatorXmlStr.replaceAll("driverClass=\"[\\w\\.]+Driver","driverClass=\""+driverClass); //后面不要加+"\""
-                generatorXmlStr = generatorXmlStr.replaceAll("driverClass=\"[\\w\\.]+Driver","driverClass=\""+"com.mysql.jdbc.Driver"); //后面不要加+"\""
+                generatorXmlStr = generatorXmlStr.replaceAll("driverClass=\"[\\w\\.]+Driver","driverClass=\""+"com.mysql.cj.jdbc.Driver"); //后面不要加+"\""
                 logger.info("请使用低于6版本的mysql驱动，否则修改generator和OneUpdate.java");
                 System.exit(0);
             }

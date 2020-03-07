@@ -20,7 +20,7 @@ spring.mvc.view.prefix: /
 spring.mvc.view.suffix: .jsp
 spring.mvc.favicon.enabled: false
 #旧版驱动mysql.5.1.47，已废弃
-#spring.datasource.driver-class-name: com.mysql.jdbc.Driver
+#spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
 #新版驱动mysql.6.1.6
 #mysql-connector-java 6比m5多了useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
 spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
