@@ -24,8 +24,8 @@ public class OneUpdate {
     private String propertiesName="";//application.properties
     private String resourcesPath="";//D:/workspace/idea/com/zufang/src/main/resources
     private String jarLocation="";//D:/workspace/idea/com/zufang/src/main/resources/mybatisGenerator/mysql-connector-java-5.1.47.jar
-    @Value("${spring.datasource.driver-class-name}")
-    private String driverClass;//com.mysql.cj.jdbc.Driver
+    //@Value("${spring.datasource.driver-class-name}")
+    private String driverClass="com.mysql.jdbc.Driver";//com.mysql.jdbc.Driver
     @Value("${spring.datasource.url}")
     private String connectionURL;//jdbc:mysql://localhost:3306/src?characterEncoding=utf8
     @Value("spring.datasource.name")
@@ -378,10 +378,12 @@ public class OneUpdate {
             String generatorXmlStr = generatorXml.toString();
             generatorXmlStr = generatorXmlStr.replaceAll("location=\"[\\u4e00-\\u9fa5\\w\\.\\-:/\\\\]+\\.jar\"","location=\""+jarLocation+"\"");
             if(connectionURL.contains("mysql-connector-java-6")||connectionURL.contains("mysql-connector-java-8")){
-                //generatorXmlStr = generatorXmlStr.replaceAll("driverClass=\"[\\w\\.]+Driver","driverClass=\""+driverClass); //后面不要加+"\""
-                generatorXmlStr = generatorXmlStr.replaceAll("driverClass=\"[\\w\\.]+Driver","driverClass=\""+"com.mysql.cj.jdbc.Driver"); //后面不要加+"\""
                 logger.info("请使用低于6版本的mysql驱动，否则修改generator和OneUpdate.java");
                 System.exit(0);
+            }
+            else {
+                //generatorXmlStr = generatorXmlStr.replaceAll("driverClass=\"[\\w\\.]+Driver","driverClass=\""+driverClass); //后面不要加+"\""
+                generatorXmlStr = generatorXmlStr.replaceAll("driverClass=\"[\\w\\.]+Driver","driverClass=\""+driverClass); //后面不要加+"\""
             }
             generatorXmlStr = generatorXmlStr.replaceAll("connectionURL=\"[\\w\\.\\-:=&;\\? /\\\\]*\" userId","connectionURL=\""+connectionURL+"\" userId");
             generatorXmlStr = generatorXmlStr.replaceAll("<javaModelGenerator[\\s]+targetPackage=\"[\\w\\./]*+\"[\\s]+targetProject=\"[\\u4e00-\\u9fa5\\w\\.\\-:/\\\\]+\">","<javaModelGenerator targetPackage=\""+javaModelGenerator+"\" targetProject=\""+javaTargetProject+"\">");
@@ -876,7 +878,7 @@ public class OneUpdate {
                 "    @RequestMapping(value = \"/t_userDelete\",produces = \"application/json;chart=UTF-8\")\n" +
                 "    public String t_userDelete(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params){\n" +
                 "        System.out.println(\"-----params:\"+params.toString());\n" +
-                "        String primaryname = request.getParameter(primarynameKey);\n" +
+                "        String primaryname = request.getParameter(primarynameKey+1);\n" +
                 "        String primaryval = params.get(primaryname).toString();\n" +
                 "        int i = iT_userService.deleteByPrimaryKey(Integer.valueOf(primaryval));\n" +
                 "        return JSON.toJSONString(i);\n" +
@@ -905,7 +907,7 @@ public class OneUpdate {
                 "    @RequestMapping(value = \"/t_userSelect\",produces = \"application/json;chart=UTF-8\")\n" +
                 "    public String t_userSelect(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params){\n" +
                 "        System.out.println(\"-----params:\"+params.toString());\n" +
-                "        String primaryname = request.getParameter(primarynameKey);\n" +
+                "        String primaryname = request.getParameter(primarynameKey+1);\n" +
                 "        String primaryval = params.get(primaryname).toString();\n" +
                 "        T_user t_user = iT_userService.selectByPrimaryKey(Integer.valueOf(primaryval));\n" +
                 "        return JSON.toJSONString(t_user);\n" +
@@ -984,7 +986,7 @@ public class OneUpdate {
         //读取配置文件值https://blog.csdn.net/jiangyu1013/article/details/82188593,能读a.bc=3和a.c: 4格式，不分yml或properties。
         //执行前，必须先build生成target,否则无法获取路径，使用mysql5，不要用6和8.要改配置。
         //OneUpdate oneUpdate = new OneUpdate("application.properties","mysql-connector-java-5.1.20.jar", "dao","Mapper", "service","impl",true,tableStr);
-        OneUpdate oneUpdate = new OneUpdate("application.properties","mysql-connector-java-5.1.20.jar", "dao","entity","Mapper", "service","impl",true,"t_user");
+        OneUpdate oneUpdate = new OneUpdate("application.properties","mysql-connector-java-5.1.20.jar", "dao","entity","Mapper", "service","impl",true,"T_user");
         //根据传入的表(一个或多个)进行重新生成该表的相关信息，tableNames在调用时指定.
         oneUpdate.runFun();//最后输出-----serviceFile，生成xml配置文件，生成实体类，生成服务接口，实现接口，可拆分执行。
 
@@ -992,6 +994,6 @@ public class OneUpdate {
 //        OneUpdate oneUpdate = new OneUpdate();
         //oneUpdate.controller("D:\\workspace\\idea\\springcloud\\f8xn\\autof8\\src\\main\\java\\com\\action","t_decisemanagetable");
         //可以不指定actionPath,tableNames要么在方法里指定，要么调用时指定.
-        oneUpdate.controller("action","t_user","com");
+        oneUpdate.controller("action","T_user","com");
     }
 }

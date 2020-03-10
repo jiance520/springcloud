@@ -88,7 +88,7 @@ public class CommonController implements ServletContextAware {
     public String selectOne(HttpServletRequest request,@RequestParam(required = false) Map<String,Object> params){
         System.out.println("-----params:"+params);
         String tablename = request.getParameter(tablenameKey);
-        String primaryname = request.getParameter(primarynameKey);
+        String primaryname = request.getParameter(primarynameKey+1);
         String primaryval = request.getParameter(primaryname);
         String backStr = null;
         if(tablename==null||"".equals(tablename)){
@@ -113,7 +113,7 @@ public class CommonController implements ServletContextAware {
     public Object deleteOne(HttpServletRequest request,@RequestParam(required = false) Map<String,Object> params){
         System.out.println("-----params:"+params);
         String tablename = request.getParameter(tablenameKey);
-        String primaryname = request.getParameter(primarynameKey);
+        String primaryname = request.getParameter(primarynameKey+1);
         String primaryval = request.getParameter(primaryname);
         String backStr = null;
         if(tablename==null||"".equals(tablename)){
@@ -140,7 +140,7 @@ public class CommonController implements ServletContextAware {
         System.out.println("-----params:"+params);
         String sql = "";
         String tablename = request.getParameter(tablenameKey);
-        String primaryname = request.getParameter(primarynameKey);
+        String primaryname = request.getParameter(primarynameKey+1);
         String primaryval = request.getParameter(primaryname);
         String primaryname2 = request.getParameter(primarynameKey+2);
         String backStr = null;
@@ -181,7 +181,7 @@ public class CommonController implements ServletContextAware {
         System.out.println("-----params:"+params);
         String sql = "";
         String tablename = request.getParameter(tablenameKey);
-        String primaryname = request.getParameter(primarynameKey);
+        String primaryname = request.getParameter(primarynameKey+1);
         String primaryname2 = request.getParameter(primarynameKey+2);
         String backStr = null;
         if(tablename==null||"".equals(tablename)){
@@ -215,7 +215,7 @@ public class CommonController implements ServletContextAware {
         System.out.println("-----params:"+params);
         String sql = "";
         String tablename = request.getParameter(tablenameKey);
-        String primaryname = request.getParameter(primarynameKey);
+        String primaryname = request.getParameter(primarynameKey+1);
         String primaryval = request.getParameter(primaryname);
         String primaryname2 = request.getParameter(primarynameKey+2);
         sql="UPDATE "+tablename+" SET ";
@@ -237,11 +237,11 @@ public class CommonController implements ServletContextAware {
     @RequestMapping(value = "/actionAll",produces = "application/json;chart=UTF-8")
     public String actionAll(HttpServletRequest request, @RequestParam(required=false) Map<String,Object> params) {
         System.out.println("-----params:"+params);
-        String primaryname = request.getParameter(primarynameKey);
+        String primaryname = request.getParameter(primarynameKey+1);
         String primaryval = request.getParameter(primaryname);
-        if(!"".equals(primaryname)&&!"".equals(primaryval)&&!params.containsKey(primaryname)){
+        /*if(!"".equals(primaryname)&&!"".equals(primaryval)&&!params.containsKey(primaryname)){
             params.put(primaryname,primaryval);
-        }
+        }*/
         Object object = null;
         if(params.isEmpty()){
             object = "params是空";
@@ -265,16 +265,16 @@ public class CommonController implements ServletContextAware {
     @RequestMapping(value = "/actionAllTwo",produces = "application/json;chart=UTF-8")
     public String actionAllTwo(HttpServletRequest request, @RequestParam(required=false) Map<String,Object> params) {
         System.out.println("-----params:"+params);
-        String primaryname = request.getParameter(primarynameKey);
+        String primaryname = request.getParameter(primarynameKey+1);
         String primaryval = request.getParameter(primaryname);
-        if(!"".equals(primaryname)&&!"".equals(primaryval)&&!params.containsKey(primaryname)){
+        /*if(!"".equals(primaryname)&&!"".equals(primaryval)&&!params.containsKey(primaryname)){
             params.put(primaryname,primaryval);
-        }
+        }*/
         String primaryname2 = request.getParameter(primarynameKey+2);
         String primaryval2 = request.getParameter(primaryname2);
-        if(!"".equals(primaryname2)&&!"".equals(primaryval2)&&!params.containsKey(primaryname2)){
+        /*if(!"".equals(primaryname2)&&!"".equals(primaryval2)&&!params.containsKey(primaryname2)){
             params.put(primaryname2,primaryval2);
-        }
+        }*/
         Object object = null;
         if(params.isEmpty()){
             object = "params是空";
@@ -287,6 +287,7 @@ public class CommonController implements ServletContextAware {
                     iterator.remove();
                 }
             }
+
             object = ActionUtil.actionAllTwo(this,params);
         }
         return JSON.toJSONString(object);

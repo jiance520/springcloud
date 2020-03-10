@@ -61,9 +61,8 @@ public class ActionUtil implements ApplicationContextAware {
         tableName = tableName.substring(0,1).toUpperCase()+tableName.substring(1);
         String actionType = params.get(actiontypeKey).toString();
         //-----params236:{tabname=t_user, id=1, acttype=selectOne, name=admin, password=123}
-        System.out.println("-----primarynameKey:"+primarynameKey);
         System.out.println("-----params:"+params);
-        String mapPrimaryName=params.get(primarynameKey).toString();//deciseID/mrank_id
+        String mapPrimaryName=params.get(primarynameKey+1).toString();//deciseID/mrank_id
         //primaryval1必须转化为跟bean属性大小写一样，一个pidname1=id,map中可能有也可能没有id=1.有可能有pidval==1。
         String beanIdName = MapToBeanUtil.mapKeyToField(mapPrimaryName);//deciseid //用于表中有下划线_的字段，转成属性中的带大写的驼峰名。
         String idVal = "";
@@ -79,6 +78,7 @@ public class ActionUtil implements ApplicationContextAware {
         try {
             Class<?> entityClass = Class.forName(comName+"."+entityName+"."+tableName);
             Constructor<?> entityConstructor = entityClass.getDeclaredConstructor();
+            System.out.println("-----entityConstructor.newInstance():"+entityConstructor.newInstance().toString());
             Object backBean = MapToBeanUtil.backInstanceMapBean(entityConstructor.newInstance(), params);
             if(tableName!=null&&!"".equals(tableName)){
                 for (int i = 0; i <mapperFileStrArr.length ; i++) {
@@ -183,14 +183,18 @@ public class ActionUtil implements ApplicationContextAware {
         ArrayList arrIdVal = new ArrayList();
         Object invoke = null;
         try {
+            //com.entity.T_flatweapon_correspond
             Class<?> entityClass = Class.forName(comName+"."+entityName+"."+tableName);
             Constructor<?> entityConstructor = entityClass.getDeclaredConstructor();
-            Object backBean = MapToBeanUtil.backInstanceMapBean(entityConstructor.newInstance(), params);
+            System.out.println("-----entityConstructor.newInstance():"+entityConstructor.newInstance().toString());
+            Object backBean = MapToBeanUtil.backInstanceMapBean(entityConstructor.newInstance(), params); //-----backBean190:com.entity.T_flatweapon_correspond@4d55e8bd
+            System.out.println("-----backBean190:"+backBean.toString());
             int primaryNum = 0;
             //循环判断map中是否有多个key=primary1 primary2
+            System.out.println("-----params:"+params);
             for(Map.Entry<String,Object> paramsEntry:params.entrySet()){
                 String paramsAttrKey = paramsEntry.getKey();
-                String jsonmapattrkey = paramsAttrKey.substring(0,paramsAttrKey.length()-1);
+                String jsonmapattrkey = paramsAttrKey.substring(0,paramsAttrKey.length()-1); //pidname1去掉1如果等于pidname
                 if(jsonmapattrkey.equals(primarynameKey)){
                     primaryNum++;
                     arrMapKeyName.add(jsonmapattrkey+primaryNum);//jsonmapattrkey=primaryname

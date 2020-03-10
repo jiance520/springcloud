@@ -25,7 +25,6 @@ public class MapToBeanUtil {
     //Constructor<?> entityConstructor = entityClass.getDeclaredConstructor(); bean=entityConstructor.newInstance()
     public static <T> Object backInstanceMapBean(T newInstanceBean, Map<String,Object> params){
         Map<String,Object> beanMap = backInstanceBeanMap(newInstanceBean);//默认返回的mapkey是bean属性，小写+大写(假如字段含下划线)
-        System.out.println("-----params:"+params);
         //遍历接收的paramsMap，再遍历beanMap，如果前者的key没有在后者里面，则从前者里面移除。
         try {
             for(HashMap.Entry<String,Object> entry:params.entrySet()){
@@ -47,6 +46,7 @@ public class MapToBeanUtil {
                         break;
                     }
                 }
+                //如果params的key在对象属性中
                 if(flag){
                     Object objectValue = entry.getValue();//11，默认全是String
                     if(objectValue!=null){
@@ -79,7 +79,7 @@ public class MapToBeanUtil {
             System.out.println("-----非法入参");
             e.getMessage();
         }
-        System.out.println("-----bean:"+newInstanceBean);
+        System.out.println("-----newInstanceBean82:"+newInstanceBean.toString());
         return newInstanceBean;
     }
     //实体对象bean转Map，接收前端的对象转存到map，用于模糊查询和传jsonObject.put("params",map);给前端,注意字段大小写
@@ -99,6 +99,7 @@ public class MapToBeanUtil {
                 return null;
             }
         }
+        System.out.println("-----beanMap:"+map);
         return map;
     }
     //对map的key对应bean中的类型进行判断，如果匹配到类型，把map中key的值value进行转型，并返回，能转换字符串，或没匹配到返回原型T mapAttrValue。

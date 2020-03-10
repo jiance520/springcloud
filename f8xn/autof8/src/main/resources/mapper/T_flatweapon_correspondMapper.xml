@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.T_flatweapon_correspondMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.T_flatweapon_correspond" >
+    <id column="w_flat_id" property="wFlatId" jdbcType="INTEGER" />
+    <id column="w_weapon_id" property="wWeaponId" jdbcType="INTEGER" />
+    <result column="w_weapon_type" property="wWeaponType" jdbcType="INTEGER" />
+    <result column="w_weapon_name" property="wWeaponName" jdbcType="VARCHAR" />
+    <result column="w_info_campaign_f" property="wInfoCampaignF" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    w_flat_id, w_weapon_id, w_weapon_type, w_weapon_name, w_info_campaign_f
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_flatweapon_correspond
+    where w_flat_id = #{wFlatId,jdbcType=INTEGER}
+      and w_weapon_id = #{wWeaponId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from t_flatweapon_correspond
+    where w_flat_id = #{wFlatId,jdbcType=INTEGER}
+      and w_weapon_id = #{wWeaponId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.T_flatweapon_correspond" >
+    insert into t_flatweapon_correspond (w_flat_id, w_weapon_id, w_weapon_type, 
+      w_weapon_name, w_info_campaign_f)
+    values (#{wFlatId,jdbcType=INTEGER}, #{wWeaponId,jdbcType=INTEGER}, #{wWeaponType,jdbcType=INTEGER}, 
+      #{wWeaponName,jdbcType=VARCHAR}, #{wInfoCampaignF,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.T_flatweapon_correspond" >
+    insert into t_flatweapon_correspond
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wFlatId != null" >
+        w_flat_id,
+      </if>
+      <if test="wWeaponId != null" >
+        w_weapon_id,
+      </if>
+      <if test="wWeaponType != null" >
+        w_weapon_type,
+      </if>
+      <if test="wWeaponName != null" >
+        w_weapon_name,
+      </if>
+      <if test="wInfoCampaignF != null" >
+        w_info_campaign_f,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wFlatId != null" >
+        #{wFlatId,jdbcType=INTEGER},
+      </if>
+      <if test="wWeaponId != null" >
+        #{wWeaponId,jdbcType=INTEGER},
+      </if>
+      <if test="wWeaponType != null" >
+        #{wWeaponType,jdbcType=INTEGER},
+      </if>
+      <if test="wWeaponName != null" >
+        #{wWeaponName,jdbcType=VARCHAR},
+      </if>
+      <if test="wInfoCampaignF != null" >
+        #{wInfoCampaignF,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.T_flatweapon_correspond" >
+    update t_flatweapon_correspond
+    <set >
+      <if test="wWeaponType != null" >
+        w_weapon_type = #{wWeaponType,jdbcType=INTEGER},
+      </if>
+      <if test="wWeaponName != null" >
+        w_weapon_name = #{wWeaponName,jdbcType=VARCHAR},
+      </if>
+      <if test="wInfoCampaignF != null" >
+        w_info_campaign_f = #{wInfoCampaignF,jdbcType=INTEGER},
+      </if>
+    </set>
+    where w_flat_id = #{wFlatId,jdbcType=INTEGER}
+      and w_weapon_id = #{wWeaponId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.T_flatweapon_correspond" >
+    update t_flatweapon_correspond
+    set w_weapon_type = #{wWeaponType,jdbcType=INTEGER},
+      w_weapon_name = #{wWeaponName,jdbcType=VARCHAR},
+      w_info_campaign_f = #{wInfoCampaignF,jdbcType=INTEGER}
+    where w_flat_id = #{wFlatId,jdbcType=INTEGER}
+      and w_weapon_id = #{wWeaponId,jdbcType=INTEGER}
+  </update>
+</mapper>

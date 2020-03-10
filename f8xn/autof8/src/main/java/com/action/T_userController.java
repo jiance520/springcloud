@@ -47,7 +47,7 @@ public class T_userController implements ServletContextAware {
     @RequestMapping(value = "/t_userDelete",produces = "application/json;chart=UTF-8")
     public String t_userDelete(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params){
         System.out.println("-----params:"+params.toString());
-        String primaryname = request.getParameter(primarynameKey);
+        String primaryname = request.getParameter(primarynameKey+1);
         String primaryval = params.get(primaryname).toString();
         int i = iT_userService.deleteByPrimaryKey(Integer.valueOf(primaryval));
         return JSON.toJSONString(i);
@@ -75,8 +75,8 @@ public class T_userController implements ServletContextAware {
     @ResponseBody
     @RequestMapping(value = "/t_userSelect",produces = "application/json;chart=UTF-8")
     public String t_userSelect(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params){
-        System.out.println("-----params:"+params.toString());
-        String primaryname = request.getParameter(primarynameKey);
+        System.out.println("-----params78:"+params.toString());
+        String primaryname = request.getParameter(primarynameKey+1);
         String primaryval = params.get(primaryname).toString();
         T_user t_user = iT_userService.selectByPrimaryKey(Integer.valueOf(primaryval));
         return JSON.toJSONString(t_user);
