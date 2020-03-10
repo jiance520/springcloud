@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="css/themes/icon.css">
+    <!--<link rel="stylesheet" href="css/bootstrap.min.css"/>-->
+    <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+    <style type="text/css">
+    </style>
+</head>
+<body>
+<div class="easyui-panel" title="标题" style="width:400px;border: 1px solid #444;">
+    <div style="padding:10px 60px 20px 60px">
+        <form id="ff" method="post">
+            <table cellpadding="5">
+                <tr>
+                    <td>订单编号:</td>
+                    <td><input class="span1" type="text" name="uname" data-options="required:true,missingMessage:'字段不能为空'" title=""/></td>
+                </tr>
+                <tr>
+                    <td>商品名称:</td>
+                    <td><input class="easyui-textbox" type="text" name="email" data-options="required:true,validType:'email',invalidMessage:'邮箱格式不对'" title=""/></td>
+                </tr>
+                <tr>
+                    <td>Message:</td>
+                    <td><input class="easyui-textbox" name="message" data-options="multiline:true" style="height:60px" title=""/></td>
+                </tr>
+                <tr>
+                    <td>供应商:</td>
+                    <td>
+                        <select class="easyui-combobox" name="language" title=""><option value="ar">Arabic</option><option value="bg">Bulgarian</option><option value="ca">Catalan</option><option value="zh-cht">Chinese Traditional</option><option value="cs">Czech</option><option value="da">Danish</option><option value="nl">Dutch</option><option value="en" selected="selected">English</option><option value="et">Estonian</option><option value="fi">Finnish</option><option value="fr">French</option><option value="de">German</option><option value="el">Greek</option><option value="ht">Haitian Creole</option><option value="he">Hebrew</option><option value="hi">Hindi</option></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>language2:</td>
+                    <td>
+                        <input id="cc" class="easyui-combobox" name="language2" data-options="
+                     url: 'combobox_data1.json',
+                     method: 'get',
+                     valueField: 'id',
+                     textField: 'text',
+                     panelWidth: 350,
+                     panelHeight: 'auto',
+                     formatter: formatItem
+                  ">
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <div style="text-align:center;padding:5px">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">Submit</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">Clear</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<script type="text/javascript">
+    function formatItem(row){
+        var s = '<span style="font-weight:bold">' + row.text + '</span><br/>' +
+            '<span style="color:#888">' + row.desc + '</span>';
+        return s;
+    }
+    $('#cc').combobox({
+        onLoadSuccess: function (data) {
+            if (data == 0) {
+                $.messager.alert("系统提示", "数据库异常，请联系管理员！", "warning");
+            } else {
+                var data1 = $('#cc').combobox('getData');  //赋默认值
+                if (data1.length > 0) {
+                    $("#cc").combobox('select', data1[0].id);//默认选择第1个
+                }
+            }
+        },
+        onSelect: function (data) {
+//            alert(data.id);//这个id,是Language的？
+        }
+    });
+    function submitForm(){
+        $('#ff').form('submit',{
+                url:'AjaxAction',
+                onSubmit:function(){
+                    //return false;
+                },
+                success:function(data){
+                    alert(data);
+                }
+            }
+        );
+    }
+    function clearForm(){
+        $('#ff').form('clear');
+    }
+</script>

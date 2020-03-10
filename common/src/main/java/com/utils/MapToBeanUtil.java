@@ -20,8 +20,11 @@ public class MapToBeanUtil {
 
     //Map转实体，接收前端的map，存入实体，用于插入表中,方法的判断是针对字符串，对于非字符串原类型，直接使用field.set(bean,objectValue);！
     //map中多余的不在bean中的字段不处理。关键字区分大小写
-    public static <T> Object backBean(T bean,Map<String,Object> params){
-        Map<String,Object> beanMap = backMap(bean);//默认返回的mapkey是bean属性，小写+大写(假如字段含下划线)
+    //入参newInstanceBean是类的对象，实例。可以是一个空对象 Userinfo userinfo = new Userinfo();!也可以是包反射获取的实例
+    //Class<?> entityClass = Class.forName(comName+"."+entityName+"."+tableName);
+    //Constructor<?> entityConstructor = entityClass.getDeclaredConstructor(); bean=entityConstructor.newInstance()
+    public static <T> Object backInstanceMapBean(T newInstanceBean, Map<String,Object> params){
+        Map<String,Object> beanMap = backInstanceBeanMap(newInstanceBean);//默认返回的mapkey是bean属性，小写+大写(假如字段含下划线)
         System.out.println("-----params:"+params);
         //遍历接收的paramsMap，再遍历beanMap，如果前者的key没有在后者里面，则从前者里面移除。
         try {
@@ -49,13 +52,13 @@ public class MapToBeanUtil {
                     if(objectValue!=null){
                         //System.out.println("-----entry.getKey:"+mapAttrKey);
                         //System.out.println("-----objectValue:"+objectValue.toString());
-                        Field field = bean.getClass().getDeclaredField(beanField);//公私有字段,不包括继承字段，mapAttrKey值可以为空，但必须包含在实体类的bean中，否则抛异常,中止执行！
+                        Field field = newInstanceBean.getClass().getDeclaredField(beanField);//公私有字段,不包括继承字段，mapAttrKey值可以为空，但必须包含在实体类的bean中，否则抛异常,中止执行！
                         if(field!=null){
                             field.setAccessible(true);//设置可以访问和修改私有属性，包括final?
                             //System.out.println("-----field.getName():"+field.getName());
                             //System.out.println("-----fieldType.getSimpleName():"+fieldType.getSimpleName());//不能用于类型转换(short)1
                             //Object fieldParam = field.get(bean);//属性值不能为空才能返回其Object类型，再使用instanceof判断。
-                            field.set(bean, valToBeanVal(bean,beanField,objectValue));
+                            field.set(newInstanceBean, valToBeanVal(newInstanceBean,beanField,objectValue));
                             field.setAccessible(false);
                         }
                         else{
@@ -76,19 +79,19 @@ public class MapToBeanUtil {
             System.out.println("-----非法入参");
             e.getMessage();
         }
-        System.out.println("-----bean:"+bean);
-        return bean;
+        System.out.println("-----bean:"+newInstanceBean);
+        return newInstanceBean;
     }
     //实体对象bean转Map，接收前端的对象转存到map，用于模糊查询和传jsonObject.put("params",map);给前端,注意字段大小写
     //只返回下划线+小写。不返回大写。
-    public static <T> Map backMap(T bean) {
+    public static <T> Map backInstanceBeanMap(T newInstanceBean) {
         Map map  = new HashMap();
-        Field[] fields = bean.getClass().getDeclaredFields();
+        Field[] fields = newInstanceBean.getClass().getDeclaredFields();
         for (Field field : fields) {
             try {
                 field.setAccessible(true);
                 String filedStr = field.getName();//属性名有可能是大写,而表中字段是下划线
-                map.put(filedStr,field.get(bean));//默认bean中属性全小写
+                map.put(filedStr,field.get(newInstanceBean));//默认bean中属性全小写
                 field.setAccessible(false);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();

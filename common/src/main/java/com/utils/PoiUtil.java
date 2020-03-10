@@ -142,6 +142,7 @@ public class PoiUtil {
         out.close();
         System.out.println("---------out-------------");
     }
+    //用于读到上传的xls中的数据，并转为listmap。
     public static ArrayList<HashMap<String,Object>> inxlsx(MultipartFile excelfile)throws Exception{/*excel的xlsx可插入*/
         Workbook workbook = null;
         String fname = excelfile.getOriginalFilename();

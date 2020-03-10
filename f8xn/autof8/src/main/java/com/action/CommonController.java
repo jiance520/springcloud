@@ -15,13 +15,13 @@ import org.springframework.web.context.ServletContextAware;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 @Controller
 public class CommonController implements ServletContextAware {
     private static String tablenameKey = "tabname";
-    private static String primaryvalKey = "pidval";
     private static String primarynameKey = "pidname";
     //slf4j与log4j、log4j2:https://blog.csdn.net/HarderXin/article/details/80422903?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
     //Spring Boot 日志配置(超详细),https://blog.csdn.net/Inke88/article/details/75007649?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
@@ -68,7 +68,8 @@ public class CommonController implements ServletContextAware {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/selectAll",produces = "application/json;chart=UTF-8")
-    public String selectAll(HttpServletRequest request){
+    public String selectAll(HttpServletRequest request,@RequestParam(required = false) Map<String,Object> params){
+        System.out.println("-----params:"+params);
         String tablename = request.getParameter(tablenameKey);
         String backStr = null;
         if(tablename==null||"".equals(tablename)){
@@ -84,10 +85,11 @@ public class CommonController implements ServletContextAware {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/selectOne",produces = "application/json;chart=UTF-8")
-    public String selectOne(HttpServletRequest request){
+    public String selectOne(HttpServletRequest request,@RequestParam(required = false) Map<String,Object> params){
+        System.out.println("-----params:"+params);
         String tablename = request.getParameter(tablenameKey);
         String primaryname = request.getParameter(primarynameKey);
-        String primaryval = request.getParameter(primaryvalKey);
+        String primaryval = request.getParameter(primaryname);
         String backStr = null;
         if(tablename==null||"".equals(tablename)){
             backStr="tablename为空,";
@@ -108,10 +110,11 @@ public class CommonController implements ServletContextAware {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/deleteOne",produces = "application/json;chart=UTF-8")
-    public Object deleteOne(HttpServletRequest request){
+    public Object deleteOne(HttpServletRequest request,@RequestParam(required = false) Map<String,Object> params){
+        System.out.println("-----params:"+params);
         String tablename = request.getParameter(tablenameKey);
         String primaryname = request.getParameter(primarynameKey);
-        String primaryval = request.getParameter(primaryvalKey);
+        String primaryval = request.getParameter(primaryname);
         String backStr = null;
         if(tablename==null||"".equals(tablename)){
             backStr="tablename为空,";
@@ -134,14 +137,33 @@ public class CommonController implements ServletContextAware {
     @ResponseBody
     @RequestMapping(value = "/insertOne",produces = "application/json;chart=UTF-8")
     public String insertOne(HttpServletRequest request,@RequestParam(required = false) Map<String,Object> params){
+        System.out.println("-----params:"+params);
         String sql = "";
         String tablename = request.getParameter(tablenameKey);
-        logger.info("-----params:"+params.toString());
-
-        sql="INSERT INTO "+tablename+" VALUES(";
+        String primaryname = request.getParameter(primarynameKey);
+        String primaryval = request.getParameter(primaryname);
+        String primaryname2 = request.getParameter(primarynameKey+2);
+        String backStr = null;
+        if(tablename==null||"".equals(tablename)){
+            backStr="tablename为空,";
+        }
+        if(primaryname==null||"".equals(primaryname)){
+            backStr=backStr+"primaryname为空,";
+        }
+        if(primaryval==null||"".equals(primaryval)){
+            backStr=backStr+"primaryval为空";
+        }
+        sql="INSERT INTO "+tablename+"(";
         for(HashMap.Entry<String,Object> entry:params.entrySet()){
             String entryKey = entry.getKey();
-            if(!entryKey.equals(tablenameKey)){
+            if(!entryKey.equals("proname")&&!entryKey.equals("tabname")&&!entryKey.contains("pidname")&&!entryKey.equals(primaryname2)&&!entryKey.equals("acttype")&&!entryKey.equals("excelfile")){
+                sql = sql +","+ entry.getKey();
+            }
+        }
+        sql=sql+") VALUES(";
+        for(HashMap.Entry<String,Object> entry:params.entrySet()){
+            String entryKey = entry.getKey();
+            if(!entryKey.equals("proname")&&!entryKey.equals("tabname")&&!entryKey.contains("pidname")&&!entryKey.equals(primaryname2)&&!entryKey.equals("acttype")&&!entryKey.equals("excelfile")){
                 sql = sql +",\""+ entry.getValue().toString()+"\"";
             }
         }
@@ -150,22 +172,32 @@ public class CommonController implements ServletContextAware {
         System.out.println("-----insertOnesql:"+sql);
         int i = JdbcUtil.executeUpdate(sql);
         String str =  JSON.toJSONString(i);//return JSONSerializer.toJSON(json);
-        logger.info("end");
         return str;
     }
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/insertOneAutoId",produces = "application/json;chart=UTF-8")
     public String insertOneAutoId(HttpServletRequest request,@RequestParam(required = false) Map<String,Object> params){
+        System.out.println("-----params:"+params);
         String sql = "";
-        System.out.println("-----params:"+params.toString());
         String tablename = request.getParameter(tablenameKey);
-        logger.info("-----params:"+params.toString());
-
-        sql="INSERT INTO "+tablename+" VALUES(DEFAULT";
+        String primaryname = request.getParameter(primarynameKey);
+        String primaryname2 = request.getParameter(primarynameKey+2);
+        String backStr = null;
+        if(tablename==null||"".equals(tablename)){
+            backStr="tablename为空,";
+        }
+        sql="INSERT INTO "+tablename+"(";
         for(HashMap.Entry<String,Object> entry:params.entrySet()){
             String entryKey = entry.getKey();
-            if(!entryKey.equals(tablenameKey)){
+            if(!entryKey.equals("proname")&&!entryKey.equals("tabname")&&!entryKey.contains("pidname")&&!entryKey.equals(primaryname2)&&!entryKey.equals("acttype")&&!entryKey.equals("excelfile")){
+                sql = sql +","+ entry.getKey();
+            }
+        }
+        sql=sql+") VALUES(";
+        for(HashMap.Entry<String,Object> entry:params.entrySet()){
+            String entryKey = entry.getKey();
+            if(!entryKey.equals("proname")&&!entryKey.equals("tabname")&&!entryKey.contains("pidname")&&!entryKey.equals(primaryname2)&&!entryKey.equals("acttype")&&!entryKey.equals("excelfile")){
                 sql = sql +",\""+ entry.getValue().toString()+"\"";
             }
         }
@@ -180,21 +212,21 @@ public class CommonController implements ServletContextAware {
     @ResponseBody
     @RequestMapping(value = "/updateOne",produces = "application/json;chart=UTF-8")
     public String updateOne(HttpServletRequest request,@RequestParam(required = false) Map<String,Object> params){
+        System.out.println("-----params:"+params);
         String sql = "";
         String tablename = request.getParameter(tablenameKey);
         String primaryname = request.getParameter(primarynameKey);
         String primaryval = request.getParameter(primaryname);
-
+        String primaryname2 = request.getParameter(primarynameKey+2);
         sql="UPDATE "+tablename+" SET ";
         for(HashMap.Entry<String,Object> entry:params.entrySet()){
             String entryKey = entry.getKey();
-            if(!entryKey.equals(tablenameKey)&&!entryKey.equals(primarynameKey)&&!entryKey.equals(primaryname)){
+            if(!entryKey.equals("proname")&&!entryKey.equals("tabname")&&!entryKey.contains("pidname")&&!entryKey.equals(primaryname2)&&!entryKey.equals("acttype")&&!entryKey.equals("excelfile")){
                 sql = sql +entry.getKey()+"=\""+ entry.getValue().toString()+"\",";
             }
         }
         sql = sql.substring(0,sql.length()-1);//去掉最后一个,号
         sql=sql+" WHERE "+primaryname+"='"+primaryval+"'";
-        System.out.println("-----primaryname:"+primaryname);
         System.out.println("-----insertOnesql:"+sql);
         int i = JdbcUtil.executeUpdate(sql);
         String str =  JSON.toJSONString(i);//return JSONSerializer.toJSON(json);
@@ -202,30 +234,62 @@ public class CommonController implements ServletContextAware {
     }
     @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "/actionall",produces = "application/json;chart=UTF-8")
-    public Object actionall(HttpServletRequest request, @RequestParam(required=false) Map<String,Object> params) {
+    @RequestMapping(value = "/actionAll",produces = "application/json;chart=UTF-8")
+    public String actionAll(HttpServletRequest request, @RequestParam(required=false) Map<String,Object> params) {
+        System.out.println("-----params:"+params);
+        String primaryname = request.getParameter(primarynameKey);
+        String primaryval = request.getParameter(primaryname);
+        if(!"".equals(primaryname)&&!"".equals(primaryval)&&!params.containsKey(primaryname)){
+            params.put(primaryname,primaryval);
+        }
         Object object = null;
         if(params.isEmpty()){
             object = "params是空";
         }
         else{
+            Iterator iterator = params.keySet().iterator();
+            while (iterator.hasNext()){
+                String entryKey = iterator.next().toString();
+                if(entryKey.equals("proname")||entryKey.equals("excelfile")){
+                    iterator.remove();
+                }
+            }
+            System.out.println("-----params236:"+params);
             object = ActionUtil.actionAll(this,params);
             System.out.println("-----object:"+object.toString());
         }
-        return object;
+        return JSON.toJSONString(object);
     }
     @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "/actionalltwo",produces = "application/json;chart=UTF-8")
-    public Object actionalltwo(HttpServletRequest request, @RequestParam(required=false) Map<String,Object> params) {
+    @RequestMapping(value = "/actionAllTwo",produces = "application/json;chart=UTF-8")
+    public String actionAllTwo(HttpServletRequest request, @RequestParam(required=false) Map<String,Object> params) {
+        System.out.println("-----params:"+params);
+        String primaryname = request.getParameter(primarynameKey);
+        String primaryval = request.getParameter(primaryname);
+        if(!"".equals(primaryname)&&!"".equals(primaryval)&&!params.containsKey(primaryname)){
+            params.put(primaryname,primaryval);
+        }
+        String primaryname2 = request.getParameter(primarynameKey+2);
+        String primaryval2 = request.getParameter(primaryname2);
+        if(!"".equals(primaryname2)&&!"".equals(primaryval2)&&!params.containsKey(primaryname2)){
+            params.put(primaryname2,primaryval2);
+        }
         Object object = null;
         if(params.isEmpty()){
             object = "params是空";
         }
         else{
+            Iterator iterator = params.keySet().iterator();
+            while (iterator.hasNext()){
+                String entryKey = iterator.next().toString();
+                if(entryKey.equals("proname")||entryKey.equals("excelfile")){
+                    iterator.remove();
+                }
+            }
             object = ActionUtil.actionAllTwo(this,params);
         }
-        return object;
+        return JSON.toJSONString(object);
     }
     public static void main(String[] args) throws Exception {
 //        LoginController loginController = new LoginController();
