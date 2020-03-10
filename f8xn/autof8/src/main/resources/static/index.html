@@ -55,15 +55,15 @@
             <td><input type="text"  id="pidname2" class="form-control" placeholder="id2" name="pidname2" value="id2" required autofocus></td>
         </tr>
         <tr>
-            <td><label for="acttype" class="sr-only">增删改查acttype=selectOne/actionAll</label></td>
+            <td><label for="acttype" class="sr-only">增删改查acttype=selectOne/t_userSelect</label></td>
             <td>
-                <!--<select id="acttype" class="form-control" name="acttype" size="1" required autofocus οnchange="this.nextSibling.value=this.value">&lt;!&ndash;&ndash;&gt;
+                <select id="acttype" name="acttype" class="form-control" size="1" required autofocus ><!--把先中的内容放在输入框中，只传递输入框的值给后台οnchange="this.nextSibling.value=this.value"无效-->
                     <option value="selectOne">selectOne</option>
                     <option value="insertOne">insertOne</option>
                     <option value="updateOne">updateOne</option>
                     <option value="deleteOne">deleteOne</option>
-                </select>-->
-                <input id="acttype" name="acttype" style="width:100px;position:relative;left:0px;"/>
+                </select>
+                <!--<input id="acttype" name="acttype" style="width:100px;position:relative;left:0px;" value="selectOne"/>-->
             </td>
         </tr>
         <tr>
@@ -102,11 +102,11 @@
     <tr>
         <td><label for="jdbc" class="sr-only">查询方式jdbc=j/a1/a2/c</label></td>
         <td>
-            <select id="jdbc" class="sr-only" name="jdbc" size="1" required autofocus>
-                <option value="j" selected>j</option>
-                <option value="a1">a1</option>
-                <option value="a2">a2</option>
-                <option value="c">c</option>
+            <select size="1" id="jdbc" class="sr-only" name="jdbc" required autofocus>
+                <option value="j" selected>jdbc=selectOne</option>
+                <option value="a1">actionAll</option>
+                <option value="a2">actionAllTwo</option>
+                <option value="c">t_userSelect</option>
             </select>
         </td>
     </tr>

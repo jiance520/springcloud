@@ -2,6 +2,17 @@
 <HEAD>
     <meta http-equiv="Content-Type" content="multipart/form-data;charset=utf-8" />
     <TITLE>可输入的下拉框</TITLE>
+    <script src="static/js/jquery-1.12.4.js"></script>
+    <script>
+        function setRuleContent(){
+            var selectValue = $('#_select option:selected').text();//选中select的内容
+            //alert("selectValue" + selectValue);
+
+            var inputValue = $("#_input").val(selectValue);//input获得select的内容并显示在输入框中
+//alert(inputValue);
+        };
+    </script>
+
 </HEAD>
 <BODY>
     <div style="position:relative;">
@@ -14,6 +25,17 @@
             </select>
         </span>
         <input name="box">
+    </div>
+
+    <div style="position:relative;margin-left: 10%;height: 30px; margin-top: 50px;" class="col-xs-6">
+                <span style="margin-left:115px;width:18px;overflow:hidden;height: 30px;">
+        <select id="_select" style="width:240px;margin-left:-115px;height: 30px;" οnchange="setRuleContent();"> 
+<option value="1">请选择....</option>
+<option value="1">11</option>
+<option value="1">22</option>
+<option value="1">33</option></select>
+</span>
+        <input id="_input" type="text" style="width:220px;position:absolute;left:0px;height:24px;"   οnchange="setRuleContent1();"  placeholder="输入">
     </div>
 </BODY>
 </HTML>
