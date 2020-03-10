@@ -830,60 +830,85 @@ public class OneUpdate {
         String strController = "package com.action;\n" +
                 "\n" +
                 "import com.alibaba.fastjson.JSON;\n" +
-                "import com.entity.T_troops_commandership;\n" +
-                "import com.service.IT_troops_commandershipService;\n" +
+                "import com.entity.T_user;\n" +
+                "import com.service.IT_userService;\n" +
+                "import com.utils.MapToBeanUtil;\n" +
                 "import org.springframework.stereotype.Controller;\n" +
                 "import org.springframework.web.bind.annotation.*;\n" +
                 "import org.springframework.web.context.ServletContextAware;\n" +
+                "import org.springframework.web.multipart.MultipartFile;\n" +
                 "\n" +
                 "import javax.annotation.Resource;\n" +
                 "import javax.servlet.ServletContext;\n" +
                 "import javax.servlet.http.HttpServletRequest;\n" +
+                "import java.io.File;\n" +
+                "import java.util.Iterator;\n" +
+                "import java.util.Map;\n" +
                 "\n" +
-                "@RestController\n" +
-                "public class T_troops_commandershipController implements ServletContextAware {\n" +
+                "@Controller\n" +
+                "public class T_userController implements ServletContextAware {\n" +
+                "    private static String primarynameKey = \"pidname\";\n" +
                 "    private ServletContext application;\n" +
                 "    @Resource\n" +
-                "    private IT_troops_commandershipService iT_troops_commandershipService;\n" +
+                "    private IT_userService iT_userService;\n" +
                 "    @Override\n" +
                 "    public void setServletContext(ServletContext servletContext) {\n" +
                 "        this.application = servletContext;\n" +
                 "    }\n" +
                 "    @CrossOrigin\n" +
                 "    @ResponseBody\n" +
-                "    @RequestMapping(value = \"/t_troops_commandershipInsert\",produces = \"application/json;chart=UTF-8\")\n" +
-                "    public String t_troops_commandershipInsert(HttpServletRequest request){\n" +
-                "        String commandership_name = request.getParameter(\"commandership_name\");\n" +
-                "        T_troops_commandership t_troops_commandership = new T_troops_commandership();\n" +
-                "        t_troops_commandership.setCommandershipName(commandership_name);\n" +
-                "        int i = iT_troops_commandershipService.insertSelective(t_troops_commandership);\n" +
+                "    @RequestMapping(value = \"/t_userInsert\",produces = \"application/json;chart=UTF-8\")\n" +
+                "    public String t_userInsert(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params,@RequestParam(required = false) MultipartFile[] excelfile){\n" +
+                "        System.out.println(\"-----params36:\"+params.toString());\n" +
+                "        Iterator iterator = params.keySet().iterator();\n" +
+                "        while (iterator.hasNext()){\n" +
+                "            String entryKey = iterator.next().toString();\n" +
+                "            if(entryKey.equals(\"proname\")||entryKey.equals(\"tabname\")||entryKey.contains(\"pidname\")||entryKey.equals(\"acttype\")||entryKey.equals(\"excelfile\")){\n" +
+                "                iterator.remove();\n" +
+                "            }\n" +
+                "        }\n" +
+                "        T_user t_user = (T_user)MapToBeanUtil.backInstanceMapBean(new T_user(),params);\n" +
+                "        int i = iT_userService.insertSelective(t_user);\n" +
                 "        return JSON.toJSONString(i);\n" +
                 "    }\n" +
                 "    @CrossOrigin\n" +
                 "    @ResponseBody\n" +
-                "    @RequestMapping(value = \"/t_troops_commandershipUpdate\",produces = \"application/json;chart=UTF-8\")\n" +
-                "    public String t_troops_commandershipUpdate(HttpServletRequest request){\n" +
-                "        String commandership_id = request.getParameter(\"commandership_id\");\n" +
-                "        T_troops_commandership t_troops_commandership = new T_troops_commandership();\n" +
-                "        t_troops_commandership.setCommandershipId(Integer.valueOf(commandership_id));\n" +
-                "        int i = iT_troops_commandershipService.updateByPrimaryKeySelective(t_troops_commandership);\n" +
+                "    @RequestMapping(value = \"/t_userDelete\",produces = \"application/json;chart=UTF-8\")\n" +
+                "    public String t_userDelete(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params){\n" +
+                "        System.out.println(\"-----params:\"+params.toString());\n" +
+                "        String primaryname = request.getParameter(primarynameKey);\n" +
+                "        String primaryval = params.get(primaryname).toString();\n" +
+                "        int i = iT_userService.deleteByPrimaryKey(Integer.valueOf(primaryval));\n" +
                 "        return JSON.toJSONString(i);\n" +
                 "    }\n" +
                 "    @CrossOrigin\n" +
                 "    @ResponseBody\n" +
-                "    @RequestMapping(value = \"/t_troops_commandershipSelect\",produces = \"application/json;chart=UTF-8\")\n" +
-                "    public String t_troops_commandershipSelect(HttpServletRequest request){\n" +
-                "        String commandership_id = request.getParameter(\"commandership_id\");\n" +
-                "        T_troops_commandership t_troops_commandership = iT_troops_commandershipService.selectByPrimaryKey(Integer.valueOf(commandership_id));\n" +
-                "        return JSON.toJSONString(t_troops_commandership);\n" +
+                "    @RequestMapping(value = \"/t_userUpdate\",produces = \"application/json;chart=UTF-8\")\n" +
+                "    public String t_userUpdate(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params,@RequestParam(required = false) MultipartFile[] excelfile) throws Exception {\n" +
+                "        System.out.println(\"-----params:\"+params.toString());\n" +
+                "        String path = application.getRealPath(\"img\")+ File.separator;\n" +
+                "        System.out.println(\"-----img/product:\"+path);\n" +
+                "        //List<HashMap<String,Object>> mapList = PoiUtil.inxlsx(excelfile);//把接收的文件中的数据转为listmap。\n" +
+                "        Iterator iterator = params.keySet().iterator();\n" +
+                "        while (iterator.hasNext()){\n" +
+                "            String entryKey = iterator.next().toString();\n" +
+                "            if(entryKey.equals(\"proname\")||entryKey.equals(\"tabname\")||entryKey.contains(\"pidname\")||entryKey.equals(\"acttype\")||entryKey.equals(\"excelfile\")){\n" +
+                "                iterator.remove();\n" +
+                "            }\n" +
+                "        }\n" +
+                "        T_user t_user = (T_user) MapToBeanUtil.backInstanceMapBean(new T_user(),params);\n" +
+                "        int i = iT_userService.updateByPrimaryKeySelective(t_user);\n" +
+                "        return JSON.toJSONString(i);\n" +
                 "    }\n" +
                 "    @CrossOrigin\n" +
                 "    @ResponseBody\n" +
-                "    @RequestMapping(value = \"/t_troops_commandershipDelete\",produces = \"application/json;chart=UTF-8\")\n" +
-                "    public String t_troops_commandershipDelete(HttpServletRequest request){\n" +
-                "        String commandership_id = request.getParameter(\"commandership_id\");\n" +
-                "        int i = iT_troops_commandershipService.deleteByPrimaryKey(Integer.valueOf(commandership_id));\n" +
-                "        return JSON.toJSONString(i);\n" +
+                "    @RequestMapping(value = \"/t_userSelect\",produces = \"application/json;chart=UTF-8\")\n" +
+                "    public String t_userSelect(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params){\n" +
+                "        System.out.println(\"-----params:\"+params.toString());\n" +
+                "        String primaryname = request.getParameter(primarynameKey);\n" +
+                "        String primaryval = params.get(primaryname).toString();\n" +
+                "        T_user t_user = iT_userService.selectByPrimaryKey(Integer.valueOf(primaryval));\n" +
+                "        return JSON.toJSONString(t_user);\n" +
                 "    }\n" +
                 "}\n";
         if(this.actionPath==null||"".equals(this.actionPath)){
@@ -915,8 +940,8 @@ public class OneUpdate {
             for (int i = 0; i <tableArr.length ; i++) {
                 tableArr[i]= StringIndex.upFirstWord(tableArr[i]);
                 tableName=tableArr[i];
-                String newStr = strController.replaceAll("T_troops_commandership", StringIndex.upFirstWord(tableName));
-                newStr = newStr.replaceAll("t_troops_commandership", StringIndex.lowerFirstWord(tableName));
+                String newStr = strController.replaceAll("T_user", StringIndex.upFirstWord(tableName));
+                newStr = newStr.replaceAll("t_user", StringIndex.lowerFirstWord(tableName));
                 newStr = newStr.replaceAll("com\\.",groupId+".");
                 String conPath = actionPath+"/"+ StringIndex.upFirstWord(tableName)+"Controller.java";
                 file = new File(conPath);
@@ -929,8 +954,8 @@ public class OneUpdate {
         else{
             tableNames= StringIndex.upFirstWord(tableNames);
             tableName=tableNames;
-            String newStr = strController.replaceAll("T_troops_commandership", StringIndex.upFirstWord(tableName));
-            newStr = newStr.replaceAll("t_troops_commandership", StringIndex.lowerFirstWord(tableName));
+            String newStr = strController.replaceAll("T_user", StringIndex.upFirstWord(tableName));
+            newStr = newStr.replaceAll("t_user", StringIndex.lowerFirstWord(tableName));
             newStr = newStr.replaceAll("com\\.",groupId+".");
             String conPath = actionPath+"/"+ StringIndex.upFirstWord(tableName)+"Controller.java";
             file = new File(conPath);
