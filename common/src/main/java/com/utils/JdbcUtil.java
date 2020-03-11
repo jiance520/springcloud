@@ -19,7 +19,7 @@ import java.util.*;
 public class JdbcUtil {//工具类，针对不同的数据库，使用同样的jdbc方法。
 	private static final Logger logger = LoggerFactory.getLogger(JdbcUtil.class);
 	//private static Logger logger = Logger.getLogger(JdbcUtil.class.getName());
-	private static String driver = "com.mysql.cj.jdbc.Driver";//
+	private static String driver = "com.mysql.jdbc.Driver";//
 	private static String url = "jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
 	private static String user = "root";
 	private static String password = "root";
@@ -28,7 +28,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 	private static ResultSet rst = null;
 	private static CallableStatement cst = null;
 //	MySQL数据库的root用户的shiro数据库
-//		private static String driver = "com.mysql.cj.jdbc.Driver";//前后不能有空格
+//		private static String driver = "com.mysql.jdbc.Driver";//前后不能有空格
 //		private static String url = "jdbc:mysql://localhost:3306/shiro";
 //		private static String user= "root";
 //		private static String pwd= "root";

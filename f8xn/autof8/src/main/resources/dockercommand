@@ -1,0 +1,9 @@
+docker tag f8xn/autof8:latest registry.cn-shenzhen.aliyuncs.com/uuu/autof8:latest
+docker login --username=hi35059861@aliyun.com --password=autof8Ol-  registry.cn-shenzhen.aliyuncs.com
+docker push  registry.cn-shenzhen.aliyuncs.com/uuu/autof8:latest
+docker pull registry.cn-shenzhen.aliyuncs.com/uuu/autof8:latest
+docker run -d -it -p 8081:8081 --restart=on-failure:10 --name autof8 registry.cn-shenzhen.aliyuncs.com/uuu/autof8:latest
+
+firewall-cmd --zone=public --add-port=8081/tcp --permanent #autof8
+firewall-cmd --reload
+firewall-cmd --zone=public --list-ports

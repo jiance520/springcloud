@@ -53,7 +53,7 @@ public class CommonController implements ServletContextAware {
     //private Logger logger = Logger.getLogger(getClass());
     private ServletContext application;
     /*@Value("spring.datasource.driver-class-name")
-    private String driverClassName="com.mysql.cj.jdbc.Driver";
+    private String driverClassName="com.mysql.jdbc.Driver";
     @Value("spring.datasource.url")
     private String datasourceUrl="jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
     @Value("spring.datasource.username")

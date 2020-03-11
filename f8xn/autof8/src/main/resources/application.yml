@@ -1,5 +1,5 @@
 #以下用于App启动时，使用自带tomcat的项目根目录和端口的配置
-#server.servlet.context-path=/autof8
+server.servlet.context-path: /autof8
 server.port: 8081
 spring.application.name: autof8
 
@@ -20,10 +20,10 @@ spring.mvc.view.prefix: /
 spring.mvc.view.suffix: .jsp
 spring.mvc.favicon.enabled: false
 #旧版驱动mysql.5.1.47，已废弃
-#spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
+#spring.datasource.driver-class-name: com.mysql.jdbc.Driver
 #新版驱动mysql.6.1.6
 #mysql-connector-java 6比m5多了useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
-spring.datasource.driver-class-name: com.mysql.cj.jdbc.Driver
+spring.datasource.driver-class-name: com.mysql.jdbc.Driver
 #用于6以上版本mysql，MySQL 5.5.45+，6+版本默认要求建立SSL连接。
 spring.datasource.name: shiro
 spring.datasource.url: jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8

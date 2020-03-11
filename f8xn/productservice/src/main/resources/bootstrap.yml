@@ -1,7 +1,7 @@
 server:
   port: 8771
 #  servlet:
-#    context-path: /top.f8xn.productservice
+#    context-path: /productservice
 
 spring:
   application:
@@ -22,7 +22,7 @@ spring:
     name: productservice
   profiles: dev
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
     #用于6以上版本mysql，MySQL 5.5.45+，6+版本默认要求建立SSL连接。
     url: jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
     type: com.alibaba.druid.pool.DruidDataSource
@@ -108,7 +108,7 @@ spring:
     name: productservice
   profiles: test
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
     type: com.alibaba.druid.pool.DruidDataSource
     username: root
@@ -157,7 +157,7 @@ spring:
     name: productservice
   profiles: prod
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://106.13.100.117:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
     type: com.alibaba.druid.pool.DruidDataSource
     username: root

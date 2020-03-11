@@ -1,7 +1,6 @@
 com\utils\PoiUtil.class
 com\utils\ActionUtil.class
 com\App.class
-com\action\CommonController.class
 com\utils\DelRepository.class
 com\utils\FoldersDeep.class
 com\utils\MapToBeanUtil.class

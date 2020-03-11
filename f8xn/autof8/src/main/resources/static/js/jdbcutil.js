@@ -88,14 +88,14 @@ $(document).ready(function () {
 //使用万能接口，需要类和dao+mybatis，统一控制层
 //jsonMap:{tabname=t_user, pidname1=id, acttype=selectOne, name=admin, password=123}
     $('.post2').click(()=>{
-        let action = 'http://localhost:8081/autof8/actionAll';
+        let action = '/autof8/actionAll';
         $.post(action,{tabname:"t_user",pidname1:"id",pidname2:"id2",id:1,name:'admin',password:'123',acttype:"selectOne"},function(data){/* function(data){}相当于success部分,data=msg */
             alert("服务器信息"+data);
         },'text');
     });
 //使用纯Jdbcutil，无需类和接口
     /*$('.post2').click(()=>{
-        let action = 'http://localhost:8081/autof8/updateOne';
+        let action = '/autof8/updateOne';
         $.post(action,{tabname:"t_user",pidname1:"id",id:1,name:'tom',password:'123'},function(data){/!* function(data){}相当于success部分,data=msg *!/
             alert("服务器信息"+data);
         },'text');
