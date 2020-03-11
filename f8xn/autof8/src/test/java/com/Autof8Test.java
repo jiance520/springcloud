@@ -1,7 +1,7 @@
 package com;
 
 
-import com.service.IT_userService;
+import com.utils.Configf8xn;
 import com.utils.JdbcUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,9 @@ public class Autof8Test {
     //private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final Logger logger = LoggerFactory.getLogger(Autof8Test.class);
     @Autowired
-    private IT_userService it_userService;
+    private Configf8xn configf8xn;
+    @Autowired
+    private  JdbcUtil jdbcUtil;
     @Test
     @Transactional
     @Rollback
@@ -36,12 +38,13 @@ public class Autof8Test {
         String password = "123";
         //String sql = "INSERT INTO t_user VALUES(2,?,?)";
         //String sql = "INSERT INTO t_user VALUES(2,\"tom\",\"123\")";
-        //int i = JdbcUtil.executeUpdate(sql,name,password);
-        //int i = JdbcUtil.executeUpdate(sql);
+        //int i = jdbcUtil.executeUpdate2(sql,name,password);
+        //int i = jdbcUtil.executeUpdate2(sql);
 //        System.out.println("-----i:"+i);
-        Object object = JdbcUtil.exectueQuery("select * from t_user");
+        Object object = jdbcUtil.exectueQuery2("select * from t_user");
         logger.debug("--logger---test:"+object);
-//        System.out.println("---test:"+object);
+        System.out.println("---test:"+object);
+        System.out.println("---getContextPath:"+configf8xn.getContextPath());
 //        Object object2 = it_userService.selectByPrimaryKey(1);
 //        System.out.println("---test:"+object2.toString());
     }

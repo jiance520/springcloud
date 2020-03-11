@@ -1,7 +1,8 @@
+#读取配置文件的顺序优先级为谁在前(0a-z)就先读取谁！跟其它无关!application.yml>bootstrap.yml>config.properties
 server:
   port: 8081
   servlet:
-    #工程名，不是数据库名，也不是com
+    #工程名，不是数据库名，也不是
     context-path: /autof8
 
 spring:
@@ -121,6 +122,7 @@ spring:
     name: autof8
   profiles: test
   datasource:
+    name: shiro
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
     type: com.alibaba.druid.pool.DruidDataSource
@@ -170,8 +172,9 @@ spring:
     name: autof8
   profiles: prod
   datasource:
+    name: shiro
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://106.13.100.117:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://106.13.100.117/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
     type: com.alibaba.druid.pool.DruidDataSource
     username: root
     password: autof8Ol10

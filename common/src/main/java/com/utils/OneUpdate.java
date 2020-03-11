@@ -2,7 +2,9 @@ package com.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.net.URL;
@@ -16,16 +18,21 @@ import java.util.regex.Pattern;
 //数据库中的大写在对象属性中是小写，数据库中下划线后的字母在对象属性中是大写，
 //@Component
 //@Configuration构造函数的入参，必须用存在的属性？
-//@PropertySource("classpath:/application.properties")自定义配置文件
+//浅析PropertySource 基本使用https://www.cnblogs.com/cxuanBlog/p/10927823.html
+//@PropertySource("classpath:/config.properties")自定义使用哪个配置文件来注入属性值，通常结合@Configuration
+//@PropertySource(value = "classpath:application.properties",ignoreResourceNotFound = false)
+@Component
 public class OneUpdate {
     private static final Logger logger = LoggerFactory.getLogger(OneUpdate.class);
+    @Autowired
+    private Configf8xn configf8xn;
     //private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(OneUpdate.class.getName());
     private String jarName = "";//mysql-connector-java-5.1.47.jar
-    private String propertiesName="";//application.properties
+    private String propertiesName="";//config.properties
     private String resourcesPath="";//D:/workspace/idea/com/zufang/src/main/resources
     private String jarLocation="";//D:/workspace/idea/com/zufang/src/main/resources/mybatisGenerator/mysql-connector-java-5.1.47.jar
-    //@Value("${spring.datasource.driver-class-name}")
-    private String driverClass="com.mysql.jdbc.Driver";//com.mysql.jdbc.Driver
+    @Value("${spring.datasource.driver-class-name}")
+    private String driverClass;//com.mysql.jdbc.Driver
     @Value("${spring.datasource.url}")
     private String connectionURL;//jdbc:mysql://localhost:3306/src?characterEncoding=utf8
     @Value("spring.datasource.name")
@@ -79,7 +86,7 @@ public class OneUpdate {
             e.printStackTrace();
         }
 
-        //-----------由于不启动，不能通过@Value取application.properties里的属性值(已验证)，以下必须-----------
+        //-----------由于不启动，不能通过@Value取config.properties里的属性值(已验证)，以下必须-----------
         if(this.userId==null||"".equals(this.userId)){
             userId = properties.getProperty("spring.datasource.username");
         }
@@ -878,7 +885,7 @@ public class OneUpdate {
                 "    @RequestMapping(value = \"/t_userDelete\",produces = \"application/json;chart=UTF-8\")\n" +
                 "    public String t_userDelete(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params){\n" +
                 "        System.out.println(\"-----params:\"+params.toString());\n" +
-                "        String primaryname = request.getParameter(primarynameKey);\n" +
+                "        String primaryname = request.getParameter(primarynameKey+1);\n" +
                 "        String primaryval = params.get(primaryname).toString();\n" +
                 "        int i = iT_userService.deleteByPrimaryKey(Integer.valueOf(primaryval));\n" +
                 "        return JSON.toJSONString(i);\n" +
@@ -907,7 +914,7 @@ public class OneUpdate {
                 "    @RequestMapping(value = \"/t_userSelect\",produces = \"application/json;chart=UTF-8\")\n" +
                 "    public String t_userSelect(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params){\n" +
                 "        System.out.println(\"-----params:\"+params.toString());\n" +
-                "        String primaryname = request.getParameter(primarynameKey);\n" +
+                "        String primaryname = request.getParameter(primarynameKey+1);\n" +
                 "        String primaryval = params.get(primaryname).toString();\n" +
                 "        T_user t_user = iT_userService.selectByPrimaryKey(Integer.valueOf(primaryval));\n" +
                 "        return JSON.toJSONString(t_user);\n" +
@@ -971,7 +978,7 @@ public class OneUpdate {
 
     }
     public static void main(String[] args) throws IOException {
-        //手动配置好application.properties
+        //手动配置好config.properties
         //String daoFolderName,String daoLastName,String serviceFolderName,Object... tableNames
 //        String tableStr="t_decisemanagetable\n" + "t_flatequip_correspond";
         String tableStr = "t_weapon_photoelectricity_info\n" +
@@ -983,10 +990,10 @@ public class OneUpdate {
                 "t_weapon_logistics_info\n" +
                 "t_weaponammo_correspond\n" +
                 "t_weapon_cannon_info";
-        //读取配置文件值https://blog.csdn.net/jiangyu1013/article/details/82188593,能读a.bc=3和a.c: 4格式，不分yml或properties。
+        //读取配置文件值https://blog.csdn.net/jiangyu1013/article/details/82188593,能读a.bc=3和a.c: 4格式，不分yml或properties。但是不支持getProperty读取不在同一行的bootstrap.yml格式！
         //执行前，必须先build生成target,否则无法获取路径，使用mysql5，不要用6和8.要改配置。
-        //OneUpdate oneUpdate = new OneUpdate("application.properties","mysql-connector-java-5.1.20.jar", "dao","Mapper", "service","impl",true,tableStr);
-        OneUpdate oneUpdate = new OneUpdate("application.properties","mysql-connector-java-5.1.20.jar", "dao","entity","Mapper", "service","impl",true,"T_user");
+        //OneUpdate oneUpdate = new OneUpdate("config.properties","mysql-connector-java-5.1.20.jar", "dao","Mapper", "service","impl",true,tableStr);
+        OneUpdate oneUpdate = new OneUpdate("config.properties","mysql-connector-java-5.1.20.jar", "dao","entity","Mapper", "service","impl",true,"T_user");
         //根据传入的表(一个或多个)进行重新生成该表的相关信息，tableNames在调用时指定.
         oneUpdate.runFun();//最后输出-----serviceFile，生成xml配置文件，生成实体类，生成服务接口，实现接口，可拆分执行。
 

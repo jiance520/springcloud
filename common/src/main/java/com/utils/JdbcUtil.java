@@ -3,6 +3,7 @@ package com.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -19,6 +20,16 @@ import java.util.*;
 public class JdbcUtil {//工具类，针对不同的数据库，使用同样的jdbc方法。
 	private static final Logger logger = LoggerFactory.getLogger(JdbcUtil.class);
 	//private static Logger logger = Logger.getLogger(JdbcUtil.class.getName());
+	//使用@Value取值，可以读取任意yml或properties格式的属性!，当前类必须加注解被扫描，注解的属性不能是static或final。
+	//JdbcUtil类被new新建了实例，而没有在使用@Autowired(有效!重点！),
+	@Value("${spring.datasource.driver-class-name}")
+	private String driverClass;
+	@Value("${spring.datasource.url}")
+	private String connectionURL;
+	@Value("${spring.datasource.username}")
+	private String userId;
+	@Value("${spring.datasource.password}")
+	private String passwd;
 	private static String driver = "com.mysql.jdbc.Driver";//
 	private static String url = "jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
 	private static String user = "root";
@@ -27,12 +38,6 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 	private static PreparedStatement pst = null;
 	private static ResultSet rst = null;
 	private static CallableStatement cst = null;
-//	MySQL数据库的root用户的shiro数据库
-//		private static String driver = "com.mysql.jdbc.Driver";//前后不能有空格
-//		private static String url = "jdbc:mysql://localhost:3306/shiro";
-//		private static String user= "root";
-//		private static String pwd= "root";
-//		private static Connection con = null;
 //	static {//已经在连接中加载
 //		try {
 //			Class.forName(driver);
@@ -60,6 +65,21 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 				Class cc = Class.forName(driver);
 				logger.debug("加载驱动成功");
 				conn = DriverManager.getConnection(url,user,password);
+				logger.debug("连接成功");
+			} catch (Exception e) {
+				logger.debug("连接失败");
+				e.printStackTrace();
+			}
+		}
+		return conn;
+	}
+	public Connection getConn2(){
+		if(conn == null){
+			try {
+				logger.debug("开始执行");
+				Class cc = Class.forName(driverClass);
+				logger.debug("加载驱动成功");
+				conn = DriverManager.getConnection(connectionURL,userId,passwd);
 				logger.debug("连接成功");
 			} catch (Exception e) {
 				logger.debug("连接失败");
@@ -100,6 +120,32 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		}
 		return affectedLine;
 	}
+	public int executeUpdate2(String sql,Object... params){//String...比Object[]更方便，直接传任意个参数
+		conn = getConn2();
+		int affectedLine = 0;// 受影响的行数
+		try {
+			logger.debug("开始更新");
+			pst = conn.prepareStatement(sql);
+			if(params!=null){
+				for (int i = 0; i < params.length; i++) {
+					pst.setObject(i+1,params[i]);
+					logger.debug(params[i].toString());
+				}
+			}
+	/*在此 PreparedStatement 对象中执行 SQL 语句，
+            该语句必须是一个 SQL 数据操作语言（Data Manipulation Language，DML）语句，
+            比如 INSERT、UPDATE 或 DELETE语句；或者是无返回内容的 SQL 语句，比如 DDL 语句。    */
+			affectedLine = pst.executeUpdate();
+			logger.debug("更新成功，"+affectedLine+"行受影响");
+		} catch (SQLException e) {
+			logger.debug("更新错误");
+			e.printStackTrace();
+		}
+		finally{
+			closeAll();
+		}
+		return affectedLine;
+	}
 	/**
      * SQL 查询指定行和列的结果  ,一行单列，或一行多列。
      * @param sql SQL语句
@@ -107,10 +153,44 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
      * @return 结果集
      */
 	public static HashMap<String,Object> queryOne(String sql,Object... params){
+		System.out.println("-----url:"+url);
 		HashMap<String,Object> map = null;
 		ResultSetMetaData rsmd = null;
 		int columnCount = 0;
 		conn = getConn();
+		try {
+			logger.debug("开始查询一个结果");
+			pst = conn.prepareStatement(sql);
+			if(params!=null){
+				for (int i = 0; i < params.length; i++) {
+					pst.setObject(i+1, params[i]);
+				}
+			}
+			rst = pst.executeQuery();
+			rsmd = rst.getMetaData();
+			columnCount = rsmd.getColumnCount();
+			if(rst.next()){
+				map = new HashMap<String,Object>();
+				for (int i = 0; i < columnCount; i++) {
+					map.put(rsmd.getColumnLabel(i+1), rst.getObject(i+1));
+				}
+			}
+			logger.debug("查询一个结果成功");
+		} catch (Exception e) {
+			logger.debug("查询一个结果失败");
+			e.printStackTrace();
+		}
+		finally{
+			closeAll();
+		}
+		return map;
+	}
+	public HashMap<String,Object> queryOne2(String sql,Object... params){
+		System.out.println("-----connectionURL:"+connectionURL);
+		HashMap<String,Object> map = null;
+		ResultSetMetaData rsmd = null;
+		int columnCount = 0;
+		conn = getConn2();
 		try {
 			logger.debug("开始查询一个结果");
 			pst = conn.prepareStatement(sql);
@@ -162,6 +242,24 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		}
 		return rst;//不能关闭资源，否则返回的rst是null
 	}
+	public ResultSet executeQueryRS2(String sql,Object... params){
+		conn = getConn2();
+		try {
+			logger.debug("开始查询结果集");
+			pst = conn.prepareStatement(sql);
+			if(params!=null){
+				for (int i = 0; i < params.length; i++) {
+					pst.setObject(i+1,params[i]);
+				}
+			}
+			rst = pst.executeQuery();
+			logger.debug("查询结果集成功");
+		} catch (SQLException e) {
+			logger.debug("查询结果集失败");
+			e.printStackTrace();
+		}
+		return rst;//不能关闭资源，否则返回的rst是null
+	}
     /**
      * 获取结果集，并将结果放在List中 (重点)，达到可以在jsp中间接获取到ResultSet的集(表内容)。
      * @param sql  SQL语句
@@ -175,6 +273,40 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 //	exectueQuery("select * from emp where id=?","12");
 	public static List<HashMap> exectueQuery(String sql,Object... params){
 		rst = executeQueryRS(sql,params);
+		ResultSetMetaData rsmd = null;
+//		获取集列数
+		int columnCount = 0;
+		try {
+			logger.debug("开始查询List集合");
+			rsmd = rst.getMetaData();//获取有关ResultSet结果集数据的信息，如结果集的字段数，字段名。但不是获取数据内容。
+//			通过ResultSet的元数据，获得结果集列数
+			columnCount = rsmd.getColumnCount();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		List<HashMap> list = new ArrayList<HashMap>();//可根据情况，改变泛型<Object>
+		try {
+			//将ResultSet的结果保存到List中
+			while(rst.next()){
+				HashMap<String,Object> map = new HashMap<String,Object>();
+				for (int i = 0; i < columnCount; i++) {
+					map.put(rsmd.getColumnLabel(i+1), rst.getObject(i+1));//rsmd.getColumnLabel(i),通过元数据获取具有唯一性的字段名，rs.getObject(i)每一个字段名对应一个字段的值。
+//					用getColumnLabel查出的是咱们在后面重新定义的字段名，如果没有定义就是默认字段名，并且是大写字符串！
+				}
+				list.add(map);//每一个map代表一行记录，把所有的记录存在list中。
+			}
+			logger.debug("查询List成功");
+		} catch (SQLException e) {
+			logger.debug("查询List失败");
+			e.printStackTrace();
+		}
+		finally{
+			closeAll();
+		}
+		return list;
+	}
+	public List<HashMap> exectueQuery2(String sql,Object... params){
+		rst = executeQueryRS2(sql,params);
 		ResultSetMetaData rsmd = null;
 //		获取集列数
 		int columnCount = 0;
@@ -251,6 +383,41 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		}
 		return map;
 	}
+	public HashMap<String,Object> queryProcedure2(String sql,int outParamPos,int sqlType,Object... params){
+		HashMap<String,Object> map = null;
+		ResultSetMetaData rsmd = null;
+		int columnCount = 0;
+		conn = getConn2();
+		try {
+			logger.debug("开始调用过程");
+			cst = conn.prepareCall(sql);//sql="{call procedurename(?,?...)}";
+			if(params!=null){
+				for (int i = 0; i < params.length; i++) {
+					cst.setObject(i+1, params[i]);
+				}
+			}
+			cst.registerOutParameter(outParamPos, sqlType);
+//			在查询之前注册，不需要查询的结果集，所以使用无返回值的execute()方法，输出参数在callableStatement对象中。
+			cst.execute();
+			rst = (ResultSet)cst.getObject(outParamPos);//object可以转ResultSet，但是用ResultSet前不能关闭。
+			rsmd = rst.getMetaData();
+			columnCount = rsmd.getColumnCount();
+			if(rst.next()){
+				map = new HashMap<String,Object>();
+				for (int i = 0; i < columnCount; i++) {
+					map.put(rsmd.getColumnLabel(i+1), rst.getObject(i+1));
+				}
+			}
+			logger.debug("调用过程成功");
+		} catch (SQLException e) {
+			logger.debug("调用过程失败");
+			e.printStackTrace();
+		}
+		finally{
+			closeAll();
+		}
+		return map;
+	}
 //	调用带包的方法,注意for循环避开第一个?,cst.setObject(i+2, params[i]);必须从i+2开始！
 //	函数的返回值只有一个，不像过程可以返回游标，所以函数返回的只能是一个Object.
 	public static Object queryFunction(String sql,int outParamPos,int sqlType,Object... params){
@@ -279,10 +446,47 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		}
 		return obj;
 	}
+	public Object queryFunction2(String sql,int outParamPos,int sqlType,Object... params){
+		Object obj = null;
+		int columnCount = 0;
+		conn = getConn2();
+		try {
+			logger.debug("开始调用函数");
+			cst = conn.prepareCall(sql);//sql="{?=call functionname(?,?...)}";
+			if(params!=null){
+				for (int i = 0; i < params.length; i++) {
+					cst.setObject(i+2, params[i]);
+				}
+			}
+			cst.registerOutParameter(outParamPos, sqlType);
+//			在查询之前注册，不需要查询的结果集，所以使用无返回值的execute()方法，输出参数在callableStatement对象中。
+			cst.execute();
+			obj = cst.getObject(outParamPos);//object可以转ResultSet，但是用ResultSet前不能关闭。
+			logger.debug("调用函数成功");
+		} catch (SQLException e) {
+			logger.debug("调用函数失败");
+			e.printStackTrace();
+		}
+		finally{
+			closeAll();
+		}
+		return obj;
+	}
 //	查询表允许为空的字段，请传入表名如PRODUCT，
 	public static List<HashMap> nullList(String tablename){
 		String sql = "select column_name from user_tab_columns where table_name = '"+tablename+"' and nullable = 'Y'";
 		List<HashMap> maplist = exectueQuery(sql);
+		List nullList = new ArrayList();
+		for(int i =0;i<maplist.size();i++){
+			maplist.get(i).get("COLUMN_NAME");
+			nullList.add(maplist.get(i).get("COLUMN_NAME").toString().toLowerCase());
+		}
+		System.out.println("-----nullList:"+nullList);
+		return null;
+	}
+	public List<HashMap> nullList2(String tablename){
+		String sql = "select column_name from user_tab_columns where table_name = '"+tablename+"' and nullable = 'Y'";
+		List<HashMap> maplist = exectueQuery2(sql);
 		List nullList = new ArrayList();
 		for(int i =0;i<maplist.size();i++){
 			maplist.get(i).get("COLUMN_NAME");

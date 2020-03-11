@@ -5,6 +5,7 @@ import com.utils.ActionUtil;
 import com.utils.JdbcUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,8 @@ import java.util.Map;
 public class CommonController implements ServletContextAware {
     private static String tablenameKey = "tabname";
     private static String primarynameKey = "pidname";
+    @Autowired
+    private  JdbcUtil jdbcUtil;
     //slf4j与log4j、log4j2:https://blog.csdn.net/HarderXin/article/details/80422903?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
     //Spring Boot 日志配置(超详细),https://blog.csdn.net/Inke88/article/details/75007649?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
     //SpringBoot 项目中使用Log4j2详细（避坑） https://blog.csdn.net/RyanDon/article/details/82589989
@@ -52,19 +55,10 @@ public class CommonController implements ServletContextAware {
     //private static Logger logger = Logger.getLogger(CommonController.class.getName());
     //private Logger logger = Logger.getLogger(getClass());
     private ServletContext application;
-    /*@Value("spring.datasource.driver-class-name")
-    private String driverClassName="com.mysql.jdbc.Driver";
-    @Value("spring.datasource.url")
-    private String datasourceUrl="jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
-    @Value("spring.datasource.username")
-    private String datasourceUsername="root";
-    @Value("spring.datasource.password")
-    private String datasourcePassword="root";*/
     @Override
     public void setServletContext(ServletContext servletContext) {
         this.application = servletContext;
     }
-    //private JdbcUtil jdbcUtil = new JdbcUtil(driverClassName,datasourceUrl,datasourceUsername,datasourcePassword);
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/selectAll",produces = "application/json;chart=UTF-8")
@@ -77,7 +71,7 @@ public class CommonController implements ServletContextAware {
         }
        else{
             String sql = "select * from "+tablename;
-            List<HashMap> hashMaps = JdbcUtil.exectueQuery(sql);
+            List<HashMap> hashMaps = jdbcUtil.exectueQuery2(sql);
             backStr= JSON.toJSONString(hashMaps);
         }
         return backStr;
@@ -102,7 +96,7 @@ public class CommonController implements ServletContextAware {
         }
         if(backStr==null){
             String sql = "SELECT * FROM "+tablename+" WHERE "+primaryname+" = "+primaryval;
-            HashMap hashMaps = JdbcUtil.queryOne(sql);
+            HashMap hashMaps = jdbcUtil.queryOne2(sql);
             backStr = JSON.toJSONString(hashMaps);
         }
         return backStr;
@@ -127,7 +121,7 @@ public class CommonController implements ServletContextAware {
         }
         if(backStr==null){
             String sql = "DELETE FROM "+tablename+" WHERE "+primaryname+" = "+primaryval;
-            int i = JdbcUtil.executeUpdate(sql);
+            int i = jdbcUtil.executeUpdate2(sql);
             backStr =  JSON.toJSONString(i);//return JSONSerializer.toJSON(json);
         }
         return backStr;
@@ -170,7 +164,7 @@ public class CommonController implements ServletContextAware {
         sql=sql+")";
         sql=sql.replaceAll("\\(,","(");
         System.out.println("-----insertOnesql:"+sql);
-        int i = JdbcUtil.executeUpdate(sql);
+        int i = jdbcUtil.executeUpdate2(sql);
         String str =  JSON.toJSONString(i);//return JSONSerializer.toJSON(json);
         return str;
     }
@@ -203,7 +197,7 @@ public class CommonController implements ServletContextAware {
         }
         sql=sql+")";
         System.out.println("-----insertOnesql:"+sql);
-        int i = JdbcUtil.executeUpdate(sql);
+        int i = jdbcUtil.executeUpdate2(sql);
         String str =  JSON.toJSONString(i);//return JSONSerializer.toJSON(json);
         return str;
     }
@@ -228,7 +222,7 @@ public class CommonController implements ServletContextAware {
         sql = sql.substring(0,sql.length()-1);//去掉最后一个,号
         sql=sql+" WHERE "+primaryname+"='"+primaryval+"'";
         System.out.println("-----insertOnesql:"+sql);
-        int i = JdbcUtil.executeUpdate(sql);
+        int i = jdbcUtil.executeUpdate2(sql);
         String str =  JSON.toJSONString(i);//return JSONSerializer.toJSON(json);
         return str;
     }

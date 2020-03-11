@@ -26,6 +26,7 @@ spring:
 
   #引用类带mysql相关？，必须配置以下数据库内容！。
   datasource:
+    name: shiro
     driver-class-name: com.mysql.jdbc.Driver
     #用于6以上版本mysql，MySQL 5.5.45+，6+版本默认要求建立SSL连接。
     url: jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
@@ -84,6 +85,7 @@ spring:
     name: configserver
   profiles: test
   datasource:
+    name: shiro
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
     type: com.alibaba.druid.pool.DruidDataSource
@@ -118,6 +120,7 @@ spring:
     name: configserver
   profiles: prod
   datasource:
+    name: shiro
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://106.13.100.117:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
     type: com.alibaba.druid.pool.DruidDataSource

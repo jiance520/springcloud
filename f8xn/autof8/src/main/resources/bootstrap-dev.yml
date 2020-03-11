@@ -1,5 +1,6 @@
 #以下用于App启动时，使用自带tomcat的项目根目录和端口的配置
-#server.servlet.context-path: /autof8
+#读取配置文件的顺序优先级为谁在前(0a-z)就先读取谁！跟其它无关!application.yml>bootstrap.yml>config.properties
+server.servlet.context-path: /autof8
 server.port: 8081
 spring.application.name: autof8
 
@@ -16,7 +17,7 @@ spring.mvc.static-path-pattern: /**
 #/表springmvc的web启动页的根目录webapp，springbbot中的thymeleaf默认会使用static下的文件作为视图文件,
 spring.mvc.view.prefix: /
 #表示web启动首页的格式必须是.jsp结尾。此时web.xml里的<welcome-file-list>顺序无效
-#如果多种配置文件，会随机读取application.yml(springboot-html)、application.properties(sprinbmvc-jsp)，bootstrap.yml是springcloud的配置
+#如果多种配置文件，会随机读取application.yml(springboot-html)、config.properties(sprinbmvc-jsp)，bootstrap.yml是springcloud的配置
 spring.mvc.view.suffix: .jsp
 spring.mvc.favicon.enabled: false
 #旧版驱动mysql.5.1.47，已废弃

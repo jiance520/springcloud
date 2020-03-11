@@ -19,13 +19,13 @@
     delete from t_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.entity.T_user">
+  <insert id="insert" parameterType="com.entity.T_user" >
     insert into t_user (id, name, password
       )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.entity.T_user">
+  <insert id="insertSelective" parameterType="com.entity.T_user" >
     insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
