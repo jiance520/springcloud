@@ -185,7 +185,7 @@ public class CommonController implements ServletContextAware {
         for(HashMap.Entry<String,Object> entry:params.entrySet()){
             String entryKey = entry.getKey();
             if(!entryKey.equals("proname")&&!entryKey.equals("tabname")&&!entryKey.contains("pidname")&&!entryKey.equals(primaryname2)&&!entryKey.equals("acttype")&&!entryKey.equals("excelfile")){
-                sql = sql +","+ entry.getKey();
+                sql = sql + ","+ entry.getKey();
             }
         }
         sql=sql+") VALUES(";
