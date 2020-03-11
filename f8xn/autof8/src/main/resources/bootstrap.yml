@@ -8,7 +8,7 @@ spring:
   application:
     name: autof8
   profiles:
-    active: dev
+    active: prod
 
 ---
 
