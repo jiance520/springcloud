@@ -7,7 +7,10 @@ window.onload=()=>{
 //form不再需要action，在ajax指定。能获取formdata.append后加入的值！
 //$("#submitid").submit(function (e) {})是直接点击submit按钮，默认跳转到action，通过onclick事件的函数，加入ajax不跳转提交表单。
     function ajaxForm() {
-        console.log( $('#pidnamedjj1').val());
+        let driverNamedjj = $('#driverNamedjj').val();
+        let datasourceUrldjj = $('#datasourceUrldjj').val();
+        let userNamedjj = $('#userNamedjj').val();
+        let passworddjj = $('#passworddjj').val();
         let pronamedjj= document.getElementById("pronamedjj").value;
         let tabnamedjj= $("input[name='tabnamedjj']").val();
         let pidnamedjj1= $("input[name='pidnamedjj1']").val();
@@ -17,6 +20,7 @@ window.onload=()=>{
         let formData = new FormData($("#formsignin")[0]);
         //formData.append("acttypedjj",acttypedjj);
         //formData.set("excelfiledjj","excelfiledjj");//修改
+        //formData.get("acttypedjj")
         //console.log("formdata:"+JSON.stringify(formData));
         if(jdbc==="a1"){
             acttypedjj="actionAll"
@@ -24,13 +28,20 @@ window.onload=()=>{
         if(jdbc==="a2"){
             acttypedjj="actionAllTwo"
         }
-        console.log("formdata.acttypedjj:"+formData.get("acttypedjj"));
+        console.log("driverNamedjj:"+driverNamedjj);
+        console.log("datasourceUrldjj:"+datasourceUrldjj);
+        console.log("userNamedjj:"+userNamedjj);
+        console.log("passworddjj:"+passworddjj);
         console.log("pronamedjj:"+pronamedjj);
+        console.log("tabnamedjj:"+tabnamedjj);
+        console.log("pidnamedjj1:"+pidnamedjj1);
+        console.log("pidnamedjj2:"+pidnamedjj2);
         console.log("acttypedjj:"+acttypedjj);
         console.log("jdbc:"+jdbc);
         $.ajax({
             type:"POST",
             url:"/"+pronamedjj+"/"+acttypedjj, //properties不加#server.servlet.context-path=/autof8，使用http://localhost:8081/autof8/t_userUpdate
+            // url:"http://www.f8xn.top:8081/autof8/selectOne", //properties不加#server.servlet.context-path=/autof8，使用http://localhost:8081/autof8/t_userUpdate
             data:formData,//"name=John&location=Boston",
             async:false,/* 默认异步，是true,false是先执行ajax,再执行后面的内容 */
             //dataType:"json",//text,json.html,后端收到的数据的格式，一般会有 json 、text……等
@@ -54,7 +65,7 @@ window.onload=()=>{
             }
             //alert('end ajax');/* 异步时先弹出 */
         });
-        let html = "http://106.13.100.117:8081/"+pronamedjj+'/'+acttypedjj;
+        let html = "http://www.f8xn.top:8081/"+pronamedjj+'/'+acttypedjj;
         document.getElementById(httpApi.id).innerHTML=html; //给节点赋值。
     }
 
@@ -134,9 +145,38 @@ function addrow() {
          }
      }
 }
+function autoAdd() {
+    let driverNamedjj = $('#driverNamedjj').val();
+    let datasourceUrldjj = $('#datasourceUrldjj').val();
+    let userNamedjj = $('#userNamedjj').val();
+    let passworddjj = $('#passworddjj').val();
+    let tabnamedjj= $("input[name='tabnamedjj']").val();
+    $.ajax({
+        type:"POST",
+        // url:"http://www.f8xn.top:8081/"+pronamedjj+'/'+acttypedjj,
+        url:"http://localhost:8081/autof8/selectOne",
+        data:{driverNamedjj:driverNamedjj,datasourceUrldjj:datasourceUrldjj,userNamedjj:userNamedjj,passworddjj:passworddjj,tabnamedjj:tabnamedjj},
+        async:false,
+        processData:false,
+        contentType:false,
+        onSubmit:function () {},
+        success:function(data){
+            console.log("ajax-data:"+JSON.stringify(data));
+        }
+    });
+}
 function deleterow(e) {
     e.parentElement.parentElement.remove();
 }
 function clearAll() {
-    $("#driverNamedjj").val("");
+    deleterow($('#driverNamedjj')[0]);//转为DOM对象
+    deleterow($('#datasourceUrldjj')[0]);
+    deleterow($('#userNamedjj')[0]);
+    deleterow($('#passworddjj')[0]);
+    $("input[name='tabnamedjj']").val("");
+    $("input[name='pidnamedjj1']").val("");
+    $("input[name='pidnamedjj2']").val("");
+    deleterow($('#id')[0]);
+    deleterow($('#name')[0]);
+    deleterow($('#password')[0]);
 }

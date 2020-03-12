@@ -57,7 +57,7 @@
         <tr>
             <td><label for="datasourceUrldjj" class="sr-only">数据库连接地址端口和表datasourceUrldjj</label></td>
             <td>
-                <input type="text"  id="datasourceUrldjj" class="form-control" placeholder="datasourceUrldjj" name="datasourceUrldjj" value="jdbc:mysql://106.13.100.117:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8" required autofocus>
+                <input type="text"  id="datasourceUrldjj" class="form-control" placeholder="datasourceUrldjj" name="datasourceUrldjj" value="jdbc:mysql://47.107.171.60:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8" required autofocus>
                 <input type="button" value="deleterow" onclick="deleterow(this)">
             </td>
         </tr>
@@ -155,7 +155,10 @@
         <td></td>
     </tr>
     <tr style="text-align: center">
-        <td><input type="button" class="addrow" value="增加一行" onclick="addrow()"/></td>
+        <td>
+            <input type="button" class="addrow" value="增加一行" onclick="addrow()"/>
+            <input type="button" class="autoAdd" value="自动生成表格" onclick="autoAdd()"/>
+        </td>
         <td><input type="submit" class="ajax2" value="$.ajax测试"/></td>
         <!--<td><input type="submit" class="post2" value="$.post测试"/></td>-->
     </tr>

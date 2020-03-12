@@ -15,10 +15,7 @@ import org.springframework.web.context.ServletContextAware;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class CommonController implements ServletContextAware {
@@ -358,6 +355,29 @@ public class CommonController implements ServletContextAware {
         }
         return JSON.toJSONString(object);
     }
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/actionAutoAdd",produces = "application/json;chart=UTF-8")
+    public String actionAutoAdd(HttpServletRequest request, @RequestParam(required=false) Map<String,Object> params) {
+        String tabnamedjj = request.getParameter("tabnamedjj");
+        String driverNamedjj = request.getParameter("driverNamedjj");
+        String datasourceUrldjj = request.getParameter("datasourceUrldjj");
+        String userNamedjj = request.getParameter("userNamedjj");
+        String passworddjj = request.getParameter("passworddjj");
+        List list = new ArrayList();
+        if(!"".equals(driverNamedjj)&&driverNamedjj!=null&&!"".equals(datasourceUrldjj)&&datasourceUrldjj!=null&&!"".equals(userNamedjj)&&userNamedjj!=null&&!"".equals(passworddjj)&&passworddjj!=null){
+            jdbcUtil.setDriverName(driverNamedjj);
+            jdbcUtil.setDatasourceUrl(datasourceUrldjj);
+            jdbcUtil.setUserName(userNamedjj);
+            jdbcUtil.setPassword(passworddjj);
+            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            list = jdbcUtil.columnList(tabnamedjj);
+        }
+        else{
+            System.out.println("-----有错误:");
+        }
+        return JSON.toJSONString(list);//return JSONSerializer.toJSON(json);
+    };
     public static void main(String[] args) throws Exception {
 //        LoginController loginController = new LoginController();
 //        loginController.action();

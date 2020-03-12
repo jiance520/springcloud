@@ -550,7 +550,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 			nullList.add(maplist.get(i).get("COLUMN_NAME").toString().toLowerCase());
 		}
 		System.out.println("-----nullList:"+nullList);
-		return null;
+		return nullList;
 	}
 	public List<HashMap> nullList2(String tablename){
 		String sql = "select column_name from user_tab_columns where table_name = '"+tablename+"' and nullable = 'Y'";
@@ -562,6 +562,19 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		}
 		System.out.println("-----nullList:"+nullList);
 		return null;
+	}
+	//查询表中所有字段
+	public List columnList(String tablename){
+		String sql = "select column_name from user_tab_columns where table_name = '"+tablename;
+		List<HashMap> maplist = exectueQuery(sql);
+		System.out.println("-----maplist:"+maplist);
+		List columnList = new ArrayList();
+		for(int i =0;i<maplist.size();i++){
+			maplist.get(i).get("COLUMN_NAME");
+			columnList.add(maplist.get(i).get("COLUMN_NAME").toString().toLowerCase());
+		}
+		System.out.println("-----columnList:"+columnList);
+		return columnList;
 	}
 	//	只关闭连接
 	public void closeConn(){
