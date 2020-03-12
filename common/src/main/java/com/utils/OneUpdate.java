@@ -826,15 +826,11 @@ public class OneUpdate {
     public void controller(String actionName,String tableNames,String groupId) throws IOException {
         String tableName = "";
         if(tableNames==null||"".equals(tableNames)){
-            tableNames = "t_weapon_photoelectricity_info\n" +
-                    "t_troops_basic_uint\n" +
-                    "t_troops_uint\n" +
+            tableNames = "t_permission\n" +
+                    "t_role\n" +
+                    "t_role_permission\n" +
                     "t_user\n" +
-                    "t_weapon_communicate_info\n" +
-                    "t_flatequip_correspond\n" +
-                    "t_weapon_logistics_info\n" +
-                    "t_weaponammo_correspond\n" +
-                    "t_weapon_cannon_info";
+                    "t_user_role";
         }
         String strController = "package com.action;\n" +
                 "\n" +
@@ -856,7 +852,7 @@ public class OneUpdate {
                 "\n" +
                 "@Controller\n" +
                 "public class T_userController implements ServletContextAware {\n" +
-                "    private static String primarynameKey = \"pidname\";\n" +
+                "    private static String primarynameKey = \"pidnamedjj\";\n" +
                 "    private ServletContext application;\n" +
                 "    @Resource\n" +
                 "    private IT_userService iT_userService;\n" +
@@ -867,12 +863,12 @@ public class OneUpdate {
                 "    @CrossOrigin\n" +
                 "    @ResponseBody\n" +
                 "    @RequestMapping(value = \"/t_userInsert\",produces = \"application/json;chart=UTF-8\")\n" +
-                "    public String t_userInsert(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params,@RequestParam(required = false) MultipartFile[] excelfile){\n" +
+                "    public String t_userInsert(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params,@RequestParam(required = false) MultipartFile[] excelfiledjj){\n" +
                 "        System.out.println(\"-----params36:\"+params.toString());\n" +
                 "        Iterator iterator = params.keySet().iterator();\n" +
                 "        while (iterator.hasNext()){\n" +
                 "            String entryKey = iterator.next().toString();\n" +
-                "            if(entryKey.equals(\"proname\")||entryKey.equals(\"tabname\")||entryKey.contains(\"pidname\")||entryKey.equals(\"acttype\")||entryKey.equals(\"excelfile\")){\n" +
+                "            if(entryKey.equals(\"driverNamedjj\")||entryKey.equals(\"datasourceUrldjj\")||entryKey.equals(\"userNamedjj\")||entryKey.equals(\"passworddjj\")||entryKey.equals(\"pronamedjj\")||entryKey.equals(\"tabnamedjj\")||entryKey.contains(\"pidnamedjj\")||entryKey.equals(\"acttypedjj\")||entryKey.equals(\"excelfiledjj\")){\n" +
                 "                iterator.remove();\n" +
                 "            }\n" +
                 "        }\n" +
@@ -893,15 +889,15 @@ public class OneUpdate {
                 "    @CrossOrigin\n" +
                 "    @ResponseBody\n" +
                 "    @RequestMapping(value = \"/t_userUpdate\",produces = \"application/json;chart=UTF-8\")\n" +
-                "    public String t_userUpdate(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params,@RequestParam(required = false) MultipartFile[] excelfile) throws Exception {\n" +
+                "    public String t_userUpdate(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params,@RequestParam(required = false) MultipartFile[] excelfiledjj) throws Exception {\n" +
                 "        System.out.println(\"-----params:\"+params.toString());\n" +
                 "        String path = application.getRealPath(\"img\")+ File.separator;\n" +
                 "        System.out.println(\"-----img/product:\"+path);\n" +
-                "        //List<HashMap<String,Object>> mapList = PoiUtil.inxlsx(excelfile);//把接收的文件中的数据转为listmap。\n" +
+                "        //List<HashMap<String,Object>> mapList = PoiUtil.inxlsx(excelfiledjj);//把接收的文件中的数据转为listmap。\n" +
                 "        Iterator iterator = params.keySet().iterator();\n" +
                 "        while (iterator.hasNext()){\n" +
                 "            String entryKey = iterator.next().toString();\n" +
-                "            if(entryKey.equals(\"proname\")||entryKey.equals(\"tabname\")||entryKey.contains(\"pidname\")||entryKey.equals(\"acttype\")||entryKey.equals(\"excelfile\")){\n" +
+                "            if(entryKey.equals(\"driverNamedjj\")||entryKey.equals(\"datasourceUrldjj\")||entryKey.equals(\"userNamedjj\")||entryKey.equals(\"passworddjj\")||entryKey.equals(\"pronamedjj\")||entryKey.equals(\"tabnamedjj\")||entryKey.contains(\"pidnamedjj\")||entryKey.equals(\"acttypedjj\")||entryKey.equals(\"excelfiledjj\")){\n" +
                 "                iterator.remove();\n" +
                 "            }\n" +
                 "        }\n" +
@@ -919,7 +915,7 @@ public class OneUpdate {
                 "        T_user t_user = iT_userService.selectByPrimaryKey(Integer.valueOf(primaryval));\n" +
                 "        return JSON.toJSONString(t_user);\n" +
                 "    }\n" +
-                "}\n";
+                "}";
         if(this.actionPath==null||"".equals(this.actionPath)){
             if(this.oneUpdatePath==null||"".equals(this.oneUpdatePath)){
                 this.oneUpdatePath = this.oneUpdateURL.toString();

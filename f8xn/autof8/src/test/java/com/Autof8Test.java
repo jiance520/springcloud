@@ -1,6 +1,7 @@
 package com;
 
 
+import com.service.IT_userService;
 import com.utils.Configf8xn;
 import com.utils.JdbcUtil;
 import org.slf4j.Logger;
@@ -29,6 +30,8 @@ public class Autof8Test {
     private Configf8xn configf8xn;
     @Autowired
     private  JdbcUtil jdbcUtil;
+    @Autowired
+    private IT_userService it_userService;
     @Test
     @Transactional
     @Rollback
@@ -41,12 +44,12 @@ public class Autof8Test {
         //int i = jdbcUtil.executeUpdate2(sql,name,password);
         //int i = jdbcUtil.executeUpdate2(sql);
 //        System.out.println("-----i:"+i);
-        Object object = jdbcUtil.exectueQuery2("select * from t_user");
-        logger.debug("--logger---test:"+object);
-        System.out.println("---test:"+object);
-        System.out.println("---getContextPath:"+configf8xn.getContextPath());
-//        Object object2 = it_userService.selectByPrimaryKey(1);
-//        System.out.println("---test:"+object2.toString());
+//        Object object = jdbcUtil.exectueQuery2("select * from t_user");
+//        logger.debug("--logger---test:"+object);
+//        System.out.println("---test:"+object);
+//        System.out.println("---getContextPath:"+configf8xn.getContextPath());
+        Object object2 = it_userService.selectByPrimaryKey(1);
+        System.out.println("---test:"+object2.toString());
     }
 
 }

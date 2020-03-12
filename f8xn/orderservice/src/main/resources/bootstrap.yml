@@ -85,15 +85,16 @@ spring:
 #  thymeleaf:
 #    cache: false #关闭缓存
 #    mode: HTML #LEGACYHTML5
-#mybatis:
-#  mapper-locations: classpath:mapper/*.xml
-#  configuration:
-#    auto-mapping-behavior: full
-#    #解决spring boot整合mybatis时 返回map value为空字段不显示
-#    call-setters-on-nulls: true
-#  #可有可无的配置
-#  #引用类时，可简写，配置mapper.xml文件中，如com.entity.User在User,resultType="user"写成User
-#  type-aliases-package: com.entity
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    auto-mapping-behavior: full
+    #解决spring boot整合mybatis时 返回map value为空字段不显示
+    call-setters-on-nulls: true
+  #可有可无的配置
+  #引用类时，可简写，配置mapper.xml文件中，如com.entity.User在User,resultType="user"写成User
+  type-aliases-package: com.entity
 
 #指定注册中心地址,不在git指定，在boostrap.yml指定
 eureka:
@@ -231,6 +232,13 @@ spring:
         enabled: false
       #profile: test
 
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    auto-mapping-behavior: full
+    call-setters-on-nulls: true
+  type-aliases-package: com.entity
+
 eureka:
   client:
     serviceUrl:
@@ -312,6 +320,13 @@ spring:
         service-id: configserver
         enabled: false
       #profile: prod
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    auto-mapping-behavior: full
+    call-setters-on-nulls: true
+  type-aliases-package: com.entity
 
 eureka:
   client:

@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Controller
 public class T_userController implements ServletContextAware {
-    private static String primarynameKey = "pidname";
+    private static String primarynameKey = "pidnamedjj";
     private ServletContext application;
     @Resource
     private IT_userService iT_userService;
@@ -29,12 +29,12 @@ public class T_userController implements ServletContextAware {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/t_userInsert",produces = "application/json;chart=UTF-8")
-    public String t_userInsert(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params,@RequestParam(required = false) MultipartFile[] excelfile){
+    public String t_userInsert(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params,@RequestParam(required = false) MultipartFile[] excelfiledjj){
         System.out.println("-----params36:"+params.toString());
         Iterator iterator = params.keySet().iterator();
         while (iterator.hasNext()){
             String entryKey = iterator.next().toString();
-            if(entryKey.equals("proname")||entryKey.equals("tabname")||entryKey.contains("pidname")||entryKey.equals("acttype")||entryKey.equals("excelfile")){
+            if(entryKey.equals("driverNamedjj")||entryKey.equals("datasourceUrldjj")||entryKey.equals("userNamedjj")||entryKey.equals("passworddjj")||entryKey.equals("pronamedjj")||entryKey.equals("tabnamedjj")||entryKey.contains("pidnamedjj")||entryKey.equals("acttypedjj")||entryKey.equals("excelfiledjj")){
                 iterator.remove();
             }
         }
@@ -55,15 +55,15 @@ public class T_userController implements ServletContextAware {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/t_userUpdate",produces = "application/json;chart=UTF-8")
-    public String t_userUpdate(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params,@RequestParam(required = false) MultipartFile[] excelfile) throws Exception {
+    public String t_userUpdate(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params,@RequestParam(required = false) MultipartFile[] excelfiledjj) throws Exception {
         System.out.println("-----params:"+params.toString());
         String path = application.getRealPath("img")+ File.separator;
         System.out.println("-----img/product:"+path);
-        //List<HashMap<String,Object>> mapList = PoiUtil.inxlsx(excelfile);//把接收的文件中的数据转为listmap。
+        //List<HashMap<String,Object>> mapList = PoiUtil.inxlsx(excelfiledjj);//把接收的文件中的数据转为listmap。
         Iterator iterator = params.keySet().iterator();
         while (iterator.hasNext()){
             String entryKey = iterator.next().toString();
-            if(entryKey.equals("proname")||entryKey.equals("tabname")||entryKey.contains("pidname")||entryKey.equals("acttype")||entryKey.equals("excelfile")){
+            if(entryKey.equals("driverNamedjj")||entryKey.equals("datasourceUrldjj")||entryKey.equals("userNamedjj")||entryKey.equals("passworddjj")||entryKey.equals("pronamedjj")||entryKey.equals("tabnamedjj")||entryKey.contains("pidnamedjj")||entryKey.equals("acttypedjj")||entryKey.equals("excelfiledjj")){
                 iterator.remove();
             }
         }

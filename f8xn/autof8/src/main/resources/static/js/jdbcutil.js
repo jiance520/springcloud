@@ -1,34 +1,36 @@
-$(document).ready(function () {
+//调用jquery事件或函数必须放在window.onload=或$(document).ready()方法体内！否则无效！javascript自定义方法放在ready()外，且里面不能使得jquery方法！已验证！重点
+/*$(document).ready(function () {
+});*/
+window.onload=()=>{
     //,必须放在ready内。
 //ajax不跳转提交表单，一是点击form外的按钮，二是点击form的button按钮事件onclick="submitForm()"。不刷新提交表单？
 //form不再需要action，在ajax指定。能获取formdata.append后加入的值！
-//$("#submit").submit(function (e) {})是直接点击submit按钮，会跳转到action。
+//$("#submitid").submit(function (e) {})是直接点击submit按钮，默认跳转到action，通过onclick事件的函数，加入ajax不跳转提交表单。
     function ajaxForm() {
-        let proname= document.getElementById("proname").value;
-        /*let tabname= $("input[name='tabname']").val();
-        let id= $("input[name='id']").val();
-        let id2= $("input[name='id2']").val();
-        let pidname1= $("input[name='pidname1']").val();
-        let pidname2= $("input[name='pidname2']").val();*/
-        var acttype= document.getElementsByName("acttype").item(0).value;//外部js只能是纯js，不能使用jquery取值。
+        console.log( $('#pidnamedjj1').val());
+        let pronamedjj= document.getElementById("pronamedjj").value;
+        let tabnamedjj= $("input[name='tabnamedjj']").val();
+        let pidnamedjj1= $("input[name='pidnamedjj1']").val();
+        let pidnamedjj2= $("input[name='pidnamedjj2']").val();
+        var acttypedjj= document.getElementsByName("acttypedjj").item(0).value;//外部js只能是纯js，不能使用jquery取值。
         let jdbc= document.getElementsByName("jdbc").item(0).value;
         let formData = new FormData($("#formsignin")[0]);
-        //formData.append("acttype",acttype);
-        //formData.set("excelfile","excelfile");//修改
+        //formData.append("acttypedjj",acttypedjj);
+        //formData.set("excelfiledjj","excelfiledjj");//修改
         //console.log("formdata:"+JSON.stringify(formData));
         if(jdbc==="a1"){
-            acttype="actionAll"
+            acttypedjj="actionAll"
         }
         if(jdbc==="a2"){
-            acttype="actionAllTwo"
+            acttypedjj="actionAllTwo"
         }
-        console.log("formdata.acttype:"+formData.get("acttype"));
-        console.log("proname:"+proname);
-        console.log("acttype:"+acttype);
+        console.log("formdata.acttypedjj:"+formData.get("acttypedjj"));
+        console.log("pronamedjj:"+pronamedjj);
+        console.log("acttypedjj:"+acttypedjj);
         console.log("jdbc:"+jdbc);
         $.ajax({
             type:"POST",
-            url:"/"+proname+"/"+acttype, //properties不加#server.servlet.context-path=/autof8，使用http://localhost:8081/autof8/t_userUpdate
+            url:"/"+pronamedjj+"/"+acttypedjj, //properties不加#server.servlet.context-path=/autof8，使用http://localhost:8081/autof8/t_userUpdate
             data:formData,//"name=John&location=Boston",
             async:false,/* 默认异步，是true,false是先执行ajax,再执行后面的内容 */
             //dataType:"json",//text,json.html,后端收到的数据的格式，一般会有 json 、text……等
@@ -46,20 +48,17 @@ $(document).ready(function () {
                 }*/
             },
             success:function(data){
-                alert("ajax-data:"+JSON.stringify(data));
+                console.log("ajax-data:"+JSON.stringify(data));
                 //后端Map+request.getParameter能取new FormData($(formid)[0])里的值;
-                //提交表单上传文件，后端可以使用MultipartFile excelfile接收。
+                //提交表单上传文件，后端可以使用MultipartFile excelfiledjj接收。
             }
             //alert('end ajax');/* 异步时先弹出 */
         });
+        let html = "http://106.13.100.117:8081/"+pronamedjj+'/'+acttypedjj;
+        document.getElementById(httpApi.id).innerHTML=html; //给节点赋值。
     }
-//方式一(推荐)form内的button按钮点击事件，ajax不跳转提交。
-    function submitForm() {
-        console.log(3);
-        //submit.onSubmit=function(){};
-        ajaxForm();
-    }
-//方式二(推荐)form外的button按钮点击事件，ajax不跳转提交。
+
+    //方式二(推荐)form外的button按钮点击事件，ajax不跳转提交。
     $('.ajax2').click(()=>{
         ajaxForm();
     });
@@ -79,43 +78,65 @@ $(document).ready(function () {
         })
     });*/
 //方式四提交时跳转页面。
-    /*$("#submit").submit((e)=>{
-        e.preventDefault();//阻止默认事件，一样会提交和跳转到form元素的action上。
+    /*$("#submitid").submit((e)=>{
+        e.preventDefault();//阻止默认事件，默认跳转到form元素的action上。
         console.log(4);
         //ajaxForm();
         return false;//不刷新提交.无效？
     });*/
 //使用万能接口，需要类和dao+mybatis，统一控制层
-//jsonMap:{tabname=t_user, pidname1=id, acttype=selectOne, name=admin, password=123}
+//jsonMap:{tabnamedjj=t_user, pidnamedjj1=id, acttypedjj=selectOne, name=admin, password=123}
     $('.post2').click(()=>{
         let action = '/autof8/actionAll';
-        $.post(action,{tabname:"t_user",pidname1:"id",pidname2:"id2",id:1,name:'admin',password:'123',acttype:"selectOne"},function(data){/* function(data){}相当于success部分,data=msg */
-            alert("服务器信息"+data);
+        let driverNamedjj="com.mysql.jdbc.Driver";
+        let datasourceUrldjj="jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
+        let userNamedjj="root";
+        let passworddjj="root";
+        $.post(action,{driverNamedjj:driverNamedjj,datasourceUrldjj:datasourceUrldjj,userNamedjj:userNamedjj,passworddjj:passworddjj,tabnamedjj:"t_user",pidnamedjj1:"id",pidnamedjj2:"id2",id:1,name:'admin',password:'123',acttypedjj:"selectOne"},function(data){/* function(data){}相当于success部分,data=msg */
+            console.log("服务器信息"+data);
         },'text');
     });
 //使用纯Jdbcutil，无需类和接口
     /*$('.post2').click(()=>{
         let action = '/autof8/updateOne';
-        $.post(action,{tabname:"t_user",pidname1:"id",id:1,name:'tom',password:'123'},function(data){/!* function(data){}相当于success部分,data=msg *!/
+        let driverNamedjj="com.mysql.jdbc.Driver";
+        let datasourceUrldjj="jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
+        let userNamedjj="root";
+        let passworddjj="root";
+        $.post(action,{driverNamedjj:driverNamedjj,datasourceUrldjj:datasourceUrldjj,userNamedjj:userNamedjj,passworddjj:passworddjj,tabnamedjj:"t_user",pidnamedjj1:"id",id:1,name:'tom',password:'123'},function(data){/!* function(data){}相当于success部分,data=msg *!/
             alert("服务器信息"+data);
         },'text');
     });*/
-});
+};
+
+
+//方式一(推荐)form内的button按钮点击事件，ajax不跳转提交。
+function submitForm() {
+    console.log(3);
+    //submit.onSubmit=function(){};
+    ajaxForm();
+}
 
 //删除和增加,必须放在ready外。
 function addrow() {
     let inputname = prompt("请输入name的字段名：");
-    let inputvalue = prompt("请输入value的值：");
-    //"+inputname+"
-    let childNode =`        <tr>
+     if(inputname!==false&&inputname!=null){//判断是空值或没有值用==和||,判断非空用!和&&(重点)。
+         let inputvalue = prompt("请输入value的值：");
+         if(inputvalue!==false&&inputvalue!=null){//判断是空值或没有值用==和||,判断非空用!和&&(重点)。
+             let childNode =`        <tr>
             <td><label for="password" class="sr-only">新增字段${inputname}</label></td>
             <td>
                 <input type="text" id="${inputname}" class="form-control" name="${inputname}" value="${inputvalue}" required autofocus>
                 <input type="button" value="deleterow" onclick="deleterow(this)">
             </td>
         </tr>`;
-    $("#addrow").append(childNode);
+             $("#addrow").append(childNode);
+         }
+     }
 }
 function deleterow(e) {
     e.parentElement.parentElement.remove();
+}
+function clearAll() {
+    $("#driverNamedjj").val("");
 }

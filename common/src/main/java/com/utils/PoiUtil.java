@@ -143,16 +143,16 @@ public class PoiUtil {
         System.out.println("---------out-------------");
     }
     //用于读到上传的xls中的数据，并转为listmap。
-    public static ArrayList<HashMap<String,Object>> inxlsx(MultipartFile excelfile)throws Exception{/*excel的xlsx可插入*/
+    public static ArrayList<HashMap<String,Object>> inxlsx(MultipartFile excelfiledjj)throws Exception{/*excel的xlsx可插入*/
         Workbook workbook = null;
-        String fname = excelfile.getOriginalFilename();
+        String fname = excelfiledjj.getOriginalFilename();
 //        读取03或07的版本
 //        String filePath = filepath.replaceAll("\\\\","\\\\\\\\");/*带路径的文件*/
         System.out.println("-----fname:"+fname);
 //        if (filePath.matches("^.+\\.(?i)((xls)|(xlsx))$")) {/*带路径的文件*/
         if (fname.matches("^.+.(?i)((xls)|(xlsx))$")) {/*不带路径的文件*/
 //            FileInputStream is = new FileInputStream(filePath);
-            InputStream is = excelfile.getInputStream();
+            InputStream is = excelfiledjj.getInputStream();
 //            boolean is03Excell = filePath.matches("^.+\\.(?i)(xls)$") ? true : false;/*带路径的文件*/
             boolean is03Excell = fname.matches("^.+.(?i)(xls)$") ? true : false;/*不带路径的文件*/
             //1.创建工作簿

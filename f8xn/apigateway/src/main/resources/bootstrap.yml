@@ -62,15 +62,15 @@ spring:
 #  thymeleaf:
 #    cache: false #关闭缓存
 #    mode: HTML #LEGACYHTML5
-#mybatis:
-#  mapper-locations: classpath:mapper/*.xml
-#  configuration:
-#    auto-mapping-behavior: full
-#    #解决spring boot整合mybatis时 返回map value为空字段不显示
-#    call-setters-on-nulls: true
-#  #可有可无的配置
-#  #引用类时，可简写，配置mapper.xml文件中，如com.entity.User在User,resultType="user"写成User
-#  type-aliases-package: com.entity
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    auto-mapping-behavior: full
+    #解决spring boot整合mybatis时 返回map value为空字段不显示
+    call-setters-on-nulls: true
+  #可有可无的配置
+  #引用类时，可简写，配置mapper.xml文件中，如com.entity.User在User,resultType="user"写成User
+  type-aliases-package: com.entity
 
 #测试zuul,必须取消服务超时1秒，否则无法访问，#网关/环境隔离配置，注意多个服务防止被覆盖
 #自定义路径、路由转发，apigateway代替orderservice
@@ -138,6 +138,13 @@ spring:
         enabled: false
       #profile: test
 
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    auto-mapping-behavior: full
+    call-setters-on-nulls: true
+  type-aliases-package: com.entity
+
 eureka:
   client:
     serviceUrl:
@@ -187,6 +194,13 @@ spring:
         service-id: configserver
         enabled: false
       #profile: prod
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    auto-mapping-behavior: full
+    call-setters-on-nulls: true
+  type-aliases-package: com.entity
 
 eureka:
   client:

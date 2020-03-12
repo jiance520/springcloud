@@ -10,6 +10,14 @@
     <!--<script type="text/javascript" href="../css/vue.js" ></script>-->
     <!--去除html页面中GET http://localhost:8080/favicon.ico 404 (Not Found)-->
     <link rel="shortcut icon" href="#" />
+    <script type="text/javascript">
+        /*window.onload=()=>{
+
+        }*/
+        /*$(document).ready(function () {
+
+        })*/
+    </script>
     <style type="text/css">
         *{
             /*font:normal 14px/24px 宋体;*/
@@ -29,48 +37,76 @@
     </style>
 </head>
 <body class="text-center">
-<form action="/autof8/t_userUpdate" enctype="multipart/form-data" id="formsignin" method="post" name="formsignin">
+<form action="" enctype="multipart/form-data" id="formsignin" method="post" name="formsignin">
     <h2 class="contextcenter" style="text-align: center;line-height: 40px">接口测试</h2>
-    <p class="contextcenter" style="text-align: center;line-height: 40px"><img src="images/time.png" style="vertical-align:middle"><span id="show_time"></span></p>
-    <p class="contextcenter">1.不能有跟proname、tabname、pidname1、pidname2、acttype、jdbc无关的其它非对象的name属性，尽量只使用以上有关的属性。</p>
-    <p class="contextcenter">2.不能用pidname1/2代替主键或双主键，要有的都要有。</p>
+    <p class="contextcenter" style="text-align: center;line-height: 40px"><img src="images/time.png" style="vertical-align:middle" alt=""><span id="show_time"></span></p>
+    <p class="contextcenter">1.不能有跟pronamedjj、tabnamedjj、pidnamedjj1、pidnamedjj2、acttypedjj、jdbc无关的其它非对象的name属性，尽量只使用以上有关的属性。</p>
+    <p class="contextcenter">2.不能用pidnamedjj1/2代替主键或双主键，要有的都要有。</p>
     <p class="contextcenter">3.尽量只使用jdbc和单主键，只适合单表操作。</p>
     <p class="contextcenter">4.查询方式jdbc=j/a1/a2/c,j表示使用jdbc工具查询，不需要实体类和服务层，除了控制层其它都有用a1单主键，a2双主键,c传统控制层。</p>
     <p class="contextcenter">5.删除原来可删除的测试数，使用添加功能，添加数据。</p>
     <p class="contextcenter">6.容器无法直接读取本地主机数据库linux-localhost。</p>
-    <table class="contextcenter" id="addrow" cellspacing="0" cellpadding="0">
+    <table class="contextcenter" id="addrow">
         <tr>
-            <td><label for="proname" class="sr-only">项目地址前缀/工程名/proname=autof8</label></td>
-            <td><input type="text"  id="proname" class="form-control" placeholder="autof8" name="proname" value="autof8" required autofocus></td>
-        </tr>
-        <tr>
-            <td><label for="tabname" class="sr-only">表名tabname=t_user</label></td>
-            <td><input type="text"  id="tabname" class="form-control" placeholder="t_user" name="tabname" value="t_user" required autofocus></td>
-        </tr>
-        <tr>
-            <td><label for="pidname1" class="sr-only">主键名pidname1=id</label></td>
-            <td><input type="text"  id="pidname1" class="form-control" placeholder="id" name="pidname1" value="id" required autofocus></td>
-        </tr>
-        <tr>
-            <td><label for="pidname2" class="sr-only">主键名pidname2=id2</label></td>
-            <td><input type="text"  id="pidname2" class="form-control" placeholder="id2" name="pidname2" value="id2" required autofocus></td>
-        </tr>
-        <tr>
-            <td><label for="acttype" class="sr-only">增删改查acttype=selectOne/t_userSelect</label></td>
+            <td><label for="driverNamedjj" class="sr-only">数据库驱动driverNamedjj</label></td>
             <td>
-                <select id="acttype" name="acttype" class="form-control" size="1" required autofocus ><!--把先中的内容放在输入框中，只传递输入框的值给后台οnchange="this.nextSibling.value=this.value"无效-->
+                <input type="text"  id="driverNamedjj" class="form-control" placeholder="driverNamedjj" name="driverNamedjj" value="com.mysql.jdbc.Driver" required autofocus>
+                <input type="button" value="deleterow" onclick="deleterow(this)">
+            </td>
+        </tr>
+        <tr>
+            <td><label for="datasourceUrldjj" class="sr-only">数据库连接地址端口和表datasourceUrldjj</label></td>
+            <td>
+                <input type="text"  id="datasourceUrldjj" class="form-control" placeholder="datasourceUrldjj" name="datasourceUrldjj" value="jdbc:mysql://106.13.100.117:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8" required autofocus>
+                <input type="button" value="deleterow" onclick="deleterow(this)">
+            </td>
+        </tr>
+        <tr>
+            <td><label for="userNamedjj" class="sr-only">数据库用户名userNamedjj</label></td>
+            <td>
+                <input type="text"  id="userNamedjj" class="form-control" placeholder="userNamedjj" name="userNamedjj" value="root" required autofocus>
+                <input type="button" value="deleterow" onclick="deleterow(this)">
+            </td>
+        </tr>
+        <tr>
+            <td><label for="passworddjj" class="sr-only">数据库密码passworddjj</label></td>
+            <td>
+                <input type="password"  id="passworddjj" class="form-control" placeholder="passworddjj" name="passworddjj" value="autof8Ol10" required autofocus>
+                <input type="button" value="deleterow" onclick="deleterow(this)">
+            </td>
+        </tr>
+        <tr>
+            <td><label for="pronamedjj" class="sr-only">项目地址前缀/工程名/pronamedjj</label></td>
+            <td><input type="text"  id="pronamedjj" class="form-control" placeholder="pronamedjj" name="pronamedjj" value="autof8" required disabled></td>
+        </tr>
+        <tr>
+            <td><label for="tabnamedjj" class="sr-only">表名tabnamedjj</label></td>
+            <td><input type="text"  id="tabnamedjj" class="form-control" placeholder="tabnamedjj" name="tabnamedjj" value="t_user" required autofocus></td>
+        </tr>
+        <tr>
+            <td><label for="pidnamedjj1" class="sr-only">主键名pidnamedjj1</label></td>
+            <td><input type="text"  id="pidnamedjj1" class="form-control" placeholder="pidnamedjj1" name="pidnamedjj1" value="id" required autofocus></td>
+        </tr>
+        <tr>
+            <td><label for="pidnamedjj2" class="sr-only">主键名pidnamedjj2</label></td>
+            <td><input type="text"  id="pidnamedjj2" class="form-control" placeholder="pidnamedjj2" name="pidnamedjj2" value="id2" required disabled></td>
+        </tr>
+        <tr>
+            <td><label for="acttypedjj" class="sr-only">增删改查acttypedjj</label></td>
+            <td>
+                <select id="acttypedjj" name="acttypedjj" class="form-control" size="1" required autofocus ><!--把先中的内容放在输入框中，只传递输入框的值给后台οnchange="this.nextSibling.value=this.value"无效-->
                     <option value="selectOne">selectOne</option>
                     <option value="insertOne">insertOne</option>
                     <option value="updateOne">updateOne</option>
                     <option value="deleteOne">deleteOne</option>
                 </select>
-                <!--<input id="acttype" name="acttype" style="width:100px;position:relative;left:0px;" value="selectOne"/>-->
+                <!--<input id="acttypedjj" name="acttypedjj" style="width:100px;position:relative;left:0px;" value="t_userSelect"/>-->
             </td>
         </tr>
         <tr>
-            <td><label for="id1" class="sr-only">主键id1=1</label></td>
+            <td><label for="id" class="sr-only">主键id</label></td>
             <td>
-                <input type="text"  id="id1" class="form-control" placeholder="id1" name="id" value="1" required autofocus>
+                <input type="text"  id="id" class="form-control" placeholder="id" name="id" value="1" required autofocus>
                 <input type="button" value="deleterow" onclick="deleterow(this)">
             </td>
         </tr>
@@ -79,35 +115,39 @@
             <td><input type="text"  id="id2" class="form-control" placeholder="id2" name="id2" value="" required autofocus></td>
         </tr>-->
         <tr>
-            <td><label for="name" class="sr-only">用户名</label></td>
+            <td><label for="name" class="sr-only">用户名name</label></td>
             <td>
-                <input type="text" id="name" class="form-control" placeholder="admin" name="name" value="admin" required autofocus>
+                <input type="text" id="name" class="form-control" placeholder="name" name="name" value="admin" required autofocus>
                 <input type="button" value="deleterow" onclick="deleterow(this)">
             </td>
         </tr>
         <tr>
-            <td><label for="password" class="sr-only">密码</label></td>
+            <td><label for="password" class="sr-only">密码password</label></td>
             <td>
-                <input type="text" id="password" class="form-control" placeholder="密码" name="password" value="123" required autofocus>
+                <input type="password" id="password" class="form-control" placeholder="password" name="password" value="123" required autofocus>
                 <input type="button" value="deleterow" onclick="deleterow(this)">
             </td>
         </tr>
         <tr>
-            <td><input type="file" id="excelfile" class="sr-only" name="excelfile" ></td>
-            <td><button class="btn btn-lg btn-primary btn-block" id="submit" type="button" onclick="submitForm()">提交测试</button></td>
+            <td><input type="file" id="excelfiledjj" class="sr-only" name="excelfiledjj" disabled></td>
+            <td>
+                <!--<input type="button" value="清空" onclick="clearAll()"/>-->
+                <button type="button" onclick="clearAll()">清空</button>
+                <input class="btn btn-lg btn-primary btn-block" type="reset" value="重置默认"/>
+                <input class="btn btn-lg btn-primary btn-block" id="submitid" type="button" value="提交测试" onclick="submitForm()"/>
+            </td>
             <!--<td><button class="btn btn-lg btn-primary btn-block" id="submit" type="submit">提交测试</button></td>-->
         </tr>
     </table>
 </form>
 <table  class="contextcenter">
     <tr>
-        <td><label for="jdbc" class="sr-only">查询方式jdbc=j/a1/a2/c</label></td>
+        <td><label for="jdbc" class="sr-only">修改action路径:jdbc=j/a1/a2/c</label></td>
         <td>
             <select size="1" id="jdbc" class="sr-only" name="jdbc" required autofocus>
-                <option value="j" selected>jdbc=selectOne</option>
+                <option value="j" selected>jdbc/c=selectOne</option>
                 <option value="a1">actionAll</option>
-                <option value="a2">actionAllTwo</option>
-                <option value="c">t_userSelect</option>
+                <!--<option value="a2">actionAllTwo</option>-->
             </select>
         </td>
     </tr>
@@ -117,15 +157,10 @@
     <tr style="text-align: center">
         <td><input type="button" class="addrow" value="增加一行" onclick="addrow()"/></td>
         <td><input type="submit" class="ajax2" value="$.ajax测试"/></td>
-        <td><input type="submit" class="post2" value="$.post测试"/></td>
+        <!--<td><input type="submit" class="post2" value="$.post测试"/></td>-->
     </tr>
+    <tr><td colspan="2"><p id="httpApi"></p></td></tr>
 </table>
-
-<script type="text/javascript">
-/*    window.onload=()=>{
-    }*/
-
-</script>
 <p style="margin: 100px"></p>
 <div style="display:flex;justify-content:center;padding:20px 0;font: normal 20px/20px 微软雅黑">
     <div style="display: inline-block;">
@@ -138,5 +173,6 @@
             <span style="float:left;color:#939393;">湘ICP备18023926号-1</span></a>
     </div>
 </div>
+
 </body>
 </html>

@@ -11,10 +11,26 @@ import java.util.Date;
 import java.util.*;
 
 //import oracle.jdbc.OracleTypes;
-
 /**
- * @version 时间：2018年5月10日 上午10:05:42
- * 所有的类属性和方法都是静态的属性和方法,如果不初始化，都默认使用Oracle中的mytable用户中的orcl
+ *         if(!"".equals(driverNamedjj)&&driverNamedjj!=null&&!"".equals(datasourceUrldjj)&&datasourceUrldjj!=null&&!"".equals(userNamedjj)&&userNamedjj!=null&&!"".equals(passworddjj)&&passworddjj!=null){
+ *             //为了保存注入bean里的属性值，永远不要新建JdbcUtil对象，只用set/get处理属性。
+ *             //静态属性值是所有实例共享。
+ *             //如果传递过来值，则使用set修改bean的默认值，使用默认方法0。
+ *             //如果新构造对象，会替换注入的bean,不会保留配置文件属性值。并改变JdbcUtil的属性值。此操作不可逆！spring容器中的注解组件只加载一次，单例模式，所以永久保留修改！
+ *             jdbcUtil.setDriverName(driverNamedjj);
+ *             jdbcUtil.setDatasourceUrl(datasourceUrldjj);
+ *             jdbcUtil.setUserName(userNamedjj);
+ *             jdbcUtil.setPassword(passworddjj);
+ *             System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+ *             hashMaps = jdbcUtil.queryOne(sql);
+ *         }
+ *         else{
+ *             //推荐使用此方法。
+ *             //如果没有传递过来值，则使用注入的bean读取的配置文件的值。使用方法2.
+ *             //调用动态的方法，使用动态的属性，动态的属性值可以通过bean获取配置文件值
+ *             System.out.println("-----2jdbcUtil.toString:"+jdbcUtil.toString());
+ *             hashMaps = jdbcUtil.queryOne2(sql);
+ *         }
  */
 @Component
 public class JdbcUtil {//工具类，针对不同的数据库，使用同样的jdbc方法。
@@ -22,22 +38,22 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 	//private static Logger logger = Logger.getLogger(JdbcUtil.class.getName());
 	//使用@Value取值，可以读取任意yml或properties格式的属性!，当前类必须加注解被扫描，注解的属性不能是static或final。
 	//JdbcUtil类被new新建了实例，而没有在使用@Autowired(有效!重点！),
+	private String driverName = "com.mysql.jdbc.Driver";//
+	private String datasourceUrl = "jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
+	private String userName = "root";
+	private String password = "root";
 	@Value("${spring.datasource.driver-class-name}")
-	private String driverClass;
+	private String driverName2;
 	@Value("${spring.datasource.url}")
-	private String connectionURL;
+	private String datasourceUrl2;
 	@Value("${spring.datasource.username}")
-	private String userId;
+	private String userName2;
 	@Value("${spring.datasource.password}")
-	private String passwd;
-	private static String driver = "com.mysql.jdbc.Driver";//
-	private static String url = "jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
-	private static String user = "root";
-	private static String password = "root";
-	private static Connection conn = null;
-	private static PreparedStatement pst = null;
-	private static ResultSet rst = null;
-	private static CallableStatement cst = null;
+	private String password2;
+	private Connection conn = null;
+	private PreparedStatement pst = null;
+	private ResultSet rst = null;
+	private CallableStatement cst = null;
 //	static {//已经在连接中加载
 //		try {
 //			Class.forName(driver);
@@ -46,25 +62,76 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 //			e.printStackTrace();
 //		}
 //	}
+	public String getDriverName() {
+		return driverName;
+	}
+	public void setDriverName(String driverName) {
+		this.driverName = driverName;
+	}
+	public String getDatasourceUrl() {
+		return datasourceUrl;
+	}
+	public void setDatasourceUrl(String datasourceUrl) {
+		this.datasourceUrl = datasourceUrl;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getDriverName2() {
+		return driverName2;
+	}
+	public String getDatasourceUrl2() {
+		return datasourceUrl2;
+	}
+	public String getUserName2() {
+		return userName2;
+	}
+	public String getPassword2() {
+		return password2;
+	}
+	@Override
+	public String toString() {
+		return "JdbcUtil{" +
+				"driverName='" + driverName + '\'' +
+				", datasourceUrl='" + datasourceUrl + '\'' +
+				", userName='" + userName + '\'' +
+				", password='" + password + '\'' +
+				", driverName2='" + driverName2 + '\'' +
+				", datasourceUrl2='" + datasourceUrl2 + '\'' +
+				", userName2='" + userName2 + '\'' +
+				", password2='" + password2 + '\'' +
+				'}';
+	}
+
 	public JdbcUtil() {
 		super();
 	}
 //	使用构造方法初始化工具类,必须是非静态属性
     public JdbcUtil(String driver, String url , String user, String password) {
-        this.driver = driver;
-        this.url = url;
-        this.user = user;
-        this.password = password;
+        driverName2 = driver;
+		datasourceUrl2 = url;
+		userName2 = user;
+		this.password2 = password;
 		logger.debug("构造一个新JdbcUtil");
     }
-	//	得到连接，所有的其它方法中都调用了连接。
-	public static Connection getConn(){
+
+	//使用当前静态属性值，得到连接，所有的其它方法中都调用了连接。
+	public Connection getConn(){
 		if(conn == null){
 			try {
 				logger.debug("开始执行");
-				Class cc = Class.forName(driver);
+				Class cc = Class.forName(driverName);
 				logger.debug("加载驱动成功");
-				conn = DriverManager.getConnection(url,user,password);
+				conn = DriverManager.getConnection(datasourceUrl, userName, password);
 				logger.debug("连接成功");
 			} catch (Exception e) {
 				logger.debug("连接失败");
@@ -73,13 +140,14 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		}
 		return conn;
 	}
+	//使用配置文件的动态属性值获取连接
 	public Connection getConn2(){
 		if(conn == null){
 			try {
 				logger.debug("开始执行");
-				Class cc = Class.forName(driverClass);
+				Class cc = Class.forName(driverName2);
 				logger.debug("加载驱动成功");
-				conn = DriverManager.getConnection(connectionURL,userId,passwd);
+				conn = DriverManager.getConnection(datasourceUrl2, userName2, password2);
 				logger.debug("连接成功");
 			} catch (Exception e) {
 				logger.debug("连接失败");
@@ -94,7 +162,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
      * @param params 占位符?参数数组，若没有参数则为null
      * @return 受影响的行数
      */
-	public static int executeUpdate(String sql,Object... params){//String...比Object[]更方便，直接传任意个参数
+	public int executeUpdate(String sql,Object... params){//String...比Object[]更方便，直接传任意个参数
 		conn = getConn();
 		int affectedLine = 0;// 受影响的行数
 		try {
@@ -152,8 +220,8 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
      * @param params 参数数组，若没有参数则为null
      * @return 结果集
      */
-	public static HashMap<String,Object> queryOne(String sql,Object... params){
-		System.out.println("-----url:"+url);
+	public HashMap<String,Object> queryOne(String sql,Object... params){
+		System.out.println("-----url:"+ datasourceUrl);
 		HashMap<String,Object> map = null;
 		ResultSetMetaData rsmd = null;
 		int columnCount = 0;
@@ -186,7 +254,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		return map;
 	}
 	public HashMap<String,Object> queryOne2(String sql,Object... params){
-		System.out.println("-----connectionURL:"+connectionURL);
+		System.out.println("-----connectionURL:"+ datasourceUrl2);
 		HashMap<String,Object> map = null;
 		ResultSetMetaData rsmd = null;
 		int columnCount = 0;
@@ -224,7 +292,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
      * @param params 参数数组，若没有参数则为null
      * @return 结果集
      */
-	public static ResultSet executeQueryRS(String sql,Object... params){
+	public ResultSet executeQueryRS(String sql,Object... params){
 		conn = getConn();
 		try {
 			logger.debug("开始查询结果集");
@@ -271,7 +339,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 //	查询表中所有的不允许为空的字段，
 //List list = exectueQuery("select column_name from user_tab_columns where table_name = 'PRODUCT' and nullable = 'Y'");
 //	exectueQuery("select * from emp where id=?","12");
-	public static List<HashMap> exectueQuery(String sql,Object... params){
+	public List<HashMap> exectueQuery(String sql,Object... params){
 		rst = executeQueryRS(sql,params);
 		ResultSetMetaData rsmd = null;
 //		获取集列数
@@ -348,7 +416,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
      * @return 输出参数的值
      * Object obj = queryProcedure("{call com.queryUser(?,?)}", 2, OracleTypes.CURSOR, "www.hao123.com");
      */
-	public static HashMap<String,Object> queryProcedure(String sql,int outParamPos,int sqlType,Object... params){
+	public HashMap<String,Object> queryProcedure(String sql,int outParamPos,int sqlType,Object... params){
 		HashMap<String,Object> map = null;
 		ResultSetMetaData rsmd = null;
 		int columnCount = 0;
@@ -420,7 +488,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 	}
 //	调用带包的方法,注意for循环避开第一个?,cst.setObject(i+2, params[i]);必须从i+2开始！
 //	函数的返回值只有一个，不像过程可以返回游标，所以函数返回的只能是一个Object.
-	public static Object queryFunction(String sql,int outParamPos,int sqlType,Object... params){
+	public Object queryFunction(String sql,int outParamPos,int sqlType,Object... params){
 		Object obj = null;
 		int columnCount = 0;
 		conn = getConn();
@@ -473,7 +541,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		return obj;
 	}
 //	查询表允许为空的字段，请传入表名如PRODUCT，
-	public static List<HashMap> nullList(String tablename){
+	public List<HashMap> nullList(String tablename){
 		String sql = "select column_name from user_tab_columns where table_name = '"+tablename+"' and nullable = 'Y'";
 		List<HashMap> maplist = exectueQuery(sql);
 		List nullList = new ArrayList();
@@ -496,7 +564,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		return null;
 	}
 	//	只关闭连接
-	public static void closeConn(){
+	public void closeConn(){
 		if(conn != null){
 			try {
 				conn.close();
@@ -507,7 +575,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		}
 	}
 //	关闭全部
-	public static void closeAll(){
+	public void closeAll(){
 		if(conn!=null){
 			try {
 				conn.close();
@@ -547,7 +615,8 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 	public static void main(String[] args) {
 //		nullList("PRODUCT");
 //		OracleTypes,用于向数据规定数据类型。
-		Object object = JdbcUtil.exectueQuery("select * from t_user");
+		JdbcUtil jdbcUtil = new JdbcUtil();
+		Object object = jdbcUtil.exectueQuery("select * from t_user");
 		logger.debug(object.toString());
 		System.out.println("-----test:"+object);
 	}

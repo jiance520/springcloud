@@ -22,10 +22,10 @@ import java.util.Map;
 
 @Controller
 public class CommonController implements ServletContextAware {
-    private static String tablenameKey = "tabname";
-    private static String primarynameKey = "pidname";
+    private static String tablenameKey = "tabnamedjj";
+    private static String primarynameKey = "pidnamedjj";
     @Autowired
-    private  JdbcUtil jdbcUtil;
+    private JdbcUtil jdbcUtil;
     //slf4j与log4j、log4j2:https://blog.csdn.net/HarderXin/article/details/80422903?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
     //Spring Boot 日志配置(超详细),https://blog.csdn.net/Inke88/article/details/75007649?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
     //SpringBoot 项目中使用Log4j2详细（避坑） https://blog.csdn.net/RyanDon/article/details/82589989
@@ -66,11 +66,21 @@ public class CommonController implements ServletContextAware {
         System.out.println("-----params:"+params);
         String tablename = request.getParameter(tablenameKey);
         String backStr = null;
+
+        String driverNamedjj = request.getParameter("driverNamedjj");
+        String datasourceUrldjj = request.getParameter("datasourceUrldjj");
+        String userNamedjj = request.getParameter("userNamedjj");
+        String passworddjj = request.getParameter("passworddjj");
+        if(!"".equals(driverNamedjj)&&driverNamedjj!=null&&!"".equals(datasourceUrldjj)&&datasourceUrldjj!=null&&!"".equals(userNamedjj)&&userNamedjj!=null&&!"".equals(passworddjj)&&passworddjj!=null){
+            jdbcUtil = new JdbcUtil(driverNamedjj,datasourceUrldjj,userNamedjj,passworddjj);
+        }
+
         if(tablename==null||"".equals(tablename)){
             backStr="tablename为空";
         }
        else{
             String sql = "select * from "+tablename;
+
             List<HashMap> hashMaps = jdbcUtil.exectueQuery2(sql);
             backStr= JSON.toJSONString(hashMaps);
         }
@@ -84,22 +94,33 @@ public class CommonController implements ServletContextAware {
         String tablename = request.getParameter(tablenameKey);
         String primaryname = request.getParameter(primarynameKey+1);
         String primaryval = request.getParameter(primaryname);
-        String backStr = null;
-        if(tablename==null||"".equals(tablename)){
-            backStr="tablename为空,";
+        HashMap hashMaps = null;
+
+        String driverNamedjj = request.getParameter("driverNamedjj");
+        String datasourceUrldjj = request.getParameter("datasourceUrldjj");
+        String userNamedjj = request.getParameter("userNamedjj");
+        String passworddjj = request.getParameter("passworddjj");
+        String sql = "SELECT * FROM "+tablename+" WHERE "+primaryname+" = "+primaryval;
+        if(!"".equals(driverNamedjj)&&driverNamedjj!=null&&!"".equals(datasourceUrldjj)&&datasourceUrldjj!=null&&!"".equals(userNamedjj)&&userNamedjj!=null&&!"".equals(passworddjj)&&passworddjj!=null){
+            //为了保存注入bean里的属性值，永远不要新建JdbcUtil对象，只用set/get处理属性。
+            //静态属性值是所有实例共享。
+            //如果传递过来值，则使用set修改bean的默认值，使用默认方法0。
+            //如果新构造对象，会替换注入的bean,不会保留配置文件属性值。并改变JdbcUtil的属性值。此操作不可逆！spring容器中的注解组件只加载一次，单例模式，所以永久保留修改！
+            jdbcUtil.setDriverName(driverNamedjj);
+            jdbcUtil.setDatasourceUrl(datasourceUrldjj);
+            jdbcUtil.setUserName(userNamedjj);
+            jdbcUtil.setPassword(passworddjj);
+            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            hashMaps = jdbcUtil.queryOne(sql);
         }
-        if(primaryname==null||"".equals(primaryname)){
-            backStr=backStr+"primaryname为空,";
+        else{
+            //推荐使用此方法。
+            //如果没有传递过来值，则使用注入的bean读取的配置文件的值。使用方法2.
+            //调用动态的方法，使用动态的属性，动态的属性值可以通过bean获取配置文件值
+            System.out.println("-----2jdbcUtil.toString:"+jdbcUtil.toString());
+            hashMaps = jdbcUtil.queryOne2(sql);
         }
-        if(primaryval==null||"".equals(primaryval)){
-            backStr=backStr+"primaryval为空";
-        }
-        if(backStr==null){
-            String sql = "SELECT * FROM "+tablename+" WHERE "+primaryname+" = "+primaryval;
-            HashMap hashMaps = jdbcUtil.queryOne2(sql);
-            backStr = JSON.toJSONString(hashMaps);
-        }
-        return backStr;
+        return JSON.toJSONString(hashMaps);
     }
     @CrossOrigin
     @ResponseBody
@@ -110,21 +131,27 @@ public class CommonController implements ServletContextAware {
         String primaryname = request.getParameter(primarynameKey+1);
         String primaryval = request.getParameter(primaryname);
         String backStr = null;
-        if(tablename==null||"".equals(tablename)){
-            backStr="tablename为空,";
+
+        String driverNamedjj = request.getParameter("driverNamedjj");
+        String datasourceUrldjj = request.getParameter("datasourceUrldjj");
+        String userNamedjj = request.getParameter("userNamedjj");
+        String passworddjj = request.getParameter("passworddjj");
+        int i = 0;
+        String sql = "DELETE FROM "+tablename+" WHERE "+primaryname+" = "+primaryval;
+
+        if(!"".equals(driverNamedjj)&&driverNamedjj!=null&&!"".equals(datasourceUrldjj)&&datasourceUrldjj!=null&&!"".equals(userNamedjj)&&userNamedjj!=null&&!"".equals(passworddjj)&&passworddjj!=null){
+            jdbcUtil.setDriverName(driverNamedjj);
+            jdbcUtil.setDatasourceUrl(datasourceUrldjj);
+            jdbcUtil.setUserName(userNamedjj);
+            jdbcUtil.setPassword(passworddjj);
+            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            i = jdbcUtil.executeUpdate(sql);
         }
-        if(primaryname==null||"".equals(primaryname)){
-            backStr=backStr+"primaryname为空,";
+        else{
+            System.out.println("-----2jdbcUtil.toString:"+jdbcUtil.toString());
+            i = jdbcUtil.executeUpdate2(sql);
         }
-        if(primaryval==null||"".equals(primaryval)){
-            backStr=backStr+"primaryval为空";
-        }
-        if(backStr==null){
-            String sql = "DELETE FROM "+tablename+" WHERE "+primaryname+" = "+primaryval;
-            int i = jdbcUtil.executeUpdate2(sql);
-            backStr =  JSON.toJSONString(i);//return JSONSerializer.toJSON(json);
-        }
-        return backStr;
+        return JSON.toJSONString(i);
     }
    //不要把自增的主键，以及后台要加入的时间，传给后台。除必须key，key必须跟表字段一样。不能多也不能少。保证顺序。
     @CrossOrigin
@@ -138,35 +165,44 @@ public class CommonController implements ServletContextAware {
         String primaryval = request.getParameter(primaryname);
         String primaryname2 = request.getParameter(primarynameKey+2);
         String backStr = null;
-        if(tablename==null||"".equals(tablename)){
-            backStr="tablename为空,";
-        }
-        if(primaryname==null||"".equals(primaryname)){
-            backStr=backStr+"primaryname为空,";
-        }
-        if(primaryval==null||"".equals(primaryval)){
-            backStr=backStr+"primaryval为空";
-        }
+
+        String driverNamedjj = request.getParameter("driverNamedjj");
+        String datasourceUrldjj = request.getParameter("datasourceUrldjj");
+        String userNamedjj = request.getParameter("userNamedjj");
+        String passworddjj = request.getParameter("passworddjj");
+        int i = 0;
+
         sql="INSERT INTO "+tablename+"(";
         for(HashMap.Entry<String,Object> entry:params.entrySet()){
             String entryKey = entry.getKey();
-            if(!entryKey.equals("proname")&&!entryKey.equals("tabname")&&!entryKey.contains("pidname")&&!entryKey.equals(primaryname2)&&!entryKey.equals("acttype")&&!entryKey.equals("excelfile")){
+            if(!entryKey.equals("driverNamedjj")&&!entryKey.equals("datasourceUrldjj")&&!entryKey.equals("userNamedjj")&&!entryKey.equals("passworddjj")&&!entryKey.equals("pronamedjj")&&!entryKey.equals("tabnamedjj")&&!entryKey.contains("pidnamedjj")&&!entryKey.equals(primaryname2)&&!entryKey.equals("acttypedjj")&&!entryKey.equals("excelfiledjj")){
                 sql = sql +","+ entry.getKey();
             }
         }
         sql=sql+") VALUES(";
         for(HashMap.Entry<String,Object> entry:params.entrySet()){
             String entryKey = entry.getKey();
-            if(!entryKey.equals("proname")&&!entryKey.equals("tabname")&&!entryKey.contains("pidname")&&!entryKey.equals(primaryname2)&&!entryKey.equals("acttype")&&!entryKey.equals("excelfile")){
+            if(!entryKey.equals("driverNamedjj")&&!entryKey.equals("datasourceUrldjj")&&!entryKey.equals("userNamedjj")&&!entryKey.equals("passworddjj")&&!entryKey.equals("pronamedjj")&&!entryKey.equals("tabnamedjj")&&!entryKey.contains("pidnamedjj")&&!entryKey.equals(primaryname2)&&!entryKey.equals("acttypedjj")&&!entryKey.equals("excelfiledjj")){
                 sql = sql +",\""+ entry.getValue().toString()+"\"";
             }
         }
         sql=sql+")";
         sql=sql.replaceAll("\\(,","(");
         System.out.println("-----insertOnesql:"+sql);
-        int i = jdbcUtil.executeUpdate2(sql);
-        String str =  JSON.toJSONString(i);//return JSONSerializer.toJSON(json);
-        return str;
+
+        if(!"".equals(driverNamedjj)&&driverNamedjj!=null&&!"".equals(datasourceUrldjj)&&datasourceUrldjj!=null&&!"".equals(userNamedjj)&&userNamedjj!=null&&!"".equals(passworddjj)&&passworddjj!=null){
+            jdbcUtil.setDriverName(driverNamedjj);
+            jdbcUtil.setDatasourceUrl(datasourceUrldjj);
+            jdbcUtil.setUserName(userNamedjj);
+            jdbcUtil.setPassword(passworddjj);
+            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            i = jdbcUtil.executeUpdate(sql);
+        }
+        else{
+            System.out.println("-----2jdbcUtil.toString:"+jdbcUtil.toString());
+            i = jdbcUtil.executeUpdate2(sql);
+        }
+        return JSON.toJSONString(i);//return JSONSerializer.toJSON(json);
     }
     @CrossOrigin
     @ResponseBody
@@ -178,28 +214,46 @@ public class CommonController implements ServletContextAware {
         String primaryname = request.getParameter(primarynameKey+1);
         String primaryname2 = request.getParameter(primarynameKey+2);
         String backStr = null;
+
+        String driverNamedjj = request.getParameter("driverNamedjj");
+        String datasourceUrldjj = request.getParameter("datasourceUrldjj");
+        String userNamedjj = request.getParameter("userNamedjj");
+        String passworddjj = request.getParameter("passworddjj");
+        int i = 0;
+
         if(tablename==null||"".equals(tablename)){
             backStr="tablename为空,";
         }
         sql="INSERT INTO "+tablename+"(";
         for(HashMap.Entry<String,Object> entry:params.entrySet()){
             String entryKey = entry.getKey();
-            if(!entryKey.equals("proname")&&!entryKey.equals("tabname")&&!entryKey.contains("pidname")&&!entryKey.equals(primaryname2)&&!entryKey.equals("acttype")&&!entryKey.equals("excelfile")){
+            if(!entryKey.equals("driverNamedjj")&&!entryKey.equals("datasourceUrldjj")&&!entryKey.equals("userNamedjj")&&!entryKey.equals("passworddjj")&&!entryKey.equals("pronamedjj")&&!entryKey.equals("tabnamedjj")&&!entryKey.contains("pidnamedjj")&&!entryKey.equals(primaryname2)&&!entryKey.equals("acttypedjj")&&!entryKey.equals("excelfiledjj")){
                 sql = sql + ","+ entry.getKey();
             }
         }
         sql=sql+") VALUES(";
         for(HashMap.Entry<String,Object> entry:params.entrySet()){
             String entryKey = entry.getKey();
-            if(!entryKey.equals("proname")&&!entryKey.equals("tabname")&&!entryKey.contains("pidname")&&!entryKey.equals(primaryname2)&&!entryKey.equals("acttype")&&!entryKey.equals("excelfile")){
+            if(!entryKey.equals("driverNamedjj")&&!entryKey.equals("datasourceUrldjj")&&!entryKey.equals("userNamedjj")&&!entryKey.equals("passworddjj")&&!entryKey.equals("pronamedjj")&&!entryKey.equals("tabnamedjj")&&!entryKey.contains("pidnamedjj")&&!entryKey.equals(primaryname2)&&!entryKey.equals("acttypedjj")&&!entryKey.equals("excelfiledjj")){
                 sql = sql +",\""+ entry.getValue().toString()+"\"";
             }
         }
         sql=sql+")";
         System.out.println("-----insertOnesql:"+sql);
-        int i = jdbcUtil.executeUpdate2(sql);
-        String str =  JSON.toJSONString(i);//return JSONSerializer.toJSON(json);
-        return str;
+
+        if(!"".equals(driverNamedjj)&&driverNamedjj!=null&&!"".equals(datasourceUrldjj)&&datasourceUrldjj!=null&&!"".equals(userNamedjj)&&userNamedjj!=null&&!"".equals(passworddjj)&&passworddjj!=null){
+            jdbcUtil.setDriverName(driverNamedjj);
+            jdbcUtil.setDatasourceUrl(datasourceUrldjj);
+            jdbcUtil.setUserName(userNamedjj);
+            jdbcUtil.setPassword(passworddjj);
+            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            i = jdbcUtil.executeUpdate(sql);
+        }
+        else{
+            System.out.println("-----2jdbcUtil.toString:"+jdbcUtil.toString());
+            i = jdbcUtil.executeUpdate2(sql);
+        }
+        return JSON.toJSONString(i);//return JSONSerializer.toJSON(json);
     }
     //不要把自增的主键，以及后台要加入的时间，传给后台。除必须key，key必须跟表字段一样。不能多也不能少。保证顺序。
     @CrossOrigin
@@ -212,19 +266,37 @@ public class CommonController implements ServletContextAware {
         String primaryname = request.getParameter(primarynameKey+1);
         String primaryval = request.getParameter(primaryname);
         String primaryname2 = request.getParameter(primarynameKey+2);
+
+        String driverNamedjj = request.getParameter("driverNamedjj");
+        String datasourceUrldjj = request.getParameter("datasourceUrldjj");
+        String userNamedjj = request.getParameter("userNamedjj");
+        String passworddjj = request.getParameter("passworddjj");
+        int i = 0;
+
         sql="UPDATE "+tablename+" SET ";
         for(HashMap.Entry<String,Object> entry:params.entrySet()){
             String entryKey = entry.getKey();
-            if(!entryKey.equals("proname")&&!entryKey.equals("tabname")&&!entryKey.contains("pidname")&&!entryKey.equals(primaryname2)&&!entryKey.equals("acttype")&&!entryKey.equals("excelfile")){
+            if(!entryKey.equals("driverNamedjj")&&!entryKey.equals("datasourceUrldjj")&&!entryKey.equals("userNamedjj")&&!entryKey.equals("passworddjj")&&!entryKey.equals("pronamedjj")&&!entryKey.equals("tabnamedjj")&&!entryKey.contains("pidnamedjj")&&!entryKey.equals(primaryname2)&&!entryKey.equals("acttypedjj")&&!entryKey.equals("excelfiledjj")){
                 sql = sql +entry.getKey()+"=\""+ entry.getValue().toString()+"\",";
             }
         }
         sql = sql.substring(0,sql.length()-1);//去掉最后一个,号
         sql=sql+" WHERE "+primaryname+"='"+primaryval+"'";
         System.out.println("-----insertOnesql:"+sql);
-        int i = jdbcUtil.executeUpdate2(sql);
-        String str =  JSON.toJSONString(i);//return JSONSerializer.toJSON(json);
-        return str;
+
+        if(!"".equals(driverNamedjj)&&driverNamedjj!=null&&!"".equals(datasourceUrldjj)&&datasourceUrldjj!=null&&!"".equals(userNamedjj)&&userNamedjj!=null&&!"".equals(passworddjj)&&passworddjj!=null){
+            jdbcUtil.setDriverName(driverNamedjj);
+            jdbcUtil.setDatasourceUrl(datasourceUrldjj);
+            jdbcUtil.setUserName(userNamedjj);
+            jdbcUtil.setPassword(passworddjj);
+            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            i = jdbcUtil.executeUpdate(sql);
+        }
+        else{
+            System.out.println("-----2jdbcUtil.toString:"+jdbcUtil.toString());
+            i = jdbcUtil.executeUpdate2(sql);
+        }
+        return JSON.toJSONString(i);//return JSONSerializer.toJSON(json);
     }
     @CrossOrigin
     @ResponseBody
@@ -244,7 +316,7 @@ public class CommonController implements ServletContextAware {
             Iterator iterator = params.keySet().iterator();
             while (iterator.hasNext()){
                 String entryKey = iterator.next().toString();
-                if(entryKey.equals("proname")||entryKey.equals("excelfile")){
+                if(entryKey.equals("driverNamedjj")||entryKey.equals("datasourceUrldjj")||entryKey.equals("userNamedjj")||entryKey.equals("passworddjj")||entryKey.equals("pronamedjj")||entryKey.equals("pidnamedjj2")||entryKey.equals("excelfiledjj")){
                     iterator.remove();
                 }
             }
@@ -277,7 +349,7 @@ public class CommonController implements ServletContextAware {
             Iterator iterator = params.keySet().iterator();
             while (iterator.hasNext()){
                 String entryKey = iterator.next().toString();
-                if(entryKey.equals("proname")||entryKey.equals("excelfile")){
+                if(entryKey.equals("driverNamedjj")||entryKey.equals("datasourceUrldjj")||entryKey.equals("userNamedjj")||entryKey.equals("passworddjj")||entryKey.equals("pronamedjj")||entryKey.equals("excelfiledjj")){
                     iterator.remove();
                 }
             }
@@ -297,7 +369,8 @@ public class CommonController implements ServletContextAware {
 //        int i = JdbcUtil.executeUpdate(sql,name,password);
 //        int i = JdbcUtil.executeUpdate(sql);
 //        System.out.println("-----i:"+i);
-        Object object = JdbcUtil.exectueQuery("select * from t_user");
+        JdbcUtil jdbcUtil = new JdbcUtil();
+        Object object = jdbcUtil.exectueQuery("select * from t_user");
         logger.debug("--logger---test:"+object);
         /*logger.trace("日志输出 trace");
         logger.debug("日志输出 debug");

@@ -27,11 +27,11 @@ public class ActionUtil implements ApplicationContextAware {
     private static URL oneUpdateURL = null;//当前类所在的本地URL。
     //URL oneUpdateURL = OneUpdate.class.getResource("");//当前类所在的本地URL。
 
-    private static String tablenameKey = "tabname";
-    private static String actiontypeKey = "acttype";
-    private static String primarynameKey = "pidname";
-    //private static String primaryname1Key = "primaryname1";//必须包含primaryname，且后面跟数字1表示单主键，两个主键用12区分
-    //private static String primaryname2Key = "primaryname2";
+    private static String tablenameKey = "tabnamedjj";
+    private static String actiontypeKey = "acttypedjj";
+    private static String primarynameKey = "pidnamedjj";//最好这个表示单主键，使用pidnamedjj1表示单主键容易出错。
+    //private static String primarynameKey1 = "pidnamedjj1";//必须包含primaryname，且后面跟数字1表示单主键，两个主键用12区分
+    //private static String primarynameKey2 = "pidnamedjj2";
     private static String selectByPrimaryKey = "selectOne";
     private static String deleteByPrimaryKey = "deleteOne";
     private static String insertSelective = "insertOne";
@@ -60,10 +60,10 @@ public class ActionUtil implements ApplicationContextAware {
         String tableName = params.get(tablenameKey).toString();
         tableName = tableName.substring(0,1).toUpperCase()+tableName.substring(1);
         String actionType = params.get(actiontypeKey).toString();
-        //-----params236:{tabname=t_user, id=1, acttype=selectOne, name=admin, password=123}
+        //-----params236:{tabnamedjj=t_user, id=1, acttypedjj=selectOne, name=admin, password=123}
         System.out.println("-----params:"+params);
         String mapPrimaryName=params.get(primarynameKey+1).toString();//deciseID/mrank_id
-        //primaryval1必须转化为跟bean属性大小写一样，一个pidname1=id,map中可能有也可能没有id=1.有可能有pidval==1。
+        //primaryval1必须转化为跟bean属性大小写一样，一个pidnamedjj1=id,map中可能有也可能没有id=1.有可能有pidval==1。
         String beanIdName = MapToBeanUtil.mapKeyToField(mapPrimaryName);//deciseid //用于表中有下划线_的字段，转成属性中的带大写的驼峰名。
         String idVal = "";
         if(!"".equals(mapPrimaryName)){
@@ -74,7 +74,7 @@ public class ActionUtil implements ApplicationContextAware {
         System.out.println("-----beanIdName:"+beanIdName);
         System.out.println("-----idVal:"+idVal);
 
-        Object invoke = null;
+        Object invokeReturn = null;
         try {
             Class<?> entityClass = Class.forName(comName+"."+entityName+"."+tableName);
             Constructor<?> entityConstructor = entityClass.getDeclaredConstructor();
@@ -96,16 +96,17 @@ public class ActionUtil implements ApplicationContextAware {
                                 fieldType = MapToBeanUtil.mapAttrKeyType(backBean,beanIdName);//属性必须包含在实体类的bean中，否则抛异常,中止执行！
                             }
                             Method method = cs.getDeclaredMethod("selectByPrimaryKey",fieldType);
-                            //System.out.println("-----method:"+method.toString());
+                            System.out.println("-----method:"+method.toString());
                             String serviceBeanStr = mapperFileStrArr[i]+"Service";
                             serviceBeanStr=serviceBeanStr.substring(0,1).toLowerCase()+serviceBeanStr.substring(1);
                             //IT_decisemanagetableService t_decisemanagetableService = (IT_decisemanagetableService)applicationContext.getBean(serviceBeanStr);//最好使用接口转型，必须启动服务才能获取
                             //T_decisemanagetableService t_decisemanagetableService = (T_decisemanagetableService)c.newInstance();//失败.InvocationTargetException: null
                             System.out.println("-----idVal:"+idVal);
-                            System.out.println("-----backBean:"+backBean);
-                            System.out.println("-----serviceBeanStr:"+serviceBeanStr);
-                            invoke = method.invoke(applicationContext.getBean(serviceBeanStr), MapToBeanUtil.valToBeanVal(backBean,beanIdName,idVal));
-                            System.out.println("-----invoke查询:"+invoke.toString());
+                            System.out.println("-----backBean:"+backBean); //com.entity.T_user@6f7e86fa
+                            System.out.println("-----serviceBeanStr:"+serviceBeanStr); //t_userService
+//                            invokeReturn = method.invoke(new T_userService(), 1);//m2.invoke(u2,"张飞");
+                            invokeReturn = method.invoke(applicationContext.getBean(serviceBeanStr), MapToBeanUtil.valToBeanVal(backBean,beanIdName,idVal));
+                            System.out.println("-----invoke查询:"+invokeReturn.toString());
                         }
                         else if(actionType.equals(insertSelective)){
                             Class<?> cs = Class.forName(comName+"."+iServiceFolderName+"."+serviceFolderName+"."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
@@ -113,8 +114,8 @@ public class ActionUtil implements ApplicationContextAware {
                             System.out.println("-----method:"+method.toString());
                             String serviceBeanStr = mapperFileStrArr[i]+"Service";
                             serviceBeanStr=serviceBeanStr.substring(0,1).toLowerCase()+serviceBeanStr.substring(1);
-                            invoke = method.invoke(applicationContext.getBean(serviceBeanStr),backBean);
-                            System.out.println("-----invoke插入:"+invoke.toString());
+                            invokeReturn = method.invoke(applicationContext.getBean(serviceBeanStr),backBean);
+                            System.out.println("-----invoke插入:"+invokeReturn.toString());
                         }
                         else if(actionType.equals(updateByPrimaryKeySelective)){
                             Class<?> cs = Class.forName(comName+"."+iServiceFolderName+"."+serviceFolderName+"."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
@@ -122,8 +123,8 @@ public class ActionUtil implements ApplicationContextAware {
                             System.out.println("-----method:"+method.toString());
                             String serviceBeanStr = mapperFileStrArr[i]+"Service";
                             serviceBeanStr=serviceBeanStr.substring(0,1).toLowerCase()+serviceBeanStr.substring(1);
-                            invoke = method.invoke(applicationContext.getBean(serviceBeanStr),backBean);
-                            System.out.println("-----invoke修改:"+invoke.toString());
+                            invokeReturn = method.invoke(applicationContext.getBean(serviceBeanStr),backBean);
+                            System.out.println("-----invoke修改:"+invokeReturn.toString());
                         }
                         else if(actionType.equals(deleteByPrimaryKey)){
                             Class<?> cs = Class.forName(comName+"."+iServiceFolderName+"."+serviceFolderName+"."+mapperFileStrArr[i]+"Service");//+mapperFileStrArr[i]+"Service"
@@ -137,8 +138,8 @@ public class ActionUtil implements ApplicationContextAware {
                             String serviceBeanStr = mapperFileStrArr[i]+"Service";
                             serviceBeanStr=serviceBeanStr.substring(0,1).toLowerCase()+serviceBeanStr.substring(1);
 
-                            invoke = method.invoke(applicationContext.getBean(serviceBeanStr), MapToBeanUtil.valToBeanVal(backBean,beanIdName,idVal));
-                            System.out.println("-----invoke删除:"+invoke.toString());
+                            invokeReturn = method.invoke(applicationContext.getBean(serviceBeanStr), MapToBeanUtil.valToBeanVal(backBean,beanIdName,idVal));
+                            System.out.println("-----invoke删除:"+invokeReturn.toString());
                         }
                         break;
                     }
@@ -158,7 +159,7 @@ public class ActionUtil implements ApplicationContextAware {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return invoke;
+        return invokeReturn;
     }
     public static Object actionAllTwo(Object thisobj, Map<String,Object> params){
         if(oneUpdateURL==null){
@@ -194,7 +195,7 @@ public class ActionUtil implements ApplicationContextAware {
             System.out.println("-----params:"+params);
             for(Map.Entry<String,Object> paramsEntry:params.entrySet()){
                 String paramsAttrKey = paramsEntry.getKey();
-                String jsonmapattrkey = paramsAttrKey.substring(0,paramsAttrKey.length()-1); //pidname1去掉1如果等于pidname
+                String jsonmapattrkey = paramsAttrKey.substring(0,paramsAttrKey.length()-1); //pidnamedjj1去掉1如果等于pidnamedjj
                 if(jsonmapattrkey.equals(primarynameKey)){
                     primaryNum++;
                     arrMapKeyName.add(jsonmapattrkey+primaryNum);//jsonmapattrkey=primaryname

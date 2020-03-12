@@ -21,6 +21,8 @@ public class Configf8xn { //只能在非Bean里注入！少添加不用，或不
     private String connectionURL;
     @Value("${spring.datasource.username}")
     private String userId;
+    @Value("${spring.datasource.password}")
+    private String password;
 
     @Override
     public String toString() {
@@ -82,6 +84,4 @@ public class Configf8xn { //只能在非Bean里注入！少添加不用，或不
         this.password = password;
     }
 
-    @Value("${spring.datasource.password}")
-    private String password;
 }
