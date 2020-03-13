@@ -295,6 +295,33 @@ public class CommonController implements ServletContextAware {
         }
         return JSON.toJSONString(i);//return JSONSerializer.toJSON(json);
     }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/exectueQueryAction",produces = "application/json;chart=UTF-8")
+    public String exectueQueryAction(HttpServletRequest request,@RequestParam(required = false) Map<String,Object> params) {
+        System.out.println("-----params:" + params);
+        String driverNamedjj = request.getParameter("driverNamedjj");
+        String datasourceUrldjj = request.getParameter("datasourceUrldjj");
+        String userNamedjj = request.getParameter("userNamedjj");
+        String passworddjj = request.getParameter("passworddjj");
+        String sql = request.getParameter("exectueQuerySql");
+        List<HashMap> arrayList = new ArrayList<>();
+        if(!"".equals(driverNamedjj)&&driverNamedjj!=null&&!"".equals(datasourceUrldjj)&&datasourceUrldjj!=null&&!"".equals(userNamedjj)&&userNamedjj!=null&&!"".equals(passworddjj)&&passworddjj!=null){
+            jdbcUtil.setDriverName(driverNamedjj);
+            jdbcUtil.setDatasourceUrl(datasourceUrldjj);
+            jdbcUtil.setUserName(userNamedjj);
+            jdbcUtil.setPassword(passworddjj);
+            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            arrayList = jdbcUtil.exectueQuery(sql);
+        }
+        else{
+            System.out.println("-----2jdbcUtil.toString:"+jdbcUtil.toString());
+            arrayList = jdbcUtil.exectueQuery(sql);
+        }
+        return JSON.toJSONString(arrayList);//return JSONSerializer.toJSON(json);
+    }
+
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/actionAll",produces = "application/json;chart=UTF-8")
@@ -359,24 +386,26 @@ public class CommonController implements ServletContextAware {
     @ResponseBody
     @RequestMapping(value = "/actionAutoAdd",produces = "application/json;chart=UTF-8")
     public String actionAutoAdd(HttpServletRequest request, @RequestParam(required=false) Map<String,Object> params) {
+        System.out.println("-----params362:"+params);
         String tabnamedjj = request.getParameter("tabnamedjj");
         String driverNamedjj = request.getParameter("driverNamedjj");
         String datasourceUrldjj = request.getParameter("datasourceUrldjj");
         String userNamedjj = request.getParameter("userNamedjj");
         String passworddjj = request.getParameter("passworddjj");
-        List list = new ArrayList();
+        Map<String,Object> map = new HashMap<>();
         if(!"".equals(driverNamedjj)&&driverNamedjj!=null&&!"".equals(datasourceUrldjj)&&datasourceUrldjj!=null&&!"".equals(userNamedjj)&&userNamedjj!=null&&!"".equals(passworddjj)&&passworddjj!=null){
             jdbcUtil.setDriverName(driverNamedjj);
             jdbcUtil.setDatasourceUrl(datasourceUrldjj);
             jdbcUtil.setUserName(userNamedjj);
             jdbcUtil.setPassword(passworddjj);
             System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
-            list = jdbcUtil.columnList(tabnamedjj);
+            map = jdbcUtil.columnListMysql(tabnamedjj);
         }
         else{
-            System.out.println("-----有错误:");
+            System.out.println("-----2jdbcUtil.toString:"+jdbcUtil.toString());
+            map = jdbcUtil.columnListMysql2(tabnamedjj);
         }
-        return JSON.toJSONString(list);//return JSONSerializer.toJSON(json);
+        return JSON.toJSONString(map);//return JSONSerializer.toJSON(json);
     };
     public static void main(String[] args) throws Exception {
 //        LoginController loginController = new LoginController();

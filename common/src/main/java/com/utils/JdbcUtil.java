@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.sql.*;
 import java.util.Date;
@@ -42,6 +44,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 	private String datasourceUrl = "jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
 	private String userName = "root";
 	private String password = "root";
+	private String datasourceName;
 	@Value("${spring.datasource.driver-class-name}")
 	private String driverName2;
 	@Value("${spring.datasource.url}")
@@ -50,6 +53,8 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 	private String userName2;
 	@Value("${spring.datasource.password}")
 	private String password2;
+	@Value("spring.datasource.name")
+	private String datasourceName2;
 	private Connection conn = null;
 	private PreparedStatement pst = null;
 	private ResultSet rst = null;
@@ -98,6 +103,19 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 	public String getPassword2() {
 		return password2;
 	}
+
+	public String getDatasourceName() {
+		return datasourceName;
+	}
+
+	public void setDatasourceName(String datasourceName) {
+		this.datasourceName = datasourceName;
+	}
+
+	public String getDatasourceName2() {
+		return datasourceName2;
+	}
+
 	@Override
 	public String toString() {
 		return "JdbcUtil{" +
@@ -168,7 +186,8 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		try {
 			logger.debug("开始更新");
 			pst = conn.prepareStatement(sql);
-			if(params!=null){
+			//params是否为空，params.length!=0,StringUtils.isEmpty(params),和params.length!=0不能判断是否为null，Object...永久成立。
+			if(params.length!=0){
 				for (int i = 0; i < params.length; i++) {
 					pst.setObject(i+1,params[i]);
 					logger.debug(params[i].toString());
@@ -194,7 +213,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		try {
 			logger.debug("开始更新");
 			pst = conn.prepareStatement(sql);
-			if(params!=null){
+			if(params.length!=0){
 				for (int i = 0; i < params.length; i++) {
 					pst.setObject(i+1,params[i]);
 					logger.debug(params[i].toString());
@@ -229,7 +248,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		try {
 			logger.debug("开始查询一个结果");
 			pst = conn.prepareStatement(sql);
-			if(params!=null){
+			if(params.length!=0){
 				for (int i = 0; i < params.length; i++) {
 					pst.setObject(i+1, params[i]);
 				}
@@ -262,7 +281,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		try {
 			logger.debug("开始查询一个结果");
 			pst = conn.prepareStatement(sql);
-			if(params!=null){
+			if(params.length!=0){
 				for (int i = 0; i < params.length; i++) {
 					pst.setObject(i+1, params[i]);
 				}
@@ -297,7 +316,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		try {
 			logger.debug("开始查询结果集");
 			pst = conn.prepareStatement(sql);
-			if(params!=null){
+			if(params.length!=0){
 				for (int i = 0; i < params.length; i++) {
 					pst.setObject(i+1,params[i]);
 				}
@@ -315,7 +334,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		try {
 			logger.debug("开始查询结果集");
 			pst = conn.prepareStatement(sql);
-			if(params!=null){
+			if(params.length!=0){
 				for (int i = 0; i < params.length; i++) {
 					pst.setObject(i+1,params[i]);
 				}
@@ -339,8 +358,9 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 //	查询表中所有的不允许为空的字段，
 //List list = exectueQuery("select column_name from user_tab_columns where table_name = 'PRODUCT' and nullable = 'Y'");
 //	exectueQuery("select * from emp where id=?","12");
-	public List<HashMap> exectueQuery(String sql,Object... params){
+	public List<HashMap> exectueQuery(String sql,Object... params) {
 		rst = executeQueryRS(sql,params);
+		System.out.println("-----sql365:"+sql);
 		ResultSetMetaData rsmd = null;
 //		获取集列数
 		int columnCount = 0;
@@ -424,7 +444,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		try {
 			logger.debug("开始调用过程");
 			cst = conn.prepareCall(sql);//sql="{call procedurename(?,?...)}";
-			if(params!=null){
+			if(params.length!=0){
 				for (int i = 0; i < params.length; i++) {
 					cst.setObject(i+1, params[i]);
 				}
@@ -459,7 +479,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		try {
 			logger.debug("开始调用过程");
 			cst = conn.prepareCall(sql);//sql="{call procedurename(?,?...)}";
-			if(params!=null){
+			if(params.length!=0){
 				for (int i = 0; i < params.length; i++) {
 					cst.setObject(i+1, params[i]);
 				}
@@ -495,7 +515,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		try {
 			logger.debug("开始调用函数");
 			cst = conn.prepareCall(sql);//sql="{?=call functionname(?,?...)}";
-			if(params!=null){
+			if(params.length!=0){
 				for (int i = 0; i < params.length; i++) {
 					cst.setObject(i+2, params[i]);
 				}
@@ -521,7 +541,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		try {
 			logger.debug("开始调用函数");
 			cst = conn.prepareCall(sql);//sql="{?=call functionname(?,?...)}";
-			if(params!=null){
+			if(params.length!=0){
 				for (int i = 0; i < params.length; i++) {
 					cst.setObject(i+2, params[i]);
 				}
@@ -540,7 +560,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		}
 		return obj;
 	}
-//	查询表允许为空的字段，请传入表名如PRODUCT，
+//	查询表允许为空的字段，请传入表名如PRODUCT，//这里查询的是oracle?
 	public List<HashMap> nullList(String tablename){
 		String sql = "select column_name from user_tab_columns where table_name = '"+tablename+"' and nullable = 'Y'";
 		List<HashMap> maplist = exectueQuery(sql);
@@ -552,6 +572,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		System.out.println("-----nullList:"+nullList);
 		return nullList;
 	}
+	//这里查询的是oracle?
 	public List<HashMap> nullList2(String tablename){
 		String sql = "select column_name from user_tab_columns where table_name = '"+tablename+"' and nullable = 'Y'";
 		List<HashMap> maplist = exectueQuery2(sql);
@@ -561,20 +582,100 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 			nullList.add(maplist.get(i).get("COLUMN_NAME").toString().toLowerCase());
 		}
 		System.out.println("-----nullList:"+nullList);
-		return null;
+		return nullList;
 	}
-	//查询表中所有字段
-	public List columnList(String tablename){
-		String sql = "select column_name from user_tab_columns where table_name = '"+tablename;
+	//查询mysql表中所有字段和其注释
+	public Map<String,Object> columnListMysql(String tablename,Object... params){
+		String dataBaseNameNow = "";
+		String dataBaseUrlNow = "";
+		//params是否为空，params.length!=0,StringUtils.isEmpty(params),和params.length!=0不能判断是否为null，Object...永久成立。
+		if(params.length!=0){
+			dataBaseNameNow = params[0].toString();
+		}
+		//String sql = "select column_name from user_tab_columns where table_name = '"+tablename;//无效
+		//查询表中所有字段及其注释SELECT COLUMN_NAME,column_comment FROM INFORMATION_SCHEMA.Columns WHERE table_name='t_user' AND table_schema='shiro';
+		else if(this.datasourceUrl!=null&&!"".equals(this.datasourceUrl)){
+			dataBaseUrlNow = this.datasourceUrl;
+			if(dataBaseUrlNow.contains("mysql")){
+				int indexStart = StringIndex.indexOf(dataBaseUrlNow,"/" ,3);
+				int indexEnd = dataBaseUrlNow.indexOf("?");
+				dataBaseNameNow=dataBaseUrlNow.substring(indexStart+1,indexEnd);
+			}
+			else if(dataBaseUrlNow.contains("oracle")){
+				int indexStart = dataBaseUrlNow.lastIndexOf(":");
+				dataBaseNameNow=dataBaseUrlNow.substring(indexStart+1);
+			}
+			else if(dataBaseUrlNow.contains("postgresql")){
+				int indexStart = StringIndex.indexOf(dataBaseUrlNow,"/" ,3);
+				int indexEnd = dataBaseUrlNow.indexOf("?");
+				dataBaseNameNow=dataBaseUrlNow.substring(indexStart+1,indexEnd);
+			}
+			else {
+				logger.info("-----没有匹配到数据库名，请在OneUpdate.java的100行增加数据库");
+				System.exit(0);//0停止程序，1是异常停止。
+			}
+		}
+		else{
+			System.out.println("-----datasourceUrl属性值为空，不能成功创建连接:"+datasourceUrl);
+			System.exit(0);
+		}
+		System.out.println("-----dataBaseNameNow:"+dataBaseNameNow);
+		String sql = "SELECT COLUMN_NAME,column_comment FROM INFORMATION_SCHEMA.Columns WHERE table_name='"+tablename+"' AND table_schema='"+dataBaseNameNow+"'";
 		List<HashMap> maplist = exectueQuery(sql);
 		System.out.println("-----maplist:"+maplist);
-		List columnList = new ArrayList();
+		Map<String,Object> map = new HashMap<>();
 		for(int i =0;i<maplist.size();i++){
-			maplist.get(i).get("COLUMN_NAME");
-			columnList.add(maplist.get(i).get("COLUMN_NAME").toString().toLowerCase());
+			String keyStr = maplist.get(i).get("COLUMN_NAME").toString();
+			String valueStr = maplist.get(i).get("column_comment").toString();
+			map.put(keyStr,valueStr);
 		}
-		System.out.println("-----columnList:"+columnList);
-		return columnList;
+		System.out.println("-----map:"+map);
+		return map;
+	}
+	//查询mysql表中所有字段和其注释
+	public Map<String,Object> columnListMysql2(String tablename,Object... params){
+		String dataBaseNameNow = "";
+		String dataBaseUrlNow = "";
+		if(params.length!=0){
+			dataBaseNameNow = params[0].toString();
+		}
+		else if(this.datasourceUrl2!=null&&!"".equals(this.datasourceUrl2)){
+			dataBaseUrlNow = datasourceUrl2;
+			if(dataBaseUrlNow.contains("mysql")){
+				int indexStart = StringIndex.indexOf(dataBaseUrlNow,"/" ,3);
+				int indexEnd = dataBaseUrlNow.indexOf("?");
+				dataBaseNameNow=dataBaseUrlNow.substring(indexStart+1,indexEnd);
+			}
+			else if(dataBaseUrlNow.contains("oracle")){
+				int indexStart = dataBaseUrlNow.lastIndexOf(":");
+				dataBaseNameNow=dataBaseUrlNow.substring(indexStart+1);
+			}
+			else if(dataBaseUrlNow.contains("postgresql")){
+				int indexStart = StringIndex.indexOf(dataBaseUrlNow,"/" ,3);
+				int indexEnd = dataBaseUrlNow.indexOf("?");
+				dataBaseNameNow=dataBaseUrlNow.substring(indexStart+1,indexEnd);
+			}
+			else {
+				logger.info("-----没有匹配到数据库名，请在OneUpdate.java的100行增加数据库");
+				System.exit(0);//0停止程序，1是异常停止。
+			}
+		}
+		else{
+			System.out.println("-----datasourceUrl2属性值为空，不能成功创建连接:"+datasourceUrl2);
+			System.exit(0);
+		}
+		String sql = "SELECT COLUMN_NAME,column_comment FROM INFORMATION_SCHEMA.Columns WHERE table_name='"+tablename+"' AND table_schema='"+dataBaseNameNow+"'";
+		System.out.println("-----sql625:"+sql);
+		List<HashMap> maplist = exectueQuery2(sql);
+		System.out.println("-----maplist:"+maplist);
+		Map<String,Object> map = new HashMap<>();
+		for(int i =0;i<maplist.size();i++){
+			String keyStr = maplist.get(i).get("COLUMN_NAME").toString();
+			String valueStr = maplist.get(i).get("column_comment").toString();
+			map.put(keyStr,valueStr);
+		}
+		System.out.println("-----map:"+map);
+		return map;
 	}
 	//	只关闭连接
 	public void closeConn(){
@@ -629,8 +730,8 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 //		nullList("PRODUCT");
 //		OracleTypes,用于向数据规定数据类型。
 		JdbcUtil jdbcUtil = new JdbcUtil();
-		Object object = jdbcUtil.exectueQuery("select * from t_user");
-		logger.debug(object.toString());
-		System.out.println("-----test:"+object);
+		Object object = jdbcUtil.columnListMysql2("t_user");
+//		logger.debug(object.toString());
+//		System.out.println("-----test:"+object);
 	}
 }

@@ -25,8 +25,15 @@
         }
         .contextcenter{
             margin: auto;
-            width: 60%;
+            width: 70%;
             line-height: 24px;
+        }
+        .form-control{
+            width: 80%;
+        }
+        #showdetail{
+            display: block;
+            width: 200px;
         }
         td,input{
             line-height: 22px;
@@ -38,14 +45,17 @@
 </head>
 <body class="text-center">
 <form action="" enctype="multipart/form-data" id="formsignin" method="post" name="formsignin">
-    <h2 class="contextcenter" style="text-align: center;line-height: 40px">接口测试</h2>
+    <h2 class="contextcenter" style="text-align: center;line-height: 40px">接 口 测 试</h2>
     <p class="contextcenter" style="text-align: center;line-height: 40px"><img src="images/time.png" style="vertical-align:middle" alt=""><span id="show_time"></span></p>
-    <p class="contextcenter">1.不能有跟pronamedjj、tabnamedjj、pidnamedjj1、pidnamedjj2、acttypedjj、jdbc无关的其它非对象的name属性，尽量只使用以上有关的属性。</p>
-    <p class="contextcenter">2.不能用pidnamedjj1/2代替主键或双主键，要有的都要有。</p>
-    <p class="contextcenter">3.尽量只使用jdbc和单主键，只适合单表操作。</p>
-    <p class="contextcenter">4.查询方式jdbc=j/a1/a2/c,j表示使用jdbc工具查询，不需要实体类和服务层，除了控制层其它都有用a1单主键，a2双主键,c传统控制层。</p>
-    <p class="contextcenter">5.删除原来可删除的测试数，使用添加功能，添加数据。</p>
-    <p class="contextcenter">6.容器无法直接读取本地主机数据库linux-localhost。</p>
+    <button class="contextcenter" id="showdetail" style="text-align: center;font:bold 18px/24px 微软雅黑">点击查看说明文档。</button>
+    <div class="contextcenter" id="contextdetail" hidden>
+        <div>1.不能有跟pronamedjj、tabnamedjj、pidnamedjj1、pidnamedjj2、acttypedjj、jdbc无关的其它非对象的name属性，尽量只使用以上有关的属性。</div>
+        <div>2.不能用pidnamedjj1/2代替主键或双主键，要有的都要有。</div>
+        <div>3.尽量只使用jdbc和单主键，只适合单表操作。</div>
+        <div>4.查询方式jdbc=j/a1/a2/c,j表示使用jdbc工具查询，不需要实体类和服务层，除了控制层其它都有用a1单主键，a2双主键,c传统控制层。</div>
+        <div>5.删除原来可删除的测试数，使用添加功能，添加数据。</div>
+        <div>6.容器无法直接读取本地主机数据库linux-localhost。</div>
+    </div>
     <table class="contextcenter" id="addrow">
         <tr>
             <td><label for="driverNamedjj" class="sr-only">数据库驱动driverNamedjj</label></td>
@@ -129,12 +139,12 @@
             </td>
         </tr>
         <tr>
-            <td><input type="file" id="excelfiledjj" class="sr-only" name="excelfiledjj" disabled></td>
+            <td><input type="file" id="excelfiledjj" class="form-control" name="excelfiledjj" disabled></td>
             <td>
                 <!--<input type="button" value="清空" onclick="clearAll()"/>-->
-                <button type="button" onclick="clearAll()">清空</button>
-                <input class="btn btn-lg btn-primary btn-block" type="reset" value="重置默认"/>
-                <input class="btn btn-lg btn-primary btn-block" id="submitid" type="button" value="提交测试" onclick="submitForm()"/>
+                &nbsp;<button type="button" id="clearAll">清空</button>&nbsp;&nbsp;
+                <input class="btn btn-lg btn-primary btn-block" type="reset" value="重置默认"/>&nbsp;&nbsp;
+                <!--<input class="btn btn-lg btn-primary btn-block" id="submitid" type="button" value="提交" onclick="submitForm()"/>-->
             </td>
             <!--<td><button class="btn btn-lg btn-primary btn-block" id="submit" type="submit">提交测试</button></td>-->
         </tr>
@@ -151,16 +161,22 @@
             </select>
         </td>
     </tr>
-    <tr>
-        <td></td>
-    </tr>
     <tr style="text-align: center">
         <td>
             <input type="button" class="addrow" value="增加一行" onclick="addrow()"/>
-            <input type="button" class="autoAdd" value="自动生成表格" onclick="autoAdd()"/>
+            <input type="button" class="autoAdd" style="font:bold 16px/20px 微软雅黑" id="autoAdd" value="自动生成空行"/>
         </td>
-        <td><input type="submit" class="ajax2" value="$.ajax测试"/></td>
+        <td><input type="submit" class="ajax2" style="font:bold 18px/24px 微软雅黑" value="ajax提交"/></td>
         <!--<td><input type="submit" class="post2" value="$.post测试"/></td>-->
+    </tr>
+    <tr>
+        <td colspan="2">&nbsp;<input type="button" style="font:bold 16px/22px 微软雅黑" id="exectueQueryAction" value="点击查询"/></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <label for="exectueQuerySql"></label>
+            <textarea id="exectueQuerySql" rows="4" style="width: 99%" placeholder="输入要查询的sql语句" name="exectueQuerySql"></textarea>
+        </td>
     </tr>
     <tr><td colspan="2"><p id="httpApi"></p></td></tr>
 </table>
