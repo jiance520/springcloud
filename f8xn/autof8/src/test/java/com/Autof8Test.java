@@ -48,8 +48,6 @@ public class Autof8Test {
 //        logger.debug("--logger---test:"+object);
 //        System.out.println("---test:"+object);
 //        System.out.println("---getContextPath:"+configf8xn.getContextPath());
-        Object object2 = it_userService.selectByPrimaryKey(1);
-        System.out.println("---test:"+object2.toString());
     }
 
 }
