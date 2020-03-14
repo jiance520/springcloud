@@ -5,106 +5,129 @@
     <meta http-equiv="Content-Type" content="multipart/form-data;charset=utf-8" />
     <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
     <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+    <script src="js/cookietool.js"></script><!--必须放在jdbcutil前，否则找不到方法-->
     <script src="js/jdbcutil.js"></script>
-    <script src="js/myjs.js"></script>
+    <link rel="stylesheet" href="css/autof8.css">
     <!--<script type="text/javascript" href="../css/vue.js" ></script>-->
     <!--去除html页面中GET http://localhost:8080/favicon.ico 404 (Not Found)-->
     <link rel="shortcut icon" href="#" />
     <script type="text/javascript">
-        /*window.onload=()=>{
+        function makeExpandingArea(el) {
+            var timer = null;
+            //由于ie8有溢出堆栈问题，故调整了这里
+            var setStyle = function(el, auto) {
+                if (auto) el.style.height = 'auto';
+                el.style.height = el.scrollHeight + 'px';
+            };
+            var delayedResize = function(el) {
+                if (timer) {
+                    clearTimeout(timer);
+                    timer = null;
+                }
+                timer = setTimeout(function() {
+                    setStyle(el)
+                }, 200);
+            };
+            if (el.addEventListener) {
+                el.addEventListener('input', function() {
+                    setStyle(el, 1);
+                }, false);
+                setStyle(el)
+            } else if (el.attachEvent) {
+                el.attachEvent('onpropertychange', function() {
+                    setStyle(el)
+                });
+                setStyle(el)
+            }
+            if (window.VBArray && window.addEventListener) { //IE9
+                el.attachEvent("onkeydown", function() {
+                    var key = window.event.keyCode;
+                    if (key === 8 || key === 46) delayedResize(el);
 
-        }*/
-        /*$(document).ready(function () {
+                });
+                el.attachEvent("oncut", function() {
+                    delayedResize(el);
+                }); //处理粘贴
+            }
+        }
 
-        })*/
+        var textarea = document.getElementById('exectueSql');
+        makeExpandingArea(textarea);
     </script>
     <style type="text/css">
         *{
             /*font:normal 14px/24px 宋体;*/
             /*border:1px solid #444;*/
+            color: darkcyan;
         }
-        .contextcenter{
-            margin: auto;
-            width: 70%;
-            line-height: 24px;
-        }
-        .form-control{
-            width: 80%;
-        }
-        #showdetail{
-            display: block;
-            width: 200px;
-        }
-        td,input{
-            line-height: 22px;
-        }
-        table,tr,td{
-            border: 1px solid #444
+        body{
+            background-color: #a9cf22;
         }
     </style>
 </head>
 <body class="text-center">
 <form action="" enctype="multipart/form-data" id="formsignin" method="post" name="formsignin">
     <h2 class="contextcenter" style="text-align: center;line-height: 40px">接 口 测 试</h2>
-    <p class="contextcenter" style="text-align: center;line-height: 40px"><img src="images/time.png" style="vertical-align:middle" alt=""><span id="show_time"></span></p>
+    <p class="contextcenter" style="text-align: center;line-height: 40px"><img src="images/time.png" style="vertical-align:middle" alt=""><span id="show_time"></span>&nbsp;微信:jiance_520</p>
     <button class="contextcenter" id="showdetail" style="text-align: center;font:bold 18px/24px 微软雅黑">点击查看说明文档。</button>
     <div class="contextcenter" id="contextdetail" hidden>
-        <div>1.不能有跟pronamedjj、tabnamedjj、pidnamedjj1、pidnamedjj2、acttypedjj、jdbc无关的其它非对象的name属性，尽量只使用以上有关的属性。</div>
-        <div>2.不能用pidnamedjj1/2代替主键或双主键，要有的都要有。</div>
-        <div>3.尽量只使用jdbc和单主键，只适合单表操作。</div>
-        <div>4.查询方式jdbc=j/a1/a2/c,j表示使用jdbc工具查询，不需要实体类和服务层，除了控制层其它都有用a1单主键，a2双主键,c传统控制层。</div>
-        <div>5.删除原来可删除的测试数，使用添加功能，添加数据。</div>
-        <div>6.容器无法直接读取本地主机数据库linux-localhost。</div>
+        <!--<div>1.不能有跟pronamedjj、tabnamedjj、pidnamedjj1、pidnamedjj2、acttypedjj、jdbc无关的其它非对象的name属性，尽量只使用以上有关的属性。</div>-->
+        <!--<div>2.不能用pidnamedjj1/2代替主键或双主键，要有的都要有。</div>-->
+        <!--<div>3.尽量只使用jdbc和单主键，只适合单表操作。</div>-->
+        <div>1.支持mysql、oracle,PostgeaSQL理论上支持,未测试。</div>
+        <div>2.j表示使用jdbc工具查询，a1单主键，a2双主键,c传统控制层。</div>
+        <div>3.发送数据库连接配置+sql语句。</div>
+        <div>4.容器无法直接读取本地主机数据库linux-localhost。</div>
     </div>
     <table class="contextcenter" id="addrow">
         <tr>
-            <td><label for="driverNamedjj" class="sr-only">数据库驱动driverNamedjj</label></td>
+            <td><label for="driverNamedjj" class="my-sr-only">数据库驱动driverNamedjj</label></td>
             <td>
-                <input type="text"  id="driverNamedjj" class="form-control" placeholder="driverNamedjj" name="driverNamedjj" value="com.mysql.jdbc.Driver" required autofocus>
+                <input type="text"  id="driverNamedjj" class="my-form-control" placeholder="driverNamedjj" name="driverNamedjj" value="com.mysql.jdbc.Driver" required autofocus>
                 <input type="button" value="deleterow" onclick="deleterow(this)">
             </td>
         </tr>
         <tr>
-            <td><label for="datasourceUrldjj" class="sr-only">数据库连接地址端口和表datasourceUrldjj</label></td>
+            <td><label for="datasourceUrldjj" class="my-sr-only">数据库连接地址端口和表datasourceUrldjj</label></td>
             <td>
-                <input type="text"  id="datasourceUrldjj" class="form-control" placeholder="datasourceUrldjj" name="datasourceUrldjj" value="jdbc:mysql://47.107.171.60:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8" required autofocus>
+                <input type="text"  id="datasourceUrldjj" class="my-form-control" placeholder="datasourceUrldjj" name="datasourceUrldjj" value="jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8" required autofocus>
                 <input type="button" value="deleterow" onclick="deleterow(this)">
             </td>
         </tr>
         <tr>
-            <td><label for="userNamedjj" class="sr-only">数据库用户名userNamedjj</label></td>
+            <td><label for="userNamedjj" class="my-sr-only">数据库用户名userNamedjj</label></td>
             <td>
-                <input type="text"  id="userNamedjj" class="form-control" placeholder="userNamedjj" name="userNamedjj" value="root" required autofocus>
+                <input type="text"  id="userNamedjj" class="my-form-control" placeholder="userNamedjj" name="userNamedjj" value="root" autocomplete="on" required autofocus><!--autocomplete="on"表示自动填表，在 chrome无效-->
                 <input type="button" value="deleterow" onclick="deleterow(this)">
             </td>
         </tr>
         <tr>
-            <td><label for="passworddjj" class="sr-only">数据库密码passworddjj</label></td>
+            <td><label for="passworddjj" class="my-sr-only">数据库密码passworddjj</label></td>
             <td>
-                <input type="password"  id="passworddjj" class="form-control" placeholder="passworddjj" name="passworddjj" value="" required autofocus>
+                <input type="password"  id="passworddjj" class="my-form-control" placeholder="passworddjj" name="passworddjj" value="root" required autofocus>
                 <input type="button" value="deleterow" onclick="deleterow(this)">
             </td>
         </tr>
         <tr>
-            <td><label for="pronamedjj" class="sr-only">项目地址前缀/工程名/pronamedjj</label></td>
-            <td><input type="text"  id="pronamedjj" class="form-control" placeholder="pronamedjj" name="pronamedjj" value="autof8" required disabled></td>
+            <td><label for="pronamedjj" class="my-sr-only">项目地址前缀/工程名/pronamedjj</label></td>
+            <td><input type="text"  id="pronamedjj" class="my-form-control" placeholder="pronamedjj" name="pronamedjj" value="autof8" required disabled></td>
         </tr>
         <tr>
-            <td><label for="tabnamedjj" class="sr-only">表名tabnamedjj</label></td>
-            <td><input type="text"  id="tabnamedjj" class="form-control" placeholder="tabnamedjj" name="tabnamedjj" value="t_user" required autofocus></td>
+            <td><label for="tabnamedjj" class="my-sr-only">表名tabnamedjj</label></td>
+            <td><input type="text"  id="tabnamedjj" class="my-form-control" placeholder="tabnamedjj" name="tabnamedjj" value="t_user" required autofocus></td>
         </tr>
         <tr>
-            <td><label for="pidnamedjj1" class="sr-only">主键名pidnamedjj1</label></td>
-            <td><input type="text"  id="pidnamedjj1" class="form-control" placeholder="pidnamedjj1" name="pidnamedjj1" value="id" required autofocus></td>
+            <td><label for="pidnamedjj1" class="my-sr-only">主键字段名pidnamedjj1</label></td>
+            <td><input type="text"  id="pidnamedjj1" class="my-form-control" placeholder="pidnamedjj1" name="pidnamedjj1" value="id" required autofocus></td>
         </tr>
         <tr>
-            <td><label for="pidnamedjj2" class="sr-only">主键名pidnamedjj2</label></td>
-            <td><input type="text"  id="pidnamedjj2" class="form-control" placeholder="pidnamedjj2" name="pidnamedjj2" value="id2" required disabled></td>
+            <td><label for="pidnamedjj2" class="my-sr-only">主键字段名pidnamedjj2</label></td>
+            <td><input type="text"  id="pidnamedjj2" class="my-form-control" placeholder="pidnamedjj2" name="pidnamedjj2" value="id2" required disabled></td>
         </tr>
         <tr>
-            <td><label for="acttypedjj" class="sr-only">增删改查acttypedjj</label></td>
+            <td><label for="acttypedjj" class="my-sr-only">增删改查acttypedjj</label></td>
             <td>
-                <select id="acttypedjj" name="acttypedjj" class="form-control" size="1" required autofocus ><!--把先中的内容放在输入框中，只传递输入框的值给后台οnchange="this.nextSibling.value=this.value"无效-->
+                <select id="acttypedjj" name="acttypedjj" class="my-form-control" size="1" required autofocus ><!--把先中的内容放在输入框中，只传递输入框的值给后台οnchange="this.nextSibling.value=this.value"无效-->
                     <option value="selectOne">selectOne</option>
                     <option value="insertOne">insertOne</option>
                     <option value="updateOne">updateOne</option>
@@ -113,38 +136,38 @@
                 <!--<input id="acttypedjj" name="acttypedjj" style="width:100px;position:relative;left:0px;" value="t_userSelect"/>-->
             </td>
         </tr>
-        <tr>
-            <td><label for="id" class="sr-only">主键id</label></td>
+        <!--<tr>
+            <td><label for="id" class="my-sr-only">字段id的值</label></td>
             <td>
-                <input type="text"  id="id" class="form-control" placeholder="id" name="id" value="1" required autofocus>
+                <input type="text"  id="id" class="my-form-control" placeholder="id" name="id" value="1" required autofocus>
                 <input type="button" value="deleterow" onclick="deleterow(this)">
             </td>
         </tr>
-        <!--<tr>
-            <td><label for="id2" class="sr-only">主键id2=</label></td>
-            <td><input type="text"  id="id2" class="form-control" placeholder="id2" name="id2" value="" required autofocus></td>
+        &lt;!&ndash;<tr>
+            <td><label for="id2" class="my-sr-only">字段id2的值=</label></td>
+            <td><input type="text"  id="id2" class="my-form-control" placeholder="id2" name="id2" value="" required autofocus></td>
+        </tr>&ndash;&gt;
+        <tr>
+            <td><label for="name" class="my-sr-only">字段name的值</label></td>
+            <td>
+                <input type="text" id="name" class="my-form-control" placeholder="name" name="name" value="admin" required autofocus>
+                <input type="button" value="deleterow" onclick="deleterow(this)">
+            </td>
+        </tr>
+        <tr>
+            <td><label for="password" class="my-sr-only">字段password的值</label></td>
+            <td>
+                <input type="password" id="password" class="my-form-control" placeholder="password" name="password" value="123" required autofocus>
+                <input type="button" value="deleterow" onclick="deleterow(this)">
+            </td>
         </tr>-->
         <tr>
-            <td><label for="name" class="sr-only">用户名name</label></td>
-            <td>
-                <input type="text" id="name" class="form-control" placeholder="name" name="name" value="admin" required autofocus>
-                <input type="button" value="deleterow" onclick="deleterow(this)">
-            </td>
-        </tr>
-        <tr>
-            <td><label for="password" class="sr-only">密码password</label></td>
-            <td>
-                <input type="password" id="password" class="form-control" placeholder="password" name="password" value="123" required autofocus>
-                <input type="button" value="deleterow" onclick="deleterow(this)">
-            </td>
-        </tr>
-        <tr>
-            <td><input type="file" id="excelfiledjj" class="form-control" name="excelfiledjj" disabled></td>
+            <td><input type="file" id="excelfiledjj" name="excelfiledjj" disabled></td>
             <td>
                 <!--<input type="button" value="清空" onclick="clearAll()"/>-->
-                &nbsp;<button type="button" id="clearAll">清空</button>&nbsp;&nbsp;
+                &nbsp;<button type="button" id="clearAll">清空所有新增字段</button>&nbsp;&nbsp;
                 <input class="btn btn-lg btn-primary btn-block" type="reset" value="重置默认"/>&nbsp;&nbsp;
-                <!--<input class="btn btn-lg btn-primary btn-block" id="submitid" type="button" value="提交" onclick="submitForm()"/>-->
+                <!--<input class="btn btn-lg btn-primary btn-block" id="submitid" type="button" value="submit()提交" onclick="submitForm()"/>-->
             </td>
             <!--<td><button class="btn btn-lg btn-primary btn-block" id="submit" type="submit">提交测试</button></td>-->
         </tr>
@@ -152,9 +175,9 @@
 </form>
 <table  class="contextcenter">
     <tr>
-        <td><label for="jdbc" class="sr-only">修改action路径:jdbc=j/a1/a2/c</label></td>
+        <td><label for="jdbc" class="my-sr-only">修改action路径:jdbc=j/a1/a2/c</label></td>
         <td>
-            <select size="1" id="jdbc" class="sr-only" name="jdbc" required autofocus>
+            <select size="1" id="jdbc" class="my-sr-only" name="jdbc" required autofocus>
                 <option value="j" selected>jdbc/c=selectOne</option>
                 <option value="a1">actionAll</option>
                 <!--<option value="a2">actionAllTwo</option>-->
@@ -163,22 +186,28 @@
     </tr>
     <tr style="text-align: center">
         <td>
-            <input type="button" class="addrow" value="增加一行" onclick="addrow()"/>
+            <input type="button" class="addrow" value="增加一行字段" onclick="addrow()"/>
             <input type="button" class="autoAdd" style="font:bold 16px/20px 微软雅黑" id="autoAdd" value="自动生成空行"/>
         </td>
-        <td><input type="submit" class="ajax2" style="font:bold 18px/24px 微软雅黑" value="ajax提交"/></td>
-        <!--<td><input type="submit" class="post2" value="$.post测试"/></td>-->
-    </tr>
-    <tr>
-        <td colspan="2">&nbsp;<input type="button" style="font:bold 16px/22px 微软雅黑" id="exectueQueryAction" value="点击查询"/></td>
+        <td>
+            <input type="submit" class="ajax2" style="font:bold 18px/24px 微软雅黑" value="ajax提交"/>
+           <!-- <input type="submit" class="post2" value="$.post测试"/>-->
+        </td>
     </tr>
     <tr>
         <td colspan="2">
-            <label for="exectueQuerySql"></label>
-            <textarea id="exectueQuerySql" rows="4" style="width: 99%" placeholder="输入要查询的sql语句" name="exectueQuerySql"></textarea>
+            &nbsp;<input type="button" style="font:bold 16px/22px 微软雅黑" id="exectueQueryAction" value="点击查询"/>
+            &nbsp;<input type="button" style="font:bold 16px/22px 微软雅黑" id="executeUpdateAction" value="更改数据(增删改)"/>
         </td>
     </tr>
-    <tr><td colspan="2"><p id="httpApi"></p></td></tr>
+    <tr>
+        <td colspan="2">
+            <label for="exectueSql"></label>
+            <textarea id="exectueSql" style="width: 99%" placeholder="输入要执行的sql语句" name="exectueSql"></textarea>
+        </td>
+    </tr>
+    <tr><td colspan="2"><label for="httpApi"></label><textarea id="httpApi" style="width: 99%"></textarea></td></tr>
+    <tr><td colspan="2"><label for="datavalue"></label><textarea id="datavalue" style="width: 99%"></textarea></td></tr>
 </table>
 <p style="margin: 100px"></p>
 <div style="display:flex;justify-content:center;padding:20px 0;font: normal 20px/20px 微软雅黑">
@@ -192,6 +221,80 @@
             <span style="float:left;color:#939393;">湘ICP备18023926号-1</span></a>
     </div>
 </div>
+<script src="js/timetool.js"></script>
+<script>
+    $(function () {
+        // 为每一个textarea绑定事件使其高度自适应
+        $.each($("textarea"), function(i, n){
+            autoTextarea($(n)[0]);
+        });
+    })
+    /**
+     * 文本框根据输入内容自适应高度
+     * {HTMLElement}   输入框元素
+     * {Number}        设置光标与输入框保持的距离(默认0)
+     * {Number}        设置最大高度(可选)
+     */
+    var autoTextarea = function (elem, extra, maxHeight) {
+        extra = extra || 0;
+        var isFirefox = !!document.getBoxObjectFor || 'mozInnerScreenX' in window,
+            isOpera = !!window.opera && !!window.opera.toString().indexOf('Opera'),
+            addEvent = function (type, callback) {
+                elem.addEventListener ?
+                    elem.addEventListener(type, callback, false) :
+                    elem.attachEvent('on' + type, callback);
+            },
+            getStyle = elem.currentStyle ?
+                function (name) {
+                    var val = elem.currentStyle[name];
+                    if (name === 'height' && val.search(/px/i) !== 1) {
+                        var rect = elem.getBoundingClientRect();
+                        return rect.bottom - rect.top -
+                            parseFloat(getStyle('paddingTop')) -
+                            parseFloat(getStyle('paddingBottom')) + 'px';
+                    };
+                    return val;
+                } : function (name) {
+                    return getComputedStyle(elem, null)[name];
+                },
+            minHeight = parseFloat(getStyle('height'));
+        elem.style.resize = 'both';//如果不希望使用者可以自由的伸展textarea的高宽可以设置其他值
 
+        var change = function () {
+            var scrollTop, height,
+                padding = 0,
+                style = elem.style;
+
+            if (elem._length === elem.value.length) return;
+            elem._length = elem.value.length;
+
+            if (!isFirefox && !isOpera) {
+                padding = parseInt(getStyle('paddingTop')) + parseInt(getStyle('paddingBottom'));
+            };
+            scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+
+            elem.style.height = minHeight + 'px';
+            if (elem.scrollHeight > minHeight) {
+                if (maxHeight && elem.scrollHeight > maxHeight) {
+                    height = maxHeight - padding;
+                    style.overflowY = 'auto';
+                } else {
+                    height = elem.scrollHeight - padding;
+                    style.overflowY = 'hidden';
+                };
+                style.height = height + extra + 'px';
+                scrollTop += parseInt(style.height) - elem.currHeight;
+                document.body.scrollTop = scrollTop;
+                document.documentElement.scrollTop = scrollTop;
+                elem.currHeight = parseInt(style.height);
+            };
+        };
+
+        addEvent('propertychange', change);
+        addEvent('input', change);
+        addEvent('focus', change);
+        change();
+    };
+</script>
 </body>
 </html>

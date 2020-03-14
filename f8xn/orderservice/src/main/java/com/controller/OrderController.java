@@ -49,15 +49,15 @@ public class OrderController {
     private Object saveOrderFail(int userId, int productId, HttpServletRequest request){
 
         //监控报警
-        String saveOrderKye = "save-order";
+        String saveOrderkey = "save-order";
 
-        String sendValue = redisTemplate.opsForValue().get(saveOrderKye);
+        String sendValue = redisTemplate.opsForValue().get(saveOrderkey);
         final String ip = request.getRemoteAddr();
         new Thread( ()->{
             if (StringUtils.isBlank(sendValue)) {
                 System.out.println("紧急短信，用户下单失败，请离开查找原因,ip地址是="+ip);
                 //发送一个http请求，调用短信服务 TODO
-                redisTemplate.opsForValue().set(saveOrderKye, "save-order-fail", 20, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set(saveOrderkey, "save-order-fail", 20, TimeUnit.SECONDS);
             }else{
                 System.out.println("已经发送过短信，20秒内不重复发送");
             }

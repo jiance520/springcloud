@@ -38,6 +38,11 @@ spring:
     port: 5672
     username: guest
     password: guest
+  redis:
+    database: 0
+    host: 106.13.100.117
+    port: 6378
+    timeout: 2000
   #zipkin服务所在地址
   zipkin:
     base-url: http://106.13.100.117:9411
@@ -134,6 +139,11 @@ spring:
     port: 5672
     username: guest
     password: guest
+  redis:
+    database: 0
+    host: 106.13.100.117
+    port: 6378
+    timeout: 2000
   zipkin:
     base-url: http://106.13.100.117:9411
     sender:
@@ -191,6 +201,11 @@ spring:
     port: 5672
     username: guest
     password: guest
+  redis:
+    database: 0
+    host: 106.13.100.117
+    port: 6378
+    timeout: 2000
   zipkin:
     base-url: http://106.13.100.117:9411
     sender:

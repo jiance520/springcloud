@@ -585,9 +585,10 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		return nullList;
 	}
 	//查询mysql表中所有字段和其注释
-	public Map<String,Object> columnListMysql(String tablename,Object... params){
+	public Object columnListMysql(String tablename,Object... params){
 		String dataBaseNameNow = "";
 		String dataBaseUrlNow = "";
+		String sql = "";
 		//params是否为空，params.length!=0,StringUtils.isEmpty(params),和params.length!=0不能判断是否为null，Object...永久成立。
 		if(params.length!=0){
 			dataBaseNameNow = params[0].toString();
@@ -600,15 +601,18 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 				int indexStart = StringIndex.indexOf(dataBaseUrlNow,"/" ,3);
 				int indexEnd = dataBaseUrlNow.indexOf("?");
 				dataBaseNameNow=dataBaseUrlNow.substring(indexStart+1,indexEnd);
+				sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.Columns WHERE table_name='"+tablename+"' AND table_schema='"+dataBaseNameNow+"'";
 			}
 			else if(dataBaseUrlNow.contains("oracle")){
 				int indexStart = dataBaseUrlNow.lastIndexOf(":");
 				dataBaseNameNow=dataBaseUrlNow.substring(indexStart+1);
+				sql = "SELECT column_name FROM user_tab_columns where table_name = upper('"+tablename+"')";
 			}
 			else if(dataBaseUrlNow.contains("postgresql")){
 				int indexStart = StringIndex.indexOf(dataBaseUrlNow,"/" ,3);
 				int indexEnd = dataBaseUrlNow.indexOf("?");
 				dataBaseNameNow=dataBaseUrlNow.substring(indexStart+1,indexEnd);
+				sql = "select column_name from information_schema.columns where table_schema='public' and table_name='"+tablename+"'";
 			}
 			else {
 				logger.info("-----没有匹配到数据库名，请在OneUpdate.java的100行增加数据库");
@@ -620,22 +624,23 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 			System.exit(0);
 		}
 		System.out.println("-----dataBaseNameNow:"+dataBaseNameNow);
-		String sql = "SELECT COLUMN_NAME,column_comment FROM INFORMATION_SCHEMA.Columns WHERE table_name='"+tablename+"' AND table_schema='"+dataBaseNameNow+"'";
-		List<HashMap> maplist = exectueQuery(sql);
-		System.out.println("-----maplist:"+maplist);
-		Map<String,Object> map = new HashMap<>();
-		for(int i =0;i<maplist.size();i++){
-			String keyStr = maplist.get(i).get("COLUMN_NAME").toString();
-			String valueStr = maplist.get(i).get("column_comment").toString();
-			map.put(keyStr,valueStr);
+		List<HashMap> mysqlMapList = exectueQuery(sql);
+		//mysql [{COLUMN_NAME=id}, {COLUMN_NAME=name}, {COLUMN_NAME=password}]
+		//oracle //[{"COLUMN_NAME":"AID"},{"COLUMN_NAME":"IMG"},{"COLUMN_NAME":"LINK"},{"COLUMN_NAME":"TITLE"}]
+		System.out.println("-----maplist:"+mysqlMapList);
+		List arrayList = new ArrayList();
+		for(int i =0;i<mysqlMapList.size();i++){
+			String keyStr = mysqlMapList.get(i).get("COLUMN_NAME").toString();
+			arrayList.add(keyStr);
 		}
-		System.out.println("-----map:"+map);
-		return map;
+		System.out.println("-----arrayList:"+arrayList);
+		return arrayList;
 	}
 	//查询mysql表中所有字段和其注释
-	public Map<String,Object> columnListMysql2(String tablename,Object... params){
+	public Object columnListMysql2(String tablename,Object... params){
 		String dataBaseNameNow = "";
 		String dataBaseUrlNow = "";
+		String sql = "";
 		if(params.length!=0){
 			dataBaseNameNow = params[0].toString();
 		}
@@ -645,15 +650,18 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 				int indexStart = StringIndex.indexOf(dataBaseUrlNow,"/" ,3);
 				int indexEnd = dataBaseUrlNow.indexOf("?");
 				dataBaseNameNow=dataBaseUrlNow.substring(indexStart+1,indexEnd);
+				sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.Columns WHERE table_name='"+tablename+"' AND table_schema='"+dataBaseNameNow+"'";
 			}
 			else if(dataBaseUrlNow.contains("oracle")){
 				int indexStart = dataBaseUrlNow.lastIndexOf(":");
 				dataBaseNameNow=dataBaseUrlNow.substring(indexStart+1);
+				sql = "SELECT column_name FROM user_tab_columns where table_name = upper('"+tablename+"')";
 			}
 			else if(dataBaseUrlNow.contains("postgresql")){
 				int indexStart = StringIndex.indexOf(dataBaseUrlNow,"/" ,3);
 				int indexEnd = dataBaseUrlNow.indexOf("?");
 				dataBaseNameNow=dataBaseUrlNow.substring(indexStart+1,indexEnd);
+				sql = "select column_name from information_schema.columns where table_schema='public' and table_name='"+tablename+"'";
 			}
 			else {
 				logger.info("-----没有匹配到数据库名，请在OneUpdate.java的100行增加数据库");
@@ -664,18 +672,18 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 			System.out.println("-----datasourceUrl2属性值为空，不能成功创建连接:"+datasourceUrl2);
 			System.exit(0);
 		}
-		String sql = "SELECT COLUMN_NAME,column_comment FROM INFORMATION_SCHEMA.Columns WHERE table_name='"+tablename+"' AND table_schema='"+dataBaseNameNow+"'";
 		System.out.println("-----sql625:"+sql);
-		List<HashMap> maplist = exectueQuery2(sql);
-		System.out.println("-----maplist:"+maplist);
-		Map<String,Object> map = new HashMap<>();
-		for(int i =0;i<maplist.size();i++){
-			String keyStr = maplist.get(i).get("COLUMN_NAME").toString();
-			String valueStr = maplist.get(i).get("column_comment").toString();
-			map.put(keyStr,valueStr);
+		List<HashMap> mysqlMapList = exectueQuery(sql);
+		//mysql [{COLUMN_NAME=id}, {COLUMN_NAME=name}, {COLUMN_NAME=password}]
+		//oracle //[{"COLUMN_NAME":"AID"},{"COLUMN_NAME":"IMG"},{"COLUMN_NAME":"LINK"},{"COLUMN_NAME":"TITLE"}]
+		System.out.println("-----maplist:"+mysqlMapList);
+		List arrayList = new ArrayList();
+		for(int i =0;i<mysqlMapList.size();i++){
+			String keyStr = mysqlMapList.get(i).get("COLUMN_NAME").toString();
+			arrayList.add(keyStr);
 		}
-		System.out.println("-----map:"+map);
-		return map;
+		System.out.println("-----arrayList:"+arrayList);
+		return arrayList;
 	}
 	//	只关闭连接
 	public void closeConn(){

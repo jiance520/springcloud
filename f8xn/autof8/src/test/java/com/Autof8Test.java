@@ -28,8 +28,8 @@ public class Autof8Test {
     private static final Logger logger = LoggerFactory.getLogger(Autof8Test.class);
     @Autowired
     private Configf8xn configf8xn;
-    @Autowired
-    private  JdbcUtil jdbcUtil;
+//    @Autowired
+//    private  JdbcUtil jdbcUtil;
     @Autowired
     private IT_userService it_userService;
     @Test

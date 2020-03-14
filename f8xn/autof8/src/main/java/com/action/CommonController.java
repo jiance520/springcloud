@@ -6,6 +6,7 @@ import com.utils.JdbcUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,8 @@ public class CommonController implements ServletContextAware {
     private static String primarynameKey = "pidnamedjj";
     @Autowired
     private JdbcUtil jdbcUtil;
+    @Autowired
+    private StringRedisTemplate redisTemplate;
     //slf4j与log4j、log4j2:https://blog.csdn.net/HarderXin/article/details/80422903?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
     //Spring Boot 日志配置(超详细),https://blog.csdn.net/Inke88/article/details/75007649?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
     //SpringBoot 项目中使用Log4j2详细（避坑） https://blog.csdn.net/RyanDon/article/details/82589989
@@ -68,29 +71,33 @@ public class CommonController implements ServletContextAware {
         String datasourceUrldjj = request.getParameter("datasourceUrldjj");
         String userNamedjj = request.getParameter("userNamedjj");
         String passworddjj = request.getParameter("passworddjj");
+
+        List<HashMap> listMap = new ArrayList<>();
+        String sql = "select * from "+tablename;
         if(!"".equals(driverNamedjj)&&driverNamedjj!=null&&!"".equals(datasourceUrldjj)&&datasourceUrldjj!=null&&!"".equals(userNamedjj)&&userNamedjj!=null&&!"".equals(passworddjj)&&passworddjj!=null){
-            jdbcUtil = new JdbcUtil(driverNamedjj,datasourceUrldjj,userNamedjj,passworddjj);
+            jdbcUtil.setDriverName(driverNamedjj);
+            jdbcUtil.setDatasourceUrl(datasourceUrldjj);
+            jdbcUtil.setUserName(userNamedjj);
+            jdbcUtil.setPassword(passworddjj);
+            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            listMap = jdbcUtil.exectueQuery(sql);
+            System.out.println("-----listMap:"+listMap);
         }
-
-        if(tablename==null||"".equals(tablename)){
-            backStr="tablename为空";
+        else{
+            System.out.println("-----2jdbcUtil.toString:"+jdbcUtil.toString());
+            listMap = jdbcUtil.exectueQuery(sql);
         }
-       else{
-            String sql = "select * from "+tablename;
-
-            List<HashMap> hashMaps = jdbcUtil.exectueQuery2(sql);
-            backStr= JSON.toJSONString(hashMaps);
-        }
-        return backStr;
+        return JSON.toJSONString(listMap);
     }
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/selectOne",produces = "application/json;chart=UTF-8")
     public String selectOne(HttpServletRequest request,@RequestParam(required = false) Map<String,Object> params){
-        System.out.println("-----params:"+params);
+        System.out.println("-----params92:"+params);
         String tablename = request.getParameter(tablenameKey);
         String primaryname = request.getParameter(primarynameKey+1);
         String primaryval = request.getParameter(primaryname);
+
         HashMap hashMaps = null;
 
         String driverNamedjj = request.getParameter("driverNamedjj");
@@ -98,6 +105,9 @@ public class CommonController implements ServletContextAware {
         String userNamedjj = request.getParameter("userNamedjj");
         String passworddjj = request.getParameter("passworddjj");
         String sql = "SELECT * FROM "+tablename+" WHERE "+primaryname+" = "+primaryval;
+
+//        String sendValue = redisTemplate.opsForValue().get("redisPassworddjj");//opsForValue()获取缓存。再get获取指定的key
+
         if(!"".equals(driverNamedjj)&&driverNamedjj!=null&&!"".equals(datasourceUrldjj)&&datasourceUrldjj!=null&&!"".equals(userNamedjj)&&userNamedjj!=null&&!"".equals(passworddjj)&&passworddjj!=null){
             //为了保存注入bean里的属性值，永远不要新建JdbcUtil对象，只用set/get处理属性。
             //静态属性值是所有实例共享。
@@ -109,6 +119,7 @@ public class CommonController implements ServletContextAware {
             jdbcUtil.setPassword(passworddjj);
             System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
             hashMaps = jdbcUtil.queryOne(sql);
+            System.out.println("-----hashMaps122:"+hashMaps);
         }
         else{
             //推荐使用此方法。
@@ -116,6 +127,7 @@ public class CommonController implements ServletContextAware {
             //调用动态的方法，使用动态的属性，动态的属性值可以通过bean获取配置文件值
             System.out.println("-----2jdbcUtil.toString:"+jdbcUtil.toString());
             hashMaps = jdbcUtil.queryOne2(sql);
+            System.out.println("-----hashMap130s:"+hashMaps);
         }
         return JSON.toJSONString(hashMaps);
     }
@@ -295,7 +307,7 @@ public class CommonController implements ServletContextAware {
         }
         return JSON.toJSONString(i);//return JSONSerializer.toJSON(json);
     }
-
+    //接收sql语句，执行查询
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/exectueQueryAction",produces = "application/json;chart=UTF-8")
@@ -305,7 +317,7 @@ public class CommonController implements ServletContextAware {
         String datasourceUrldjj = request.getParameter("datasourceUrldjj");
         String userNamedjj = request.getParameter("userNamedjj");
         String passworddjj = request.getParameter("passworddjj");
-        String sql = request.getParameter("exectueQuerySql");
+        String sql = request.getParameter("exectueSql");
         List<HashMap> arrayList = new ArrayList<>();
         if(!"".equals(driverNamedjj)&&driverNamedjj!=null&&!"".equals(datasourceUrldjj)&&datasourceUrldjj!=null&&!"".equals(userNamedjj)&&userNamedjj!=null&&!"".equals(passworddjj)&&passworddjj!=null){
             jdbcUtil.setDriverName(driverNamedjj);
@@ -317,9 +329,35 @@ public class CommonController implements ServletContextAware {
         }
         else{
             System.out.println("-----2jdbcUtil.toString:"+jdbcUtil.toString());
-            arrayList = jdbcUtil.exectueQuery(sql);
+            arrayList = jdbcUtil.exectueQuery2(sql);
         }
         return JSON.toJSONString(arrayList);//return JSONSerializer.toJSON(json);
+    }
+    //接收sql语句，执行增删改
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/executeUpdateAction",produces = "application/json;chart=UTF-8")
+    public String executeUpdateAction(HttpServletRequest request,@RequestParam(required = false) Map<String,Object> params) {
+        System.out.println("-----params:" + params);
+        String driverNamedjj = request.getParameter("driverNamedjj");
+        String datasourceUrldjj = request.getParameter("datasourceUrldjj");
+        String userNamedjj = request.getParameter("userNamedjj");
+        String passworddjj = request.getParameter("passworddjj");
+        String sql = request.getParameter("exectueSql");
+        int i = 0;
+        if(!"".equals(driverNamedjj)&&driverNamedjj!=null&&!"".equals(datasourceUrldjj)&&datasourceUrldjj!=null&&!"".equals(userNamedjj)&&userNamedjj!=null&&!"".equals(passworddjj)&&passworddjj!=null){
+            jdbcUtil.setDriverName(driverNamedjj);
+            jdbcUtil.setDatasourceUrl(datasourceUrldjj);
+            jdbcUtil.setUserName(userNamedjj);
+            jdbcUtil.setPassword(passworddjj);
+            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            i = jdbcUtil.executeUpdate(sql);
+        }
+        else{
+            System.out.println("-----2jdbcUtil.toString:"+jdbcUtil.toString());
+            i = jdbcUtil.executeUpdate2(sql);
+        }
+        return JSON.toJSONString(i);//return JSONSerializer.toJSON(json);
     }
 
     @CrossOrigin
@@ -392,20 +430,20 @@ public class CommonController implements ServletContextAware {
         String datasourceUrldjj = request.getParameter("datasourceUrldjj");
         String userNamedjj = request.getParameter("userNamedjj");
         String passworddjj = request.getParameter("passworddjj");
-        Map<String,Object> map = new HashMap<>();
+        Object object = null;
         if(!"".equals(driverNamedjj)&&driverNamedjj!=null&&!"".equals(datasourceUrldjj)&&datasourceUrldjj!=null&&!"".equals(userNamedjj)&&userNamedjj!=null&&!"".equals(passworddjj)&&passworddjj!=null){
             jdbcUtil.setDriverName(driverNamedjj);
             jdbcUtil.setDatasourceUrl(datasourceUrldjj);
             jdbcUtil.setUserName(userNamedjj);
             jdbcUtil.setPassword(passworddjj);
             System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
-            map = jdbcUtil.columnListMysql(tabnamedjj);
+            object = jdbcUtil.columnListMysql(tabnamedjj);
         }
         else{
             System.out.println("-----2jdbcUtil.toString:"+jdbcUtil.toString());
-            map = jdbcUtil.columnListMysql2(tabnamedjj);
+            object = jdbcUtil.columnListMysql2(tabnamedjj);
         }
-        return JSON.toJSONString(map);//return JSONSerializer.toJSON(json);
+        return JSON.toJSONString(object);//return JSONSerializer.toJSON(json);
     };
     public static void main(String[] args) throws Exception {
 //        LoginController loginController = new LoginController();
