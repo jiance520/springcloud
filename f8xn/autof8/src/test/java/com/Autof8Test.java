@@ -14,6 +14,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.junit.runner.RunWith;
 import org.junit.*;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 //SpringJUnit支持，由此引入Spring-Test框架支持！
 @RunWith(SpringRunner.class)
@@ -28,26 +32,18 @@ public class Autof8Test {
     private static final Logger logger = LoggerFactory.getLogger(Autof8Test.class);
     @Autowired
     private Configf8xn configf8xn;
-//    @Autowired
-//    private  JdbcUtil jdbcUtil;
+    @Autowired
+    private  JdbcUtil jdbcUtil;
     @Autowired
     private IT_userService it_userService;
+    //只要有@Test，就可以执行简单的测试。
     @Test
     @Transactional
     @Rollback
-    public void contextLoads() {
+    public void contextLoads() throws FileNotFoundException {
         //测试前，一定要注入Bean,不包括JdbcUtil
         String name = "tom";
         String password = "123";
-        //String sql = "INSERT INTO t_user VALUES(2,?,?)";
-        //String sql = "INSERT INTO t_user VALUES(2,\"tom\",\"123\")";
-        //int i = jdbcUtil.executeUpdate2(sql,name,password);
-        //int i = jdbcUtil.executeUpdate2(sql);
-//        System.out.println("-----i:"+i);
-//        Object object = jdbcUtil.exectueQuery2("select * from t_user");
-//        logger.debug("--logger---test:"+object);
-//        System.out.println("---test:"+object);
-//        System.out.println("---getContextPath:"+configf8xn.getContextPath());
     }
 
 }

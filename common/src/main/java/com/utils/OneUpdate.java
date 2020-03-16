@@ -52,7 +52,7 @@ public class OneUpdate {
     private String generatorPath = "D:/workspace/idea/springcloud/f8xn/src/resources/mybatisGenerator/";// D:/workspace/idea/springcloud/f8xn/src/resources/mybatisGenerator/，不能是路径\\
     private String jarMybatis = "mybatis-generator-core-1.3.2.jar";
     //private URL oneUpdateURL = "file:/D:/workspace/idea/springcloud/f8xn/autof8/target/classes/com/utils/";
-    private URL oneUpdateURL = OneUpdate.class.getResource("");//当前类或utils所在的本地target中的URL。在当前调用类的同一路径下查找该资源""
+    private URL oneUpdateURL = OneUpdate.class.getResource("");//=this.getClass().getResource("/").toString();当前类或utils所在的本地target中的URL。在当前调用类的同一路径下查找该资源""
     private String oneUpdatePath = "";
     //private String oneUpdatePath = "file:/D:/workspace/idea/springcloud/f8xn/autof8/target/classes/com/utils/";//项目目录file /x:/xxx/target/classes/com/utils/
     private boolean flagDel = false;//重构是否删除原来的dao、entity、mapper.xml。false不删除

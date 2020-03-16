@@ -37,7 +37,7 @@ import java.util.*;
 @Component
 public class JdbcUtil {//工具类，针对不同的数据库，使用同样的jdbc方法。
 	private static final Logger logger = LoggerFactory.getLogger(JdbcUtil.class);
-	//private static Logger logger = Logger.getLogger(JdbcUtil.class.getName());
+//	private static Logger logger = Logger.getLogger(JdbcUtil.class.getName());
 	//使用@Value取值，可以读取任意yml或properties格式的属性!，当前类必须加注解被扫描，注解的属性不能是static或final。
 	//JdbcUtil类被new新建了实例，而没有在使用@Autowired(有效!重点！),
 	private String driverName = "com.mysql.jdbc.Driver";//
