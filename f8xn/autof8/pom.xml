@@ -160,6 +160,12 @@
       <artifactId>postgresql</artifactId>
       <version>42.1.1</version>
     </dependency>
+    <!--爬虫，阿里巴巴连接池druid，包含用于对象字符串转换的fastjson-->
+    <!--<dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.10</version>
+    </dependency>-->
   </dependencies>
 
   <build>

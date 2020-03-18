@@ -144,33 +144,33 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 
 	//使用当前静态属性值，得到连接，所有的其它方法中都调用了连接。
 	public Connection getConn(){
-		if(conn == null){
-			try {
-				logger.debug("开始执行");
-				Class cc = Class.forName(driverName);
-				logger.debug("加载驱动成功");
-				conn = DriverManager.getConnection(datasourceUrl, userName, password);
-				logger.debug("连接成功");
-			} catch (Exception e) {
-				logger.debug("连接失败");
-				e.printStackTrace();
-			}
+		/*if(conn == null){
+		}*/
+		try {
+			logger.debug("开始执行");
+			Class cc = Class.forName(driverName);
+			logger.debug("加载驱动成功");
+			conn = DriverManager.getConnection(datasourceUrl, userName, password);
+			logger.debug("连接成功");
+		} catch (Exception e) {
+			logger.debug("连接失败");
+			e.printStackTrace();
 		}
 		return conn;
 	}
 	//使用配置文件的动态属性值获取连接
 	public Connection getConn2(){
-		if(conn == null){
-			try {
-				logger.debug("开始执行");
-				Class cc = Class.forName(driverName2);
-				logger.debug("加载驱动成功");
-				conn = DriverManager.getConnection(datasourceUrl2, userName2, password2);
-				logger.debug("连接成功");
-			} catch (Exception e) {
-				logger.debug("连接失败");
-				e.printStackTrace();
-			}
+		/*if(conn == null){
+		}*/
+		try {
+			logger.debug("开始执行");
+			Class cc = Class.forName(driverName2);
+			logger.debug("加载驱动成功");
+			conn = DriverManager.getConnection(datasourceUrl2, userName2, password2);
+			logger.debug("连接成功");
+		} catch (Exception e) {
+			logger.debug("连接失败");
+			e.printStackTrace();
 		}
 		return conn;
 	}

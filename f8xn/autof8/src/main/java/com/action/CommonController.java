@@ -16,6 +16,8 @@ import org.springframework.web.context.ServletContextAware;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 
 @Controller
@@ -445,6 +447,34 @@ public class CommonController implements ServletContextAware {
         }
         return JSON.toJSONString(object);//return JSONSerializer.toJSON(json);
     };
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/testActionConnParams",produces = "application/json;chart=UTF-8")
+    public String testActionConnParams(HttpServletRequest request, @RequestParam(required=false) Map<String,Object> params){
+        System.out.println("-----test452:"+params);
+        Connection connection = jdbcUtil.getConn();
+        Connection connection2 = jdbcUtil.getConn2();
+        if(connection==null&&connection2==null){
+            params.put("conn","数据库连接失败");
+        }else {
+            if(connection!=null){
+                params.put("getConn","数据库连接正常，连接的是："+jdbcUtil.getDatasourceUrl());
+            }
+            if(connection2!=null){
+                params.put("getConn2","数据库连接正常，连接的是："+jdbcUtil.getDatasourceUrl2());
+            }
+            try {
+                connection.close();
+                connection = null;
+                connection2.close();
+                connection2 = null;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        jdbcUtil.closeConn();
+        return JSON.toJSONString(params);
+    }
     public static void main(String[] args) throws Exception {
 //        LoginController loginController = new LoginController();
 //        loginController.action();

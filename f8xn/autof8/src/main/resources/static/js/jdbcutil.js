@@ -19,7 +19,7 @@ let acttypedjjcookie = getCookie("acttypedjjcookie");
 // delCookie("acttypedjjcookie");
 
 $(document).ready(function () {
-    // alert(1)
+    //alert(1);
     //初始化，赋值,必须放在ready()内，否则报错属性为null。
     if(driverNamedjjcookie!=null&&driverNamedjjcookie!=false&&driverNamedjjcookie!="undefined"){
         document.getElementById("driverNamedjj").value=driverNamedjjcookie;
@@ -97,7 +97,7 @@ function ajaxForm() {
 });*/
 //只能有一个window.onload，多个没反应,但跟ready()不冲突。
 window.onload=()=>{
-
+    //alert(222);//如果没反应，重启电脑，清理垃圾，重启idea和浏览器，多次刷新。
     //方式二(推荐)form外的button按钮点击事件，ajax不跳转提交。
     $('.ajax2').click(()=>{
         ajaxForm();
@@ -138,9 +138,10 @@ window.onload=()=>{
                 }*/
             },
             success:function(data){
-                console.log("ajax-data:"+JSON.stringify(data));
+                let html = JSON.stringify(data,null, '  '); //'  '可以是空格，也可以是数字
+                console.log("ajax-data:"+html);
                 document.getElementById(httpApi.id).innerHTML=`接口地址:http://www.f8xn.top:8081/${pronamedjj}/${acttypedjj}`; //给节点赋值。
-                document.getElementById(datavalue.id).innerHTML="返回数据:"+JSON.stringify(data); //给节点赋值。
+                document.getElementById(datavalue.id).innerHTML=`返回数据：<pre>${html}</pre>`; //给节点赋值。
                 //后端Map+request.getParameter能取new FormData($(formid)[0])里的值;
                 //提交表单上传文件，后端可以使用MultipartFile excelfiledjj接收。
             }
@@ -258,7 +259,6 @@ window.onload=()=>{
     }).mouseout(function () {
         $("#contextdetail").hide();
     });
-
     //查询
     $("#exectueQueryAction").click(function () {
         ajaxForm();
@@ -279,9 +279,9 @@ window.onload=()=>{
             processData:false,
             contentType:false,
             success:function(data){
-                console.log("ajax-data:"+JSON.stringify(data));
-                let html = JSON.stringify(data);
-                document.getElementById(datavalue.id).value="返回数据："+html;
+                let html = JSON.stringify(data,null, '  '); //'  '可以是空格，也可以是数字
+                console.log("ajax-data:"+html);
+                document.getElementById(datavalue.id).value=`返回数据：<pre>${html}</pre>`;
                 document.getElementById(httpApi.id).value="接口地址：http://www.f8xn.top:8081/"+pronamedjj+"/exectueQueryAction";
                 //document.getElementById(datavalue.id).innerHTML=html;
                 //$("#t1").text("AAA");
@@ -311,9 +311,9 @@ window.onload=()=>{
             processData:false,
             contentType:false,
             success:function(data){
-                console.log("ajax-data:"+JSON.stringify(data));
-                let html = JSON.stringify(data);
-                document.getElementById(datavalue.id).value="返回数据："+html;
+                let html = JSON.stringify(data,null, '  '); //'  '可以是空格，也可以是数字
+                console.log("ajax-data:"+html);
+                document.getElementById(datavalue.id).value=`返回数据：<pre>${html}</pre>`;
                 document.getElementById(httpApi.id).value="接口地址：http://www.f8xn.top:8081/"+pronamedjj+"/executeUpdateAction";
                 //document.getElementById(datavalue.id).innerHTML=html;
                 //$("#t1").text("AAA");
@@ -322,6 +322,34 @@ window.onload=()=>{
         });
     }).mouseover(function () {
         document.getElementById(httpApi.id).value="增删改接口地址：http://www.f8xn.top:8081/autof8/executeUpdateAction";
+    });
+    //测试接口和数据库连接
+    $("#testActionConnParams").click(function () {
+        ajaxForm();
+        let pronamedjj= document.getElementById("pronamedjj").value;
+        let exectueSql= document.getElementById("exectueSql").value;
+        let formData = new FormData($("#formsignin")[0]);
+        formData.append("exectueSql",exectueSql);
+        $.ajax({
+            type:"POST",
+            // url:"/"+pronamedjj+"/testActionConnParams",
+            url:"/autof8/testActionConnParams",
+            data:formData,
+            async:false,
+            processData:false,
+            contentType:false,
+            success:function(data){
+                let html = JSON.stringify(data,null, '  '); //'  '可以是空格，也可以是数字
+                console.log("ajax-data:"+html);
+                document.getElementById(datavalue.id).value=`返回数据：<pre>${html}</pre>`;
+                document.getElementById(httpApi.id).value="接口地址：http://www.f8xn.top:8081/"+pronamedjj+"/testActionConnParams";
+                //document.getElementById(datavalue.id).innerHTML=html;
+                //$("#t1").text("AAA");
+                //$("#t2").val("BBB");
+            }
+        });
+    }).mouseover(function () {
+        document.getElementById(httpApi.id).value="测试接口和数据库连接：http://www.f8xn.top:8081/autof8/testActionConnParams";
     });
 
 };
@@ -355,20 +383,5 @@ function deleterow(e) {
     e.parentElement.parentElement.remove();
 }
 
-//根据textarea 标签内容自适应高度，只回车有效
-// $(function(){
-//     $.fn.autoHeight = function(){
-//         function autoHeight(elem){
-//             elem.style.height = 'auto';
-//             elem.scrollTop = 0; //防抖动
-//             elem.style.height = elem.scrollHeight + 'px';
-//         }
-//         this.each(function(){
-//             autoHeight(this);
-//             $(this).on('keyup', function(){
-//                 autoHeight(this);
-//             });
-//         });
-//     };
-//     $('textarea').autoHeight();
-// });
+
+//===========================================
