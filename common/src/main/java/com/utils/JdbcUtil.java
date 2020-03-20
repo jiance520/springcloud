@@ -1,6 +1,7 @@
 package com.utils;
 
 
+import com.alibaba.druid.pool.DruidDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -174,6 +175,39 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		}
 		return conn;
 	}
+	//使用druid数据源
+	public Connection getDruidConn(){
+		logger.debug("开始执行");
+		DruidDataSource druidDataSource = new DruidDataSource();
+		druidDataSource.setDriverClassName(driverName);
+		druidDataSource.setUrl(datasourceUrl);
+		druidDataSource.setUsername(userName);
+		druidDataSource.setPassword(password);
+		try {
+			conn=druidDataSource.getConnection();
+			logger.debug("连接成功");
+		} catch (SQLException e) {
+			logger.debug("连接失败");
+			e.printStackTrace();
+		}
+		return conn;
+	}
+	public Connection getDruidConn2(){
+		logger.debug("开始执行");
+		DruidDataSource druidDataSource = new DruidDataSource();
+		druidDataSource.setDriverClassName(driverName2);
+		druidDataSource.setUrl(datasourceUrl2);
+		druidDataSource.setUsername(userName2);
+		druidDataSource.setPassword(password2);
+		try {
+			conn=druidDataSource.getConnection();
+			logger.debug("连接成功");
+		} catch (SQLException e) {
+			logger.debug("连接失败");
+			e.printStackTrace();
+		}
+		return conn;
+	}
 	  /**
      * insert update delete SQL语句的执行的统一方法
      * @param sql SQL语句
@@ -208,7 +242,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		return affectedLine;
 	}
 	public int executeUpdate2(String sql,Object... params){//String...比Object[]更方便，直接传任意个参数
-		conn = getConn2();
+		conn = getDruidConn2();
 		int affectedLine = 0;// 受影响的行数
 		try {
 			logger.debug("开始更新");
@@ -277,7 +311,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		HashMap<String,Object> map = null;
 		ResultSetMetaData rsmd = null;
 		int columnCount = 0;
-		conn = getConn2();
+		conn = getDruidConn2();
 		try {
 			logger.debug("开始查询一个结果");
 			pst = conn.prepareStatement(sql);
@@ -330,7 +364,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		return rst;//不能关闭资源，否则返回的rst是null
 	}
 	public ResultSet executeQueryRS2(String sql,Object... params){
-		conn = getConn2();
+		conn = getDruidConn2();
 		try {
 			logger.debug("开始查询结果集");
 			pst = conn.prepareStatement(sql);
@@ -475,7 +509,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 		HashMap<String,Object> map = null;
 		ResultSetMetaData rsmd = null;
 		int columnCount = 0;
-		conn = getConn2();
+		conn = getDruidConn2();
 		try {
 			logger.debug("开始调用过程");
 			cst = conn.prepareCall(sql);//sql="{call procedurename(?,?...)}";
@@ -537,7 +571,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 	public Object queryFunction2(String sql,int outParamPos,int sqlType,Object... params){
 		Object obj = null;
 		int columnCount = 0;
-		conn = getConn2();
+		conn = getDruidConn2();
 		try {
 			logger.debug("开始调用函数");
 			cst = conn.prepareCall(sql);//sql="{?=call functionname(?,?...)}";

@@ -63,7 +63,8 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.47</version>
     </dependency>
-    <!-- 阿里巴巴连接池druid，包含用于对象字符串转换的fastjson -->
+    <!--c3p0、dbcp、druid三大数据库连接池/数据源,jdbc只提供一个接口。-->
+    <!-- 阿里巴巴连接池druid，包含用于对象字符串转换的fastjson ，如果没有配置type: com.alibaba.druid.pool.DruidDataSource，可有可无-->
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>druid</artifactId>
@@ -79,6 +80,9 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-logging</artifactId>
     </dependency>-->
+
+    <!--被thymeleaf修饰的页面一般是thymeleaf默认在resources>templates目录下，并且默认首页是index.html，默认端口8080-->
+    <!--controller return "index"页面时。必须加上才能渲染和显示-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -120,6 +124,24 @@
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
       <version>4.5.10</version>
+    </dependency>
+
+    <!-- seleniuminhq+chromedrive.exe(根治反爬)，直接运行在浏览器里面，就像真人在操作一样。 -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>3.141.59</version>
+    </dependency>
+    <dependency>
+      <groupId>com.codeborne</groupId>
+      <artifactId>phantomjsdriver</artifactId>
+      <version>1.4.4</version>
+    </dependency>
+    <!--xpath操作xml-->
+    <dependency>
+      <groupId>us.codecraft</groupId>
+      <artifactId>xsoup</artifactId>
+      <version>0.3.1</version>
     </dependency>
 
   </dependencies>

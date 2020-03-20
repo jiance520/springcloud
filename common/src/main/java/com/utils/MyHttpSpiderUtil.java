@@ -28,30 +28,30 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class MySpiderUtil {
-    private String uri = "http://localhost:8081/autof8/testActionConnParams";
-    private String proxyIp = "117.88.177.244";
-    private int proxyPort = 3000;
-    private String usernameKey = "all";
-    private String passwordKey = "pwd";
-    private String username = "jiance520";
-    private String password = "1983love";
-    private String uriScheme = "http";
-    private String uriHost = "localhost";
-    private String uriPort = "8081";
-    private String uriPath = "/autof8/testActionConnParams";
-    private String chartset = "UTF-8";
-    //GET无参：无帐户密码,不用登陆
-    public String getNoProxyNoLogin(String uri){
+//有很大局限性，
+//@Component
+public class MyHttpSpiderUtil {
+    static String uri = "http://localhost:8081/autof8/testActionConnParams";
+    static String proxyIp = "117.88.177.244";
+    static int proxyPort = 3000;
+    static String usernameKey = "all";
+    static String passwordKey = "pwd";
+    static String username = "jiance520";
+    static String password = "1983love";
+    static String uriScheme = "http";
+    static String uriHost = "localhost";
+    static String uriPort = "8081";
+    static String uriPath = "/autof8/testActionConnParams";
+    static String chartset = "UTF-8";
+    public static String getNoProxyNoLogin(String uri){ //GET无参：无帐户密码,不用登陆
         if(uri!=null&&!"".equals(uri)){
-            this.uri=uri;
+            MyHttpSpiderUtil.uri=uri;
         }
         String str = null;
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         // 创建Get请求
-        HttpGet httpGet = new HttpGet(this.uri);
+        HttpGet httpGet = new HttpGet(MyHttpSpiderUtil.uri);
         // 响应模型
         CloseableHttpResponse response = null;
         try {
@@ -89,10 +89,9 @@ public class MySpiderUtil {
         }
         return str;
     }
-    //GET有参：帐户密码登陆，方式一：直接拼接URL
-    public String getNoProxyLogin(){
+    public static String getNoProxyLogin(){ //GET有参：帐户密码登陆，方式一：直接拼接URL
         if(uri!=null&&!"".equals(uri)){
-            this.uri=uri;
+            MyHttpSpiderUtil.uri=uri;
         }
         String str = null;
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
@@ -163,8 +162,7 @@ public class MySpiderUtil {
         }
         return str;
     }
-    //GET有参：帐户密码登陆，方式二：使用URI获得HttpGet
-    public String getNoProxyLoginUri(){
+    public static String getNoProxyLoginUri(){ //GET有参：帐户密码登陆，方式二：使用URI获得HttpGet
         String str = null;
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -239,15 +237,14 @@ public class MySpiderUtil {
         }
         return str;
     }
-    //GET 有参，使用代理,无帐户密码,不用登陆
-    public String getProxyNoLogin(String proxyIp,int proxyPort,String uri){
+    public static String getProxyNoLogin(String proxyIp,int proxyPort,String uri){ //GET 有参，使用代理,无帐户密码,不用登陆
         if(uri!=null&&!"".equals(uri)){
-            this.uri=uri;
+            MyHttpSpiderUtil.uri=uri;
         }
         if(proxyIp!=null&&!"".equals(proxyIp)){
-            this.proxyIp=proxyIp;
+            MyHttpSpiderUtil.proxyIp=proxyIp;
         }
-        this.proxyPort=proxyPort;
+        MyHttpSpiderUtil.proxyPort=proxyPort;
         String str = null;
         //创建httpClient对象
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -288,12 +285,11 @@ public class MySpiderUtil {
         System.out.println("-----str:"+str);
         return str;
     }
-    //GET 有参，使用代理,帐户密码,登陆
-    public String getProxyLoginUri(String proxyIp,int proxyPort){
-        if(proxyIp!=null&&!"".equals(proxyIp)){
-            this.proxyIp=proxyIp;
+    public static String getProxyLoginUri(String proxyIp,int proxyPort){
+        if(proxyIp!=null&&!"".equals(proxyIp)){ //GET 有参，使用代理,帐户密码,登陆
+            MyHttpSpiderUtil.proxyIp=proxyIp;
         }
-        this.proxyPort=proxyPort;
+        MyHttpSpiderUtil.proxyPort=proxyPort;
         String str = null;
         //创建httpClient对象
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -352,10 +348,9 @@ public class MySpiderUtil {
         System.out.println("-----str:"+str);
         return str;
     }
-    //POST传递普通(登陆)，方式与GET有参一样即可
-    public String postNoProxyLogin(String uri){
+    public static String postNoProxyLogin(String uri){ //POST传递普通(登陆)，方式与GET有参一样即可
         if(uri!=null&&!"".equals(uri)){
-            this.uri=uri;
+            MyHttpSpiderUtil.uri=uri;
         }
         String str = null;
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
@@ -428,15 +423,14 @@ public class MySpiderUtil {
         }
         return str;
     }
-    //POST 代理+登陆 表单提交
-    public String postProxyLoginUrl(String proxyIp,int proxyPort,String uri){
+    public static String postProxyLoginUrl(String proxyIp,int proxyPort,String uri){ //POST 代理+登陆 表单提交
         if(uri!=null&&!"".equals(uri)){
-            this.uri=uri;
+            MyHttpSpiderUtil.uri=uri;
         }
         if(proxyIp!=null&&!"".equals(proxyIp)){
-            this.proxyIp=proxyIp;
+            MyHttpSpiderUtil.proxyIp=proxyIp;
         }
-        this.proxyPort=proxyPort;
+        MyHttpSpiderUtil.proxyPort=proxyPort;
         String str = null;
         //创建httpClient对象
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -471,15 +465,14 @@ public class MySpiderUtil {
         System.out.println("-----str:"+str);
         return  str;
     }
-    //POST 代理+不登陆
-    public String postProxyNoLogin(String proxyIp,int proxyPort,String uri){
+    public static String postProxyNoLogin(String proxyIp,int proxyPort,String uri){ //POST 代理+不登陆
         if(uri!=null&&!"".equals(uri)){
-            this.uri=uri;
+            MyHttpSpiderUtil.uri=uri;
         }
         if(proxyIp!=null&&!"".equals(proxyIp)){
-            this.proxyIp=proxyIp;
+            MyHttpSpiderUtil.proxyIp=proxyIp;
         }
-        this.proxyPort=proxyPort;
+        MyHttpSpiderUtil.proxyPort=proxyPort;
         String str = null;
         //创建httpClient对象
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -507,10 +500,9 @@ public class MySpiderUtil {
         System.out.println("-----str:"+str);
         return  str;
     }
-    //POST有参(对象参数)
-    public String postObjectNoProxyNoLogin(String uri,T objectBean){
+    public static String postObjectNoProxyNoLogin(String uri,T objectBean){ //POST有参(对象参数)
         if(uri!=null&&!"".equals(uri)){
-            this.uri=uri;
+            MyHttpSpiderUtil.uri=uri;
         }
         String str = null;
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
@@ -566,8 +558,7 @@ public class MySpiderUtil {
         }
         return str;
     }
-    //POST有参(普通参数(登陆) + 对象参数)
-    public String postObjectNoProxyLoginUri(T objectBean){
+    public static String postObjectNoProxyLoginUri(T objectBean){ //POST有参(普通参数(登陆) + 对象参数)
         String str = null;
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -637,12 +628,11 @@ public class MySpiderUtil {
         }
         return str;
     }
-    //POST有参(普通参数(登陆) + 对象参数 + 代理)
-    public String postObjectProxyLoginUri(String proxyIp,int proxyPort,T objectBean){
+    public static String postObjectProxyLoginUri(String proxyIp,int proxyPort,T objectBean){ //POST有参(普通参数(登陆) + 对象参数 + 代理)
         if(proxyIp!=null&&!"".equals(proxyIp)){
-            this.proxyIp=proxyIp;
+            MyHttpSpiderUtil.proxyIp=proxyIp;
         }
-        this.proxyPort=proxyPort;
+        MyHttpSpiderUtil.proxyPort=proxyPort;
         String str = null;
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();

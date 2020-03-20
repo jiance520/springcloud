@@ -453,7 +453,7 @@ public class CommonController implements ServletContextAware {
     public String testActionConnParams(HttpServletRequest request, @RequestParam(required=false) Map<String,Object> params){
         System.out.println("-----test452:"+params);
         Connection connection = jdbcUtil.getConn();
-        Connection connection2 = jdbcUtil.getConn2();
+        Connection connection2 = jdbcUtil.getDruidConn2();
         if(connection==null&&connection2==null){
             params.put("conn","数据库连接失败");
         }else {
@@ -461,7 +461,7 @@ public class CommonController implements ServletContextAware {
                 params.put("getConn","数据库连接正常，连接的是："+jdbcUtil.getDatasourceUrl());
             }
             if(connection2!=null){
-                params.put("getConn2","数据库连接正常，连接的是："+jdbcUtil.getDatasourceUrl2());
+                params.put("getDruidConn2","数据库连接正常，连接的是："+jdbcUtil.getDatasourceUrl2());
             }
             try {
                 connection.close();

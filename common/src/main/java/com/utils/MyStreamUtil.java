@@ -12,7 +12,7 @@ import java.net.URLDecoder;
 //spider爬虫工具，爬取数据，数据流工具
 public class MyStreamUtil {
     //读取本地文件，返回字符串。
-    public static String strFilePathToStr(String filePath, Object... utf8Str){
+    public static String filePathToStr(String filePath, Object... utf8Str){
         FileReader fileReader = null;
         String backStr = null;
         BufferedReader bufferedReader = null;
@@ -48,6 +48,11 @@ public class MyStreamUtil {
             e.printStackTrace();
         }
         return backStr;
+    }
+    //读取本地resources下的文件名，返回字符串。
+    public static String resourcesFileNameToStr(String name, Object... utf8Str){
+        InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
+        return inputStreamToStr(inputStream);
     }
     //把字符输入流转为字符串
     public static String fileReaderToStr(FileReader fileReader, Object... utf8Str){
