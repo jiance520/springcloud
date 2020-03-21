@@ -9,6 +9,7 @@
         <module name="autof8" />
         <module name="common" />
         <module name="configserver" />
+        <module name="buy51cto" />
         <module name="apigateway" />
         <module name="productservice" />
         <module name="eurekaserver" />
@@ -19,6 +20,7 @@
     <bytecodeTargetLevel target="1.8">
       <module name="apigateway" target="1.8" />
       <module name="autof8" target="1.8" />
+      <module name="buy51cto" target="1.8" />
       <module name="common" target="1.8" />
       <module name="common (1) (f8xn)" target="1.8" />
       <module name="configserver" target="1.8" />
@@ -33,6 +35,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="apigateway" options="-parameters" />
       <module name="autof8" options="-parameters" />
+      <module name="buy51cto" options="-parameters" />
       <module name="common" options="-parameters" />
       <module name="common (1) (f8xn)" options="-parameters" />
       <module name="configserver" options="-parameters" />

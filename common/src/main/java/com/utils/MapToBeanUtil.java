@@ -107,7 +107,7 @@ public class MapToBeanUtil {
     public static <T> Object valToBeanVal(T bean, String beanField, T mapAttrValue) {
         if(mapAttrValue!=null&&beanField!=null&&!"".equals(beanField)&&!"".equals(mapAttrValue)){
             Class fieldType = mapAttrKeyType(bean,beanField);
-            System.out.println("-----fieldType:"+fieldType);
+            System.out.println("-----fieldType:"+fieldType);//-----fieldType:class [B:表示数据类型是二进制birary.
             if(fieldType.getSimpleName().equals("String")){
                 return (String)mapAttrValue;
             }

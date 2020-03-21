@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.CourseMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Course" >
+    <id column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="stitle" property="stitle" jdbcType="VARCHAR" />
+    <result column="snumman" property="snumman" jdbcType="BIGINT" />
+    <result column="sscore" property="sscore" jdbcType="REAL" />
+    <result column="sprice" property="sprice" jdbcType="REAL" />
+    <result column="sprice2" property="sprice2" jdbcType="REAL" />
+    <result column="shuodong" property="shuodong" jdbcType="VARCHAR" />
+    <result column="stime" property="stime" jdbcType="INTEGER" />
+    <result column="sauthor" property="sauthor" jdbcType="VARCHAR" />
+    <result column="sdetail" property="sdetail" jdbcType="VARCHAR" />
+    <result column="sdate" property="sdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sid, stitle, snumman, sscore, sprice, sprice2, shuodong, stime, sauthor, sdetail, 
+    sdate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from course
+    where sid = #{sid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from course
+    where sid = #{sid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Course" useGeneratedKeys="true" keyProperty="sid">
+    insert into course (sid, stitle, snumman, 
+      sscore, sprice, sprice2, shuodong, 
+      stime, sauthor, sdetail, 
+      sdate)
+    values (#{sid,jdbcType=INTEGER}, #{stitle,jdbcType=VARCHAR}, #{snumman,jdbcType=BIGINT}, 
+      #{sscore,jdbcType=REAL}, #{sprice,jdbcType=REAL}, #{sprice2,jdbcType=REAL}, #{shuodong,jdbcType=VARCHAR}, 
+      #{stime,jdbcType=INTEGER}, #{sauthor,jdbcType=VARCHAR}, #{sdetail,jdbcType=VARCHAR}, 
+      #{sdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Course" useGeneratedKeys="true" keyProperty="sid">
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="stitle != null" >
+        stitle,
+      </if>
+      <if test="snumman != null" >
+        snumman,
+      </if>
+      <if test="sscore != null" >
+        sscore,
+      </if>
+      <if test="sprice != null" >
+        sprice,
+      </if>
+      <if test="sprice2 != null" >
+        sprice2,
+      </if>
+      <if test="shuodong != null" >
+        shuodong,
+      </if>
+      <if test="stime != null" >
+        stime,
+      </if>
+      <if test="sauthor != null" >
+        sauthor,
+      </if>
+      <if test="sdetail != null" >
+        sdetail,
+      </if>
+      <if test="sdate != null" >
+        sdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="stitle != null" >
+        #{stitle,jdbcType=VARCHAR},
+      </if>
+      <if test="snumman != null" >
+        #{snumman,jdbcType=BIGINT},
+      </if>
+      <if test="sscore != null" >
+        #{sscore,jdbcType=REAL},
+      </if>
+      <if test="sprice != null" >
+        #{sprice,jdbcType=REAL},
+      </if>
+      <if test="sprice2 != null" >
+        #{sprice2,jdbcType=REAL},
+      </if>
+      <if test="shuodong != null" >
+        #{shuodong,jdbcType=VARCHAR},
+      </if>
+      <if test="stime != null" >
+        #{stime,jdbcType=INTEGER},
+      </if>
+      <if test="sauthor != null" >
+        #{sauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="sdetail != null" >
+        #{sdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="sdate != null" >
+        #{sdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Course" >
+    update course
+    <set >
+      <if test="stitle != null" >
+        stitle = #{stitle,jdbcType=VARCHAR},
+      </if>
+      <if test="snumman != null" >
+        snumman = #{snumman,jdbcType=BIGINT},
+      </if>
+      <if test="sscore != null" >
+        sscore = #{sscore,jdbcType=REAL},
+      </if>
+      <if test="sprice != null" >
+        sprice = #{sprice,jdbcType=REAL},
+      </if>
+      <if test="sprice2 != null" >
+        sprice2 = #{sprice2,jdbcType=REAL},
+      </if>
+      <if test="shuodong != null" >
+        shuodong = #{shuodong,jdbcType=VARCHAR},
+      </if>
+      <if test="stime != null" >
+        stime = #{stime,jdbcType=INTEGER},
+      </if>
+      <if test="sauthor != null" >
+        sauthor = #{sauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="sdetail != null" >
+        sdetail = #{sdetail,jdbcType=VARCHAR},
+      </if>
+      <if test="sdate != null" >
+        sdate = #{sdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Course" >
+    update course
+    set stitle = #{stitle,jdbcType=VARCHAR},
+      snumman = #{snumman,jdbcType=BIGINT},
+      sscore = #{sscore,jdbcType=REAL},
+      sprice = #{sprice,jdbcType=REAL},
+      sprice2 = #{sprice2,jdbcType=REAL},
+      shuodong = #{shuodong,jdbcType=VARCHAR},
+      stime = #{stime,jdbcType=INTEGER},
+      sauthor = #{sauthor,jdbcType=VARCHAR},
+      sdetail = #{sdetail,jdbcType=VARCHAR},
+      sdate = #{sdate,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=INTEGER}
+  </update>
+</mapper>

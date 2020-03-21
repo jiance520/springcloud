@@ -8,12 +8,13 @@
   <artifactId>f8xn</artifactId>
   <version>1.0-SNAPSHOT</version>
   <modules>
-    <module>eurekaserver</module>
-    <module>configserver</module>
-    <module>apigateway</module>
-    <module>productservice</module>
-    <module>orderservice</module>
-    <module>autof8</module>
+      <module>eurekaserver</module>
+      <module>configserver</module>
+      <module>apigateway</module>
+      <module>productservice</module>
+      <module>orderservice</module>
+      <module>autof8</module>
+      <module>buy51cto</module>
   </modules>
   <packaging>pom</packaging>
 
