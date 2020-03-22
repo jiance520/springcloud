@@ -78,6 +78,8 @@ mybatis:
     auto-mapping-behavior: full
     #解决spring boot整合mybatis时 返回map value为空字段不显示
     call-setters-on-nulls: true
+    #在控制台上打印sql语句
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   #可有可无的配置
   #引用类时，可简写，配置mapper.xml文件中，如com.entity.User在User,resultType="user"写成User
   type-aliases-package: com.entity
@@ -140,6 +142,7 @@ mybatis:
   configuration:
     auto-mapping-behavior: full
     call-setters-on-nulls: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-aliases-package: com.entity
 
 eureka:
@@ -197,6 +200,7 @@ mybatis:
   configuration:
     auto-mapping-behavior: full
     call-setters-on-nulls: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   type-aliases-package: com.entity
 
 eureka:

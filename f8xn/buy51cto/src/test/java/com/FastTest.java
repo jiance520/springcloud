@@ -12,6 +12,7 @@ import us.codecraft.xsoup.Xsoup;
 
 import javax.swing.plaf.IconUIResource;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,7 +54,12 @@ public class FastTest {
     }
     @Test
     public void test4() throws FileNotFoundException, InterruptedException {
-
+        Float aa = Float.parseFloat("0");
+        Float aa2 = Float.parseFloat("0.0");
+        Float aa3 = (float) 0.0;
+        Double aa5 = (double) 0;
+        Float aa6 = Float.valueOf("0.0");
+        System.out.println("-----aa3:"+aa3);
     }
 
 }

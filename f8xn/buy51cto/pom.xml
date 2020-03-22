@@ -89,7 +89,7 @@
     </dependency>
 
     <!--thymeleaf，th标签 -->
-    <!-- 也可在html中加<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml"> -->
+    <!-- 也可在html中加<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:buy51cto="http://www.w3.org/1999/xhtml"> -->
     <dependency>
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf</artifactId>

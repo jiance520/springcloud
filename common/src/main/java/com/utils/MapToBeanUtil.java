@@ -23,42 +23,44 @@ public class MapToBeanUtil {
     //入参newInstanceBean是类的对象，实例。可以是一个空对象 Userinfo userinfo = new Userinfo();!也可以是包反射获取的实例
     //Class<?> entityClass = Class.forName(comName+"."+entityName+"."+tableName);
     //Constructor<?> entityConstructor = entityClass.getDeclaredConstructor(); bean=entityConstructor.newInstance()
-    public static <T> Object backInstanceMapBean(T newInstanceBean, Map<String,Object> params){
+    public static <T> Object backInstanceMapBean(T newInstanceBean, Map<String,Object> paramsMap){
         Map<String,Object> beanMap = backInstanceBeanMap(newInstanceBean);//默认返回的mapkey是bean属性，小写+大写(假如字段含下划线)
+        //beanMap属性的值跟实例属性有关，可有可无。
         //遍历接收的paramsMap，再遍历beanMap，如果前者的key没有在后者里面，则从前者里面移除。
         try {
-            for(HashMap.Entry<String,Object> entry:params.entrySet()){
-                String mapAttrKey = null;//bigint1=field.getName();
-                String beanField = null;
+            for(HashMap.Entry<String,Object> paramsMapEntry:paramsMap.entrySet()){
+                String paramsMapAttrKey = null;//bigint1=field.getName();
+                String mapBeanField = null;
                 //System.out.println("-----mapAttrKey:"+mapAttrKey);
                 boolean flag = false;
                 for(HashMap.Entry<String,Object> beanEntry:beanMap.entrySet()){
-                    mapAttrKey = entry.getKey();
-                    String beanAttrKey = beanEntry.getKey();//bigint1=field.getName();
+                    paramsMapAttrKey = paramsMapEntry.getKey();
+                    String beanEntryKey = beanEntry.getKey();//bigint1=field.getName();
                     //System.out.println("-----beanEntry:"+beanEntry);
                     //beanEntry格式:aB，mapAttrKey格式“a_b
-                    if(beanAttrKey.contains("_")){
-                        System.out.println("-----类的属性不能包含下划线，大写代替下划线:"+beanAttrKey);
+                    if(beanEntryKey.contains("_")){
+                        System.out.println("-----类的属性不能包含下划线，大写代替下划线,退出程序:"+beanEntryKey);
+                        System.exit(0);
                     }
-                    beanField = mapKeyToField(mapAttrKey);
-                    if(beanField.equals(beanAttrKey)){//mapkey下划线转字母+mapkey大写转小写+小写,与bean原始属性进行比较
+                    mapBeanField = mapKeyToField(paramsMapAttrKey);//用于表中有下划线_的字段，转成属性中的带大写的驼峰名。
+                    if(mapBeanField.equals(beanEntryKey)){//mapkey下划线转字母+mapkey大写转小写+小写,与bean原始属性进行比较
                         flag = true;
                         break;
                     }
                 }
                 //如果params的key在对象属性中
                 if(flag){
-                    Object objectValue = entry.getValue();//11，默认全是String
-                    if(objectValue!=null){
+                    Object paramsMapValue = paramsMapEntry.getValue();//11，默认全是String
+                    if(paramsMapValue!=null){
                         //System.out.println("-----entry.getKey:"+mapAttrKey);
                         //System.out.println("-----objectValue:"+objectValue.toString());
-                        Field field = newInstanceBean.getClass().getDeclaredField(beanField);//公私有字段,不包括继承字段，mapAttrKey值可以为空，但必须包含在实体类的bean中，否则抛异常,中止执行！
+                        Field field = newInstanceBean.getClass().getDeclaredField(mapBeanField);//公私有字段,不包括继承字段，mapAttrKey值可以为空，但必须包含在实体类的bean中，否则抛异常,中止执行！
                         if(field!=null){
                             field.setAccessible(true);//设置可以访问和修改私有属性，包括final?
                             //System.out.println("-----field.getName():"+field.getName());
                             //System.out.println("-----fieldType.getSimpleName():"+fieldType.getSimpleName());//不能用于类型转换(short)1
                             //Object fieldParam = field.get(bean);//属性值不能为空才能返回其Object类型，再使用instanceof判断。
-                            field.set(newInstanceBean, valToBeanVal(newInstanceBean,beanField,objectValue));
+                            field.set(newInstanceBean, valToBeanVal(newInstanceBean,mapBeanField,paramsMapValue));
                             field.setAccessible(false);
                         }
                         else{
@@ -85,13 +87,13 @@ public class MapToBeanUtil {
     //实体对象bean转Map，接收前端的对象转存到map，用于模糊查询和传jsonObject.put("params",map);给前端,注意字段大小写
     //只返回下划线+小写。不返回大写。
     public static <T> Map backInstanceBeanMap(T newInstanceBean) {
-        Map map  = new HashMap();
+        Map hashMap  = new HashMap();
         Field[] fields = newInstanceBean.getClass().getDeclaredFields();
         for (Field field : fields) {
             try {
                 field.setAccessible(true);
                 String filedStr = field.getName();//属性名有可能是大写,而表中字段是下划线
-                map.put(filedStr,field.get(newInstanceBean));//默认bean中属性全小写
+                hashMap.put(filedStr,field.get(newInstanceBean));//默认bean中属性全小写，给Map添加key和value，如果实例属性有值，则map的value也有值。
                 field.setAccessible(false);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -99,19 +101,23 @@ public class MapToBeanUtil {
                 return null;
             }
         }
-        System.out.println("-----beanMap:"+map);
-        return map;
+        System.out.println("-----beanMap102有没有值,跟传入的实体有关:"+hashMap);
+        return hashMap;
     }
     //对map的key对应bean中的类型进行判断，如果匹配到类型，把map中key的值value进行转型，并返回，能转换字符串，或没匹配到返回原型T mapAttrValue。
     //入参必须是实体类的bean，不能是Class的bean。
-    public static <T> Object valToBeanVal(T bean, String beanField, T mapAttrValue) {
-        if(mapAttrValue!=null&&beanField!=null&&!"".equals(beanField)&&!"".equals(mapAttrValue)){
-            Class fieldType = mapAttrKeyType(bean,beanField);
-            System.out.println("-----fieldType:"+fieldType);//-----fieldType:class [B:表示数据类型是二进制birary.
-            if(fieldType.getSimpleName().equals("String")){
+    //唯一可能出错的地方。数字尽量全部传字符串！
+    public static <T> Object valToBeanVal(T newInstanceBean, String mapBeanField, T mapAttrValue) {
+        if(mapAttrValue!=null&&mapBeanField!=null&&!"".equals(mapBeanField)&&!"".equals(mapAttrValue)){
+            Class mapFieldType = mapAttrKeyType(newInstanceBean,mapBeanField);
+            System.out.println("-----mapBeanField:"+mapBeanField);
+            System.out.println("-----mapAttrValue:"+mapAttrValue);
+            System.out.println("-----mapFieldType:"+mapFieldType);//-----fieldType:class [B:表示数据类型是二进制birary.
+            System.out.println("-------------------------------------");
+            if(mapFieldType.getSimpleName().equals("String")){
                 return (String)mapAttrValue;
             }
-            else if(fieldType.getSimpleName().equals("Integer")){
+            else if(mapFieldType.getSimpleName().equals("Integer")){
                 if (mapAttrValue instanceof String) {
                     String value = (String) mapAttrValue;
                     return Integer.parseInt(value);
@@ -120,11 +126,11 @@ public class MapToBeanUtil {
                     return (Integer)mapAttrValue;
                 }
                 else{
-                    System.out.println("-----类型不匹配:"+fieldType.getSimpleName()+"!="+mapAttrValue.toString());
-                    return null;
+                    System.out.println("-----类型不匹配，返回原型:"+mapFieldType.getSimpleName()+"!="+mapAttrValue.toString());
+                    return mapAttrValue;
                 }
             }
-            else if(fieldType.getSimpleName().equals("Boolean")){
+            else if(mapFieldType.getSimpleName().equals("Boolean")){
                 if (mapAttrValue instanceof String) {
                     String value = (String) mapAttrValue;
                     return Boolean.parseBoolean(value);
@@ -133,11 +139,11 @@ public class MapToBeanUtil {
                     return (Boolean)mapAttrValue;
                 }
                 else{
-                    System.out.println("-----类型不匹配:"+fieldType.getSimpleName()+"!="+mapAttrValue.toString());
-                    return null;
+                    System.out.println("-----类型不匹配，返回原型:"+mapFieldType.getSimpleName()+"!="+mapAttrValue.toString());
+                    return mapAttrValue;
                 }
             }
-            else if(fieldType.getSimpleName().equals("Long")){
+            else if(mapFieldType.getSimpleName().equals("Long")){
                 if (mapAttrValue instanceof String) {
                     String value = (String) mapAttrValue;
                     return Long.parseLong(value);
@@ -146,11 +152,11 @@ public class MapToBeanUtil {
                     return (Long)mapAttrValue;
                 }
                 else{
-                    System.out.println("-----类型不匹配:"+fieldType.getSimpleName()+"!="+mapAttrValue.toString());
-                    return null;
+                    System.out.println("-----类型不匹配，返回原型:"+mapFieldType.getSimpleName()+"!="+mapAttrValue.toString());
+                    return mapAttrValue;
                 }
             }
-            else if(fieldType.getSimpleName().equals("Double")){
+            else if(mapFieldType.getSimpleName().equals("Double")){
                 if (mapAttrValue instanceof String) {
                     String value = (String) mapAttrValue;
                     return Double.parseDouble(value);
@@ -158,12 +164,15 @@ public class MapToBeanUtil {
                 else if (mapAttrValue instanceof Double) {
                     return (Double) mapAttrValue;
                 }
+                else if("0".equals(mapAttrValue.toString())){
+                    return (double) 0;
+                }
                 else{
-                    System.out.println("-----类型不匹配:"+fieldType.getSimpleName()+"!="+mapAttrValue.toString());
-                    return null;
+                    System.out.println("-----类型不匹配，返回原型:"+mapFieldType.getSimpleName()+"!="+mapAttrValue.toString());
+                    return mapAttrValue;
                 }
             }
-            else if(fieldType.getSimpleName().equals("Float")){
+            else if(mapFieldType.getSimpleName().equals("Float")){
                 if (mapAttrValue instanceof String) {
                     String value = (String) mapAttrValue;
                     return Float.parseFloat(value);
@@ -171,12 +180,18 @@ public class MapToBeanUtil {
                 else if (mapAttrValue instanceof Float) {
                     return (Float) mapAttrValue;
                 }
+                else if("0.0".equals(mapAttrValue.toString())){
+                    return (float)0.0;
+                }
+                else if("0".equals(mapAttrValue.toString())){
+                    return (float)0;
+                }
                 else{
-                    System.out.println("-----类型不匹配:"+fieldType.getSimpleName()+"!="+mapAttrValue.toString());
-                    return null;
+                    System.out.println("-----类型不匹配，返回原型:"+mapFieldType.getSimpleName()+"!="+mapAttrValue.toString());
+                    return mapAttrValue;
                 }
             }
-            else if(fieldType.getSimpleName().equals("Date")){
+            else if(mapFieldType.getSimpleName().equals("Date")){
                 if (mapAttrValue instanceof String) {
                     String value = (String) mapAttrValue;
                     return StrToDate.dateFormat(value,"20",true);
@@ -185,24 +200,30 @@ public class MapToBeanUtil {
                     return (Date) mapAttrValue;
                 }
                 else{
-                    System.out.println("-----类型不匹配:"+fieldType.getSimpleName()+"!="+mapAttrValue.toString());
-                    return null;
+                    System.out.println("-----类型不匹配，返回原型:"+mapFieldType.getSimpleName()+"!="+mapAttrValue.toString());
+                    return mapAttrValue;
                 }
             }
-            else if(fieldType.getSimpleName().equals("BigDecimal")){
+            else if(mapFieldType.getSimpleName().equals("BigDecimal")){
                 if (mapAttrValue instanceof String) {
                     String value = (String) mapAttrValue;
-                    return new BigDecimal(value);
+                    return new BigDecimal(value);//BigDecimal.valueOf(0.0)
                 }
                 else if (mapAttrValue instanceof BigDecimal) {
                     return (BigDecimal) mapAttrValue;
                 }
+                /*else if("0.0".equals(mapAttrValue.toString())){
+                    return BigDecimal.valueOf(0.0);
+                }
+                else if("0".equals(mapAttrValue.toString())){
+                    return BigDecimal.valueOf(0);
+                }*/
                 else{
-                    System.out.println("-----类型不匹配:"+fieldType.getSimpleName()+"!="+mapAttrValue.toString());
-                    return null;
+                    System.out.println("-----类型不匹配，返回原型:"+mapFieldType.getSimpleName()+"!="+mapAttrValue.toString());
+                    return mapAttrValue;
                 }
             }
-            else if(fieldType.getSimpleName().equals("Short")){
+            else if(mapFieldType.getSimpleName().equals("Short")){
                 if (mapAttrValue instanceof String) {
                     String value = (String) mapAttrValue;
                     return Short.parseShort(value);
@@ -211,11 +232,11 @@ public class MapToBeanUtil {
                     return (Short) mapAttrValue;
                 }
                 else{
-                    System.out.println("-----类型不匹配:"+fieldType.getSimpleName()+"!="+mapAttrValue.toString());
-                    return null;
+                    System.out.println("-----类型不匹配，返回原型:"+mapFieldType.getSimpleName()+"!="+mapAttrValue.toString());
+                    return mapAttrValue;
                 }
             }
-            else if(fieldType.getSimpleName().equals("Byte")){
+            else if(mapFieldType.getSimpleName().equals("Byte")){
                 if (mapAttrValue instanceof String) {
                     String value = (String) mapAttrValue;
                     return Byte.parseByte(value);
@@ -224,12 +245,12 @@ public class MapToBeanUtil {
                     return (Byte) mapAttrValue;
                 }
                 else{
-                    System.out.println("-----类型不匹配:"+fieldType.getSimpleName()+"!="+mapAttrValue.toString());
-                    return null;
+                    System.out.println("-----类型不匹配，返回原型:"+mapFieldType.getSimpleName()+"!="+mapAttrValue.toString());
+                    return mapAttrValue;
                 }
             }
 //            if(fieldType.getSimpleName().equals("class java.lang.byte[]")){
-            else if(fieldType.getSimpleName().equals("byte[]")){
+            else if(mapFieldType.getSimpleName().equals("byte[]")){
                 if (mapAttrValue instanceof String) {
                     //直接byte[] bytes = mapAttrValue.toString().getBytes();可能编码后乱码
                     //byte[] bytes = mapAttrValue.toString().getBytes("utf-8");编码后，字节长度增加了，标记编码格式，并且抛异常
@@ -240,8 +261,8 @@ public class MapToBeanUtil {
                     return (byte[]) mapAttrValue;
                 }
                 else{
-                    System.out.println("-----类型不匹配:"+fieldType.getSimpleName()+"!="+mapAttrValue.toString());
-                    return null;
+                    System.out.println("-----类型不匹配，返回原型:"+mapFieldType.getSimpleName()+"!="+mapAttrValue.toString());
+                    return mapAttrValue;
                 }
             }
             else {
@@ -254,11 +275,11 @@ public class MapToBeanUtil {
         }
     }
     //返回map中key对应bean中的class类型。注意数据库中的大写在实体类里全小写(系统方法会自动忽略？)，会去掉所有的下划线_
-    public static <T> Class<?> mapAttrKeyType(T bean, String beanField) {
-        if(beanField!=null&&!"".equals(beanField)){
+    public static <T> Class<?> mapAttrKeyType(T newInstanceBean, String mapBeanField) {
+        if(mapBeanField!=null&&!"".equals(mapBeanField)){
             Field field = null;
             try {
-                field = bean.getClass().getDeclaredField(beanField);
+                field = newInstanceBean.getClass().getDeclaredField(mapBeanField);
                 Class fieldType = field.getType();
                 return fieldType;
             }

@@ -3,6 +3,7 @@ package com.action;
 import com.alibaba.fastjson.JSON;
 import com.entity.Course;
 import com.service.ICourseService;
+import com.utils.JdbcUtil;
 import com.utils.MapToBeanUtil;
 import com.utils.My51ctoChromeSpider;
 import org.springframework.stereotype.Controller;
@@ -87,22 +88,40 @@ public class CourseController implements ServletContextAware {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/spider51cto",produces = "application/json;chart=UTF-8")
-    public String spider51cto(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params){
+    public String spider51cto(HttpServletRequest request, @RequestParam(required = false) Map<String,Object> params) throws InterruptedException {
         System.out.println("-----params:"+params.toString());
         //String primaryname = request.getParameter(primarynameKey+1);
         //String primaryval = params.get(primaryname).toString();
-        int j = 0;
         Course course = new Course();
+        int j = 0;
         for (int i = 0; i <My51ctoChromeSpider.pagenums ; i++) {
-        //for (int i = 0; i <1 ; i++) {
+            //for (int i = 0; i <1 ; i++) {
+            if(i>=2){
+                My51ctoChromeSpider.pageclick65=5; //下一页节点改变。
+            }
             if(i>=1){
                 My51ctoChromeSpider.page65=5; //下一页节点改变。
             }
-            List<HashMap> hashMapList = My51ctoChromeSpider.buy51cto("java ");
+            if(My51ctoChromeSpider.pagemax>=2){
+                My51ctoChromeSpider.pageclick65=5; //下一页节点改变。
+            }
+            if(My51ctoChromeSpider.pagemax>=1){
+                My51ctoChromeSpider.page65=5; //下一页节点改变。
+            }
+
+            List<HashMap> hashMapList = My51ctoChromeSpider.buy51cto("docker");
             for(HashMap hashMap:hashMapList){
+                course=new Course();
                 Object object = MapToBeanUtil.backInstanceMapBean(course,hashMap);
                 System.out.println("-----object:"+object.toString());
-                j = iCourseService.insertSelective((Course)object);
+                course = (Course)object;
+                //int j = iCourseService.insertSelective(course);
+                JdbcUtil jdbcUtil = new JdbcUtil();
+                String sql = "INSERT INTO course(stitle,snumman,sscore,sprice,sprice2,shuodong,stime,sauthor,sdetail,sdate) VALUES (\"" +
+                        course.getStitle()+"\",\""+course.getSnumman()+"\",\""+course.getSscore()+"\","+course.getSprice()+",\""
+                        +course.getSprice2()+"\",\""+course.getShuodong()+"\",\""+course.getStime()+"\",\""+course.getSauthor()+"\",\""+
+                        course.getSdetail()+"\",NOW())";
+                j=jdbcUtil.executeUpdate(sql);
             }
         }
         My51ctoChromeSpider.closeDrive();

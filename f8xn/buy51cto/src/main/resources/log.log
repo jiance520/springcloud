@@ -1,4 +1,2 @@
-body > div.Search > div:nth-child(6) > div.Page > ul > li.next > a
-body > div.Search > div:nth-child(5) > div.Page > ul > li.next > a
-body > div.Search > div:nth-child(5) > div.Page > ul > li.next > a
-body > div.Search > div:nth-child(5) > div.Page > ul > li.next > a
+body > div.Search > div:nth-child(5) > div.search_bottom_box_child > div > ul > li:nth-child(1) > div.right > div.con_04.mt10 > p
+body > div.Search > div:nth-child(5) > div.search_bottom_box_child > div > ul > li:nth-child(2) > div.right > div.con_04.mt10 > p.red
