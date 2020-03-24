@@ -1,49 +1,50 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"  %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page isELIgnored="false" %>
+<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+<%@ page import="java.sql.*" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" +  request.getServerName() + ":" + request.getServerPort() + path + "/";
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<script type="text/javascript"  src="js/jquery-1.12.4.js"></script>
-<script>
-    function sendCode() {
-        var Number = $("#phoneNumber").val();
-        $.post("code",{"phoneNumber":Number},function (data) {
-            alert(data);
-        },'json');
-    }
-    function loginSubmit() {
-        var ser_form = $("#verycode_form").serialize();
-        $.post("login",ser_form,function (data) {
-            if(data=="登陆成功!"){
-                alert(data);
-                window.location.href="index.jsp";
-            }else {
-                alert(data);
-            }
-        },'json');
-    }
-</script>
-<!--等短信模板申请下来后就可以使用这个API了，以下演示如何使用Java来调用这个API，
-制作一个简单的短信验证码登录： 首先是页面的index.jsp代码：-->
-<form name="verycode_form" id="verycode_form" action="login" method="post">
-    <input type="text" id="phoneNumber" name="phoneNumber"  placeholder="手机号码" pattern="^1[358]\d{9}"
-           required="required"/>
-    <br/>
-    <br/>
-    <input type="text" name="code" placeholder="验证码"  required="required">
-    <button type="button" onclick="sendCode()">发送验证码</button>
-    <br/>
-    <br/>
-    <button type="button" onclick="loginSubmit()">登陆</button>
-</form>
-</body>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="<%=basePath%>">
+    
+    <title>My JSP 'index.jsp' starting page</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+  </head>
+  
+  <body>
+  	<%pageContext.setAttribute("value",123); %>
+  	<input type="text" name="inputPwd6" id="inputPwd6" value="<%=pageContext.getAttribute("value") %>" required>
+    <%=session.getId()%>
+    
+    <sql:setDataSource var="snapshot" driver="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@localhost:1521/orcl" user="mytable"  password="mytable"/>
+    <sql:query dataSource="${snapshot}" var="result">select * from userdata</sql:query>
+	<table border="1" width="100%">
+	<tr>
+	<th>www</th>
+	<th>username</th>
+	<th>pwd10</th>
+	<th>pwd6</th>
+	</tr>
+	<c:forEach var="row" items="${result.rows}">
+	<tr>
+		<td><c:out value="${row.www}"/></td>
+		<td><c:out value="${row.username}"/></td>
+		<td><c:out value="${row.pwd10}"/></td>
+		<td><c:out value="${row.pwd6}"/></td>
+	</tr>
+	</c:forEach>
+	</table>
+  </body>
 </html>
