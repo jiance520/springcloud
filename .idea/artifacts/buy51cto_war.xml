@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="buy51cto:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/buy51cto_war</output-path>
+    <root id="archive" name="buy51cto_war.war">
+      <element id="artifact" artifact-name="buy51cto:war exploded" />
+    </root>
+  </artifact>
+</component>
