@@ -1,5 +1,6 @@
 #以下用于App启动时，使用自带tomcat的项目根目录和端口的配置
 #读取配置文件的顺序优先级为谁在前(0a-z)就先读取谁！跟其它无关!application.yml>bootstrap.yml>config.properties
+#sprinb boot工程及其web工程只能读取application.properties和xxx.yml，不能读取config.properties!
 server.servlet.context-path: /autof8
 server.port: 8081
 spring.application.name: autof8

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.IncomeMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Income" >
+    <id column="incomeid" property="incomeid" jdbcType="INTEGER" />
+    <result column="income" property="income" jdbcType="REAL" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="iother1" property="iother1" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    incomeid, income, date, iother1
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from income
+    where incomeid = #{incomeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from income
+    where incomeid = #{incomeid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Income" >
+    insert into income (incomeid, income, date, 
+      iother1)
+    values (#{incomeid,jdbcType=INTEGER}, #{income,jdbcType=REAL}, #{date,jdbcType=TIMESTAMP}, 
+      #{iother1,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Income" >
+    insert into income
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="incomeid != null" >
+        incomeid,
+      </if>
+      <if test="income != null" >
+        income,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="iother1 != null" >
+        iother1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="incomeid != null" >
+        #{incomeid,jdbcType=INTEGER},
+      </if>
+      <if test="income != null" >
+        #{income,jdbcType=REAL},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iother1 != null" >
+        #{iother1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Income" >
+    update income
+    <set >
+      <if test="income != null" >
+        income = #{income,jdbcType=REAL},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iother1 != null" >
+        iother1 = #{iother1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where incomeid = #{incomeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Income" >
+    update income
+    set income = #{income,jdbcType=REAL},
+      date = #{date,jdbcType=TIMESTAMP},
+      iother1 = #{iother1,jdbcType=VARCHAR}
+    where incomeid = #{incomeid,jdbcType=INTEGER}
+  </update>
+</mapper>

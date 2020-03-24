@@ -15,6 +15,7 @@
       <module>orderservice</module>
       <module>autof8</module>
       <module>buy51cto</module>
+      <module>account</module>
   </modules>
   <packaging>pom</packaging>
 

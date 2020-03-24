@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 //必须放在utils文件夹，否则手动修改必须保证所有文件夹名规范，dao,service,才能使用此工具
 //数据库中的大写在对象属性中是小写，数据库中下划线后的字母在对象属性中是大写，
 //@Component
-//@Configuration构造函数的入参，必须用存在的属性？
+//@Configuration //当前类是一个配置类，同.xml,.properties。
 //浅析PropertySource 基本使用https://www.cnblogs.com/cxuanBlog/p/10927823.html
 //@PropertySource("classpath:/config.properties")自定义使用哪个配置文件来注入属性值，通常结合@Configuration
 //@PropertySource(value = "classpath:application.properties",ignoreResourceNotFound = false)
@@ -51,10 +51,10 @@ public class OneUpdate {
     private String projectName;//zufang,工程名不一定是数据库名，所以generator.xml要检查。
     private String generatorPath = "D:/workspace/idea/springcloud/f8xn/src/resources/mybatisGenerator/";// D:/workspace/idea/springcloud/f8xn/src/resources/mybatisGenerator/，不能是路径\\
     private String jarMybatis = "mybatis-generator-core-1.3.2.jar";
-    //private URL oneUpdateURL = "file:/D:/workspace/idea/springcloud/f8xn/buy51cto/target/classes/com/utils/";
+    //private URL oneUpdateURL = "file:/D:/workspace/idea/springcloud/f8xn/account/target/classes/com/utils/";
     private URL oneUpdateURL = OneUpdate.class.getResource("");//当前类或utils所在的本地target中的URL。在当前调用类的同一路径下查找该资源""
     private String oneUpdatePath = "";
-    //private String oneUpdatePath = "file:/D:/workspace/idea/springcloud/f8xn/buy51cto/target/classes/com/utils/";//项目目录file /x:/xxx/target/classes/com/utils/
+    //private String oneUpdatePath = "file:/D:/workspace/idea/springcloud/f8xn/account/target/classes/com/utils/";//项目目录file /x:/xxx/target/classes/com/utils/
     private boolean flagDel = false;//重构是否删除原来的dao、entity、mapper.xml。false不删除
     private String cmd = "";//"cmd /k start D:/workspace/idea/com/zufang/src/main/resources/mybatisGenerator/run.bat";
     private String comName = "";//com
@@ -823,14 +823,17 @@ public class OneUpdate {
         iServiceToService();
     }
     //生成Controller
-    public void controller(String actionName,String tableNames,String groupId) throws IOException {
+    public void controller(String actionName,String groupId,String tableNames) throws IOException {
         String tableName = "";
         if(tableNames==null||"".equals(tableNames)){
-            tableNames = "t_permission\n" +
-                    "t_role\n" +
-                    "t_role_permission\n" +
-                    "t_user\n" +
-                    "t_user_role";
+            tableNames = "accountlist\n" +
+                    "credit\n" +
+                    "income\n" +
+                    "s_permssion\n" +
+                    "s_role\n" +
+                    "s_role_permssion\n" +
+                    "s_user_role\n" +
+                    "userinfo";
         }
         String strController = "package com.action;\n" +
                 "\n" +
@@ -976,27 +979,25 @@ public class OneUpdate {
     public static void main(String[] args) throws IOException {
         //手动配置好config.properties
         //String daoFolderName,String daoLastName,String serviceFolderName,Object... tableNames
-//        String tableStr="t_decisemanagetable\n" + "t_flatequip_correspond";
-        String tableStr = "t_weapon_photoelectricity_info\n" +
-                "t_troops_basic_uint\n" +
-                "t_troops_uint\n" +
-                "t_user\n" +
-                "t_weapon_communicate_info\n" +
-                "t_flatequip_correspond\n" +
-                "t_weapon_logistics_info\n" +
-                "t_weaponammo_correspond\n" +
-                "t_weapon_cannon_info";
+        String tableNames = "accountlist\n" +
+                "credit\n" +
+                "income\n" +
+                "s_permssion\n" +
+                "s_role\n" +
+                "s_role_permssion\n" +
+                "s_user_role\n" +
+                "userinfo";
         //读取配置文件值https://blog.csdn.net/jiangyu1013/article/details/82188593,能读a.bc=3和a.c: 4格式，不分yml或properties。但是不支持getProperty读取不在同一行的bootstrap.yml格式！
         //执行前，必须先build生成target,否则无法获取路径，使用mysql5，不要用6和8.要改配置。
         //OneUpdate oneUpdate = new OneUpdate("config.properties","mysql-connector-java-5.1.20.jar", "dao","Mapper", "service","impl",true,tableStr);
-        OneUpdate oneUpdate = new OneUpdate("config.properties","mysql-connector-java-5.1.20.jar", "dao","entity","Mapper", "service","impl",true,"course");
+        OneUpdate oneUpdate = new OneUpdate("config.properties","mysql-connector-java-5.1.20.jar", "dao","entity","Mapper", "service","impl",true,"userinfo");
         //根据传入的表(一个或多个)进行重新生成该表的相关信息，tableNames在调用时指定.
         oneUpdate.runFun();//最后输出-----serviceFile，生成xml配置文件，生成实体类，生成服务接口，实现接口，可拆分执行。
 
         //生成controller,只调用其中的一个方法。生成最后的控制层，前面的注消。//不需要依赖其它属性，因些不初始化有参构造。
 //        OneUpdate oneUpdate = new OneUpdate();
-        //oneUpdate.controller("D:\\workspace\\idea\\springcloud\\f8xn\\buy51cto\\src\\main\\java\\com\\action","t_decisemanagetable");
+        //oneUpdate.controller("D:\\workspace\\idea\\springcloud\\f8xn\\account\\src\\main\\java\\com\\action","t_decisemanagetable");
         //可以不指定actionPath,tableNames要么在方法里指定，要么调用时指定.
-        oneUpdate.controller("action","course","com");
+        oneUpdate.controller("action","com","userinfo");
     }
 }

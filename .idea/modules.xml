@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/f8xn/account/account.iml" filepath="$PROJECT_DIR$/f8xn/account/account.iml" />
       <module fileurl="file://$PROJECT_DIR$/f8xn/apigateway/apigateway.iml" filepath="$PROJECT_DIR$/f8xn/apigateway/apigateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/f8xn/autof8/autof8.iml" filepath="$PROJECT_DIR$/f8xn/autof8/autof8.iml" />
       <module fileurl="file://$PROJECT_DIR$/f8xn/buy51cto/buy51cto.iml" filepath="$PROJECT_DIR$/f8xn/buy51cto/buy51cto.iml" />

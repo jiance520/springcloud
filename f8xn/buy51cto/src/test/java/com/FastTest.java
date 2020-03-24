@@ -1,7 +1,5 @@
 package com;
 
-import com.entity.Course;
-import com.service.ICourseService;
 import com.utils.MapToBeanUtil;
 import com.utils.My51ctoChromeSpider;
 import com.utils.MyStreamUtil;
@@ -54,12 +52,7 @@ public class FastTest {
     }
     @Test
     public void test4() throws FileNotFoundException, InterruptedException {
-        Float aa = Float.parseFloat("0");
-        Float aa2 = Float.parseFloat("0.0");
-        Float aa3 = (float) 0.0;
-        Double aa5 = (double) 0;
-        Float aa6 = Float.valueOf("0.0");
-        System.out.println("-----aa3:"+aa3);
+
     }
 
 }

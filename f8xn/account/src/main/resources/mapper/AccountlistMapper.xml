@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.AccountlistMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Accountlist" >
+    <id column="accountid" property="accountid" jdbcType="BIGINT" />
+    <result column="account" property="account" jdbcType="INTEGER" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="regdate" property="regdate" jdbcType="DATE" />
+    <result column="telphone" property="telphone" jdbcType="BIGINT" />
+    <result column="paycard" property="paycard" jdbcType="VARCHAR" />
+    <result column="aother1" property="aother1" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    accountid, account, password, regdate, telphone, paycard, aother1
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from accountlist
+    where accountid = #{accountid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from accountlist
+    where accountid = #{accountid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Accountlist" >
+    insert into accountlist (accountid, account, password, 
+      regdate, telphone, paycard, 
+      aother1)
+    values (#{accountid,jdbcType=BIGINT}, #{account,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, 
+      #{regdate,jdbcType=DATE}, #{telphone,jdbcType=BIGINT}, #{paycard,jdbcType=VARCHAR}, 
+      #{aother1,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Accountlist" >
+    insert into accountlist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accountid != null" >
+        accountid,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="regdate != null" >
+        regdate,
+      </if>
+      <if test="telphone != null" >
+        telphone,
+      </if>
+      <if test="paycard != null" >
+        paycard,
+      </if>
+      <if test="aother1 != null" >
+        aother1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accountid != null" >
+        #{accountid,jdbcType=BIGINT},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=INTEGER},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="regdate != null" >
+        #{regdate,jdbcType=DATE},
+      </if>
+      <if test="telphone != null" >
+        #{telphone,jdbcType=BIGINT},
+      </if>
+      <if test="paycard != null" >
+        #{paycard,jdbcType=VARCHAR},
+      </if>
+      <if test="aother1 != null" >
+        #{aother1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Accountlist" >
+    update accountlist
+    <set >
+      <if test="account != null" >
+        account = #{account,jdbcType=INTEGER},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="regdate != null" >
+        regdate = #{regdate,jdbcType=DATE},
+      </if>
+      <if test="telphone != null" >
+        telphone = #{telphone,jdbcType=BIGINT},
+      </if>
+      <if test="paycard != null" >
+        paycard = #{paycard,jdbcType=VARCHAR},
+      </if>
+      <if test="aother1 != null" >
+        aother1 = #{aother1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where accountid = #{accountid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Accountlist" >
+    update accountlist
+    set account = #{account,jdbcType=INTEGER},
+      password = #{password,jdbcType=VARCHAR},
+      regdate = #{regdate,jdbcType=DATE},
+      telphone = #{telphone,jdbcType=BIGINT},
+      paycard = #{paycard,jdbcType=VARCHAR},
+      aother1 = #{aother1,jdbcType=VARCHAR}
+    where accountid = #{accountid,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -42,7 +42,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 	//使用@Value取值，可以读取任意yml或properties格式的属性!，当前类必须加注解被扫描，注解的属性不能是static或final。
 	//JdbcUtil类被new新建了实例，而没有在使用@Autowired(有效!重点！),
 	private String driverName = "com.mysql.jdbc.Driver";//
-	private String datasourceUrl = "jdbc:mysql://localhost:3306/buy51cto?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
+	private String datasourceUrl = "jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
 	private String userName = "root";
 	private String password = "root";
 	private String datasourceName;

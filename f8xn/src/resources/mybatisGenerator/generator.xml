@@ -11,7 +11,7 @@
           <property name="suppressAllComments" value="true" />  
         </commentGenerator>
           <!--在 xml 中 &符号是作为实体字符形式存在的，修改如下：&amp; &amp;nullNamePatternMatchesAll=true用于高驱动版本,不要使用6以上版本。 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/buy51cto?useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf8" userId="root" password="root">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/account?useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;useUnicode=true&amp;characterEncoding=utf8" userId="root" password="root">
        </jdbcConnection>  
         
         <javaTypeResolver>  
@@ -20,23 +20,58 @@
         </javaTypeResolver>
 
        <!-- targetProject:自动生成代码的位置 -->  <!-- 生成实体类地址 -->
-       <javaModelGenerator targetPackage="com.entity" targetProject="D:/workspace/idea/springcloud/f8xn/buy51cto/src/main/java">
+       <javaModelGenerator targetPackage="com.entity" targetProject="D:/workspace/idea/springcloud/f8xn/account/src/main/java">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->       
 	    <property name="enableSubPackages" value="false" />  
 	    <!-- 从数据库返回的值被清理前后的空格  --> 
             <property name="trimStrings" value="true" />  
        </javaModelGenerator>
        <!-- 生成mapper.xml文件位置 -->
-       <sqlMapGenerator targetPackage="resources.mapper" targetProject="D:/workspace/idea/springcloud/f8xn/buy51cto/src/main">
+       <sqlMapGenerator targetPackage="resources.mapper" targetProject="D:/workspace/idea/springcloud/f8xn/account/src/main">
             <property name="enableSubPackages" value="false" />  
         </sqlMapGenerator>
        <!--自动 生成mapper.xml对应client，也就是接口dao -->
-       <javaClientGenerator targetPackage="com.dao" targetProject="D:/workspace/idea/springcloud/f8xn/buy51cto/src/main/java" type="XMLMAPPER">
+       <javaClientGenerator targetPackage="com.dao" targetProject="D:/workspace/idea/springcloud/f8xn/account/src/main/java" type="XMLMAPPER">
            <property name="enableSubPackages" value="true" />
        </javaClientGenerator>
 
-       <table schema="buy51cto" tableName="Course"
-            domainObjectName="Course" enableCountByExample="false"
+       <table schema="account" tableName="Accountlist"
+            domainObjectName="Accountlist" enableCountByExample="false"
+            enableUpdateByExample="false" enableDeleteByExample="false"  
+            enableSelectByExample="false" selectByExampleQueryId="false">
+       </table>  
+       <table schema="account" tableName="Credit"
+            domainObjectName="Credit" enableCountByExample="false"
+            enableUpdateByExample="false" enableDeleteByExample="false"  
+            enableSelectByExample="false" selectByExampleQueryId="false">
+       </table>  
+       <table schema="account" tableName="Income"
+            domainObjectName="Income" enableCountByExample="false"
+            enableUpdateByExample="false" enableDeleteByExample="false"  
+            enableSelectByExample="false" selectByExampleQueryId="false">
+       </table>  
+       <table schema="account" tableName="S_permssion"
+            domainObjectName="S_permssion" enableCountByExample="false"
+            enableUpdateByExample="false" enableDeleteByExample="false"  
+            enableSelectByExample="false" selectByExampleQueryId="false">
+       </table>  
+       <table schema="account" tableName="S_role"
+            domainObjectName="S_role" enableCountByExample="false"
+            enableUpdateByExample="false" enableDeleteByExample="false"  
+            enableSelectByExample="false" selectByExampleQueryId="false">
+       </table>  
+       <table schema="account" tableName="S_role_permssion"
+            domainObjectName="S_role_permssion" enableCountByExample="false"
+            enableUpdateByExample="false" enableDeleteByExample="false"  
+            enableSelectByExample="false" selectByExampleQueryId="false">
+       </table>  
+       <table schema="account" tableName="S_user_role"
+            domainObjectName="S_user_role" enableCountByExample="false"
+            enableUpdateByExample="false" enableDeleteByExample="false"  
+            enableSelectByExample="false" selectByExampleQueryId="false">
+       </table>  
+       <table schema="account" tableName="Userinfo"
+            domainObjectName="Userinfo" enableCountByExample="false"
             enableUpdateByExample="false" enableDeleteByExample="false"  
             enableSelectByExample="false" selectByExampleQueryId="false">
        </table>  

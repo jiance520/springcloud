@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="milmajordb2012127@localhost" uuid="3bbc7233-028d-4e6f-8b36-8d1832fefce3">
+    <data-source source="LOCAL" name="account@localhost" uuid="3bbc7233-028d-4e6f-8b36-8d1832fefce3">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/milmajordb2012127</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/account</jdbc-url>
     </data-source>
     <data-source source="LOCAL" name="buy51cto@localhost" uuid="304f4b67-4db3-413b-900c-e28b3b35815c">
       <driver-ref>mysql</driver-ref>

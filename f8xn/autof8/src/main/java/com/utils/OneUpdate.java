@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 //必须放在utils文件夹，否则手动修改必须保证所有文件夹名规范，dao,service,才能使用此工具
 //数据库中的大写在对象属性中是小写，数据库中下划线后的字母在对象属性中是大写，
 //@Component
-//@Configuration构造函数的入参，必须用存在的属性？
+//@Configuration //当前类是一个配置类，同.xml,.properties。
 //浅析PropertySource 基本使用https://www.cnblogs.com/cxuanBlog/p/10927823.html
 //@PropertySource("classpath:/config.properties")自定义使用哪个配置文件来注入属性值，通常结合@Configuration
 //@PropertySource(value = "classpath:application.properties",ignoreResourceNotFound = false)

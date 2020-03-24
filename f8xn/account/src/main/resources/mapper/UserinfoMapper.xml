@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.UserinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Userinfo" >
+    <id column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="telphone" property="telphone" jdbcType="BIGINT" />
+    <result column="phone" property="phone" jdbcType="BIGINT" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="roleid" property="roleid" jdbcType="TINYINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="cardid" property="cardid" jdbcType="BIGINT" />
+    <result column="cardimg1" property="cardimg1" jdbcType="VARCHAR" />
+    <result column="cardimg2" property="cardimg2" jdbcType="VARCHAR" />
+    <result column="headImg" property="headimg" jdbcType="VARCHAR" />
+    <result column="paycard" property="paycard" jdbcType="VARCHAR" />
+    <result column="alipay" property="alipay" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="REAL" />
+    <result column="points" property="points" jdbcType="REAL" />
+    <result column="grade" property="grade" jdbcType="TINYINT" />
+    <result column="sharecode" property="sharecode" jdbcType="VARCHAR" />
+    <result column="weixin" property="weixin" jdbcType="VARCHAR" />
+    <result column="weibo" property="weibo" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="regdate" property="regdate" jdbcType="TIMESTAMP" />
+    <result column="sex" property="sex" jdbcType="CHAR" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="achievement" property="achievement" jdbcType="VARCHAR" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="job" property="job" jdbcType="VARCHAR" />
+    <result column="hobby" property="hobby" jdbcType="VARCHAR" />
+    <result column="canceled" property="canceled" jdbcType="BIT" />
+    <result column="creditid" property="creditid" jdbcType="INTEGER" />
+    <result column="income" property="income" jdbcType="INTEGER" />
+    <result column="accountid" property="accountid" jdbcType="BIGINT" />
+    <result column="credit" property="credit" jdbcType="INTEGER" />
+    <result column="incomeid" property="incomeid" jdbcType="INTEGER" />
+    <result column="uother1" property="uother1" jdbcType="VARCHAR" />
+    <result column="uother2" property="uother2" jdbcType="VARCHAR" />
+    <result column="uother3" property="uother3" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.entity.Userinfo" extends="BaseResultMap" >
+    <result column="note" property="note" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    userid, username, password, telphone, phone, email, roleid, name, cardid, cardimg1, 
+    cardimg2, headImg, paycard, alipay, money, points, grade, sharecode, weixin, weibo, 
+    qq, regdate, sex, birthday, address, achievement, country, job, hobby, canceled, 
+    creditid, income, accountid, credit, incomeid, uother1, uother2, uother3
+  </sql>
+  <sql id="Blob_Column_List" >
+    note
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from userinfo
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from userinfo
+    where userid = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Userinfo" >
+    insert into userinfo (userid, username, password, 
+      telphone, phone, email, 
+      roleid, name, cardid, 
+      cardimg1, cardimg2, headImg, 
+      paycard, alipay, money, 
+      points, grade, sharecode, 
+      weixin, weibo, qq, 
+      regdate, sex, birthday, 
+      address, achievement, country, 
+      job, hobby, canceled, creditid, 
+      income, accountid, credit, 
+      incomeid, uother1, uother2, 
+      uother3, note)
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{telphone,jdbcType=BIGINT}, #{phone,jdbcType=BIGINT}, #{email,jdbcType=VARCHAR}, 
+      #{roleid,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR}, #{cardid,jdbcType=BIGINT}, 
+      #{cardimg1,jdbcType=VARCHAR}, #{cardimg2,jdbcType=VARCHAR}, #{headimg,jdbcType=VARCHAR}, 
+      #{paycard,jdbcType=VARCHAR}, #{alipay,jdbcType=VARCHAR}, #{money,jdbcType=REAL}, 
+      #{points,jdbcType=REAL}, #{grade,jdbcType=TINYINT}, #{sharecode,jdbcType=VARCHAR}, 
+      #{weixin,jdbcType=VARCHAR}, #{weibo,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, 
+      #{regdate,jdbcType=TIMESTAMP}, #{sex,jdbcType=CHAR}, #{birthday,jdbcType=DATE}, 
+      #{address,jdbcType=VARCHAR}, #{achievement,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{job,jdbcType=VARCHAR}, #{hobby,jdbcType=VARCHAR}, #{canceled,jdbcType=BIT}, #{creditid,jdbcType=INTEGER}, 
+      #{income,jdbcType=INTEGER}, #{accountid,jdbcType=BIGINT}, #{credit,jdbcType=INTEGER}, 
+      #{incomeid,jdbcType=INTEGER}, #{uother1,jdbcType=VARCHAR}, #{uother2,jdbcType=VARCHAR}, 
+      #{uother3,jdbcType=VARCHAR}, #{note,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Userinfo" >
+    insert into userinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="telphone != null" >
+        telphone,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="roleid != null" >
+        roleid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="cardid != null" >
+        cardid,
+      </if>
+      <if test="cardimg1 != null" >
+        cardimg1,
+      </if>
+      <if test="cardimg2 != null" >
+        cardimg2,
+      </if>
+      <if test="headimg != null" >
+        headImg,
+      </if>
+      <if test="paycard != null" >
+        paycard,
+      </if>
+      <if test="alipay != null" >
+        alipay,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="points != null" >
+        points,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="sharecode != null" >
+        sharecode,
+      </if>
+      <if test="weixin != null" >
+        weixin,
+      </if>
+      <if test="weibo != null" >
+        weibo,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="regdate != null" >
+        regdate,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="achievement != null" >
+        achievement,
+      </if>
+      <if test="country != null" >
+        country,
+      </if>
+      <if test="job != null" >
+        job,
+      </if>
+      <if test="hobby != null" >
+        hobby,
+      </if>
+      <if test="canceled != null" >
+        canceled,
+      </if>
+      <if test="creditid != null" >
+        creditid,
+      </if>
+      <if test="income != null" >
+        income,
+      </if>
+      <if test="accountid != null" >
+        accountid,
+      </if>
+      <if test="credit != null" >
+        credit,
+      </if>
+      <if test="incomeid != null" >
+        incomeid,
+      </if>
+      <if test="uother1 != null" >
+        uother1,
+      </if>
+      <if test="uother2 != null" >
+        uother2,
+      </if>
+      <if test="uother3 != null" >
+        uother3,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        #{telphone,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=BIGINT},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=TINYINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cardid != null" >
+        #{cardid,jdbcType=BIGINT},
+      </if>
+      <if test="cardimg1 != null" >
+        #{cardimg1,jdbcType=VARCHAR},
+      </if>
+      <if test="cardimg2 != null" >
+        #{cardimg2,jdbcType=VARCHAR},
+      </if>
+      <if test="headimg != null" >
+        #{headimg,jdbcType=VARCHAR},
+      </if>
+      <if test="paycard != null" >
+        #{paycard,jdbcType=VARCHAR},
+      </if>
+      <if test="alipay != null" >
+        #{alipay,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=REAL},
+      </if>
+      <if test="points != null" >
+        #{points,jdbcType=REAL},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=TINYINT},
+      </if>
+      <if test="sharecode != null" >
+        #{sharecode,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null" >
+        #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="weibo != null" >
+        #{weibo,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="regdate != null" >
+        #{regdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="achievement != null" >
+        #{achievement,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null" >
+        #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="hobby != null" >
+        #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="canceled != null" >
+        #{canceled,jdbcType=BIT},
+      </if>
+      <if test="creditid != null" >
+        #{creditid,jdbcType=INTEGER},
+      </if>
+      <if test="income != null" >
+        #{income,jdbcType=INTEGER},
+      </if>
+      <if test="accountid != null" >
+        #{accountid,jdbcType=BIGINT},
+      </if>
+      <if test="credit != null" >
+        #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="incomeid != null" >
+        #{incomeid,jdbcType=INTEGER},
+      </if>
+      <if test="uother1 != null" >
+        #{uother1,jdbcType=VARCHAR},
+      </if>
+      <if test="uother2 != null" >
+        #{uother2,jdbcType=VARCHAR},
+      </if>
+      <if test="uother3 != null" >
+        #{uother3,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Userinfo" >
+    update userinfo
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null" >
+        telphone = #{telphone,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=BIGINT},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        roleid = #{roleid,jdbcType=TINYINT},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cardid != null" >
+        cardid = #{cardid,jdbcType=BIGINT},
+      </if>
+      <if test="cardimg1 != null" >
+        cardimg1 = #{cardimg1,jdbcType=VARCHAR},
+      </if>
+      <if test="cardimg2 != null" >
+        cardimg2 = #{cardimg2,jdbcType=VARCHAR},
+      </if>
+      <if test="headimg != null" >
+        headImg = #{headimg,jdbcType=VARCHAR},
+      </if>
+      <if test="paycard != null" >
+        paycard = #{paycard,jdbcType=VARCHAR},
+      </if>
+      <if test="alipay != null" >
+        alipay = #{alipay,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=REAL},
+      </if>
+      <if test="points != null" >
+        points = #{points,jdbcType=REAL},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=TINYINT},
+      </if>
+      <if test="sharecode != null" >
+        sharecode = #{sharecode,jdbcType=VARCHAR},
+      </if>
+      <if test="weixin != null" >
+        weixin = #{weixin,jdbcType=VARCHAR},
+      </if>
+      <if test="weibo != null" >
+        weibo = #{weibo,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="regdate != null" >
+        regdate = #{regdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="achievement != null" >
+        achievement = #{achievement,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null" >
+        job = #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="hobby != null" >
+        hobby = #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="canceled != null" >
+        canceled = #{canceled,jdbcType=BIT},
+      </if>
+      <if test="creditid != null" >
+        creditid = #{creditid,jdbcType=INTEGER},
+      </if>
+      <if test="income != null" >
+        income = #{income,jdbcType=INTEGER},
+      </if>
+      <if test="accountid != null" >
+        accountid = #{accountid,jdbcType=BIGINT},
+      </if>
+      <if test="credit != null" >
+        credit = #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="incomeid != null" >
+        incomeid = #{incomeid,jdbcType=INTEGER},
+      </if>
+      <if test="uother1 != null" >
+        uother1 = #{uother1,jdbcType=VARCHAR},
+      </if>
+      <if test="uother2 != null" >
+        uother2 = #{uother2,jdbcType=VARCHAR},
+      </if>
+      <if test="uother3 != null" >
+        uother3 = #{uother3,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.entity.Userinfo" >
+    update userinfo
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      telphone = #{telphone,jdbcType=BIGINT},
+      phone = #{phone,jdbcType=BIGINT},
+      email = #{email,jdbcType=VARCHAR},
+      roleid = #{roleid,jdbcType=TINYINT},
+      name = #{name,jdbcType=VARCHAR},
+      cardid = #{cardid,jdbcType=BIGINT},
+      cardimg1 = #{cardimg1,jdbcType=VARCHAR},
+      cardimg2 = #{cardimg2,jdbcType=VARCHAR},
+      headImg = #{headimg,jdbcType=VARCHAR},
+      paycard = #{paycard,jdbcType=VARCHAR},
+      alipay = #{alipay,jdbcType=VARCHAR},
+      money = #{money,jdbcType=REAL},
+      points = #{points,jdbcType=REAL},
+      grade = #{grade,jdbcType=TINYINT},
+      sharecode = #{sharecode,jdbcType=VARCHAR},
+      weixin = #{weixin,jdbcType=VARCHAR},
+      weibo = #{weibo,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      regdate = #{regdate,jdbcType=TIMESTAMP},
+      sex = #{sex,jdbcType=CHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      address = #{address,jdbcType=VARCHAR},
+      achievement = #{achievement,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      job = #{job,jdbcType=VARCHAR},
+      hobby = #{hobby,jdbcType=VARCHAR},
+      canceled = #{canceled,jdbcType=BIT},
+      creditid = #{creditid,jdbcType=INTEGER},
+      income = #{income,jdbcType=INTEGER},
+      accountid = #{accountid,jdbcType=BIGINT},
+      credit = #{credit,jdbcType=INTEGER},
+      incomeid = #{incomeid,jdbcType=INTEGER},
+      uother1 = #{uother1,jdbcType=VARCHAR},
+      uother2 = #{uother2,jdbcType=VARCHAR},
+      uother3 = #{uother3,jdbcType=VARCHAR},
+      note = #{note,jdbcType=LONGVARCHAR}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Userinfo" >
+    update userinfo
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      telphone = #{telphone,jdbcType=BIGINT},
+      phone = #{phone,jdbcType=BIGINT},
+      email = #{email,jdbcType=VARCHAR},
+      roleid = #{roleid,jdbcType=TINYINT},
+      name = #{name,jdbcType=VARCHAR},
+      cardid = #{cardid,jdbcType=BIGINT},
+      cardimg1 = #{cardimg1,jdbcType=VARCHAR},
+      cardimg2 = #{cardimg2,jdbcType=VARCHAR},
+      headImg = #{headimg,jdbcType=VARCHAR},
+      paycard = #{paycard,jdbcType=VARCHAR},
+      alipay = #{alipay,jdbcType=VARCHAR},
+      money = #{money,jdbcType=REAL},
+      points = #{points,jdbcType=REAL},
+      grade = #{grade,jdbcType=TINYINT},
+      sharecode = #{sharecode,jdbcType=VARCHAR},
+      weixin = #{weixin,jdbcType=VARCHAR},
+      weibo = #{weibo,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      regdate = #{regdate,jdbcType=TIMESTAMP},
+      sex = #{sex,jdbcType=CHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      address = #{address,jdbcType=VARCHAR},
+      achievement = #{achievement,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      job = #{job,jdbcType=VARCHAR},
+      hobby = #{hobby,jdbcType=VARCHAR},
+      canceled = #{canceled,jdbcType=BIT},
+      creditid = #{creditid,jdbcType=INTEGER},
+      income = #{income,jdbcType=INTEGER},
+      accountid = #{accountid,jdbcType=BIGINT},
+      credit = #{credit,jdbcType=INTEGER},
+      incomeid = #{incomeid,jdbcType=INTEGER},
+      uother1 = #{uother1,jdbcType=VARCHAR},
+      uother2 = #{uother2,jdbcType=VARCHAR},
+      uother3 = #{uother3,jdbcType=VARCHAR}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>

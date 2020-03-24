@@ -43,6 +43,10 @@
   </dependencyManagement>
 
   <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jdbc</artifactId>
+    </dependency>
     <!-- Sprig Boot/SpringJUnit支持 测试支持,spring-boot-starter-test中已经集成了junit4.12，org.springframework:spring-test-->
     <!--spring-boot-starter-test 和org.springframework.boot:spring-boot-test两者的依赖包一样-->
     <dependency>
@@ -62,6 +66,7 @@
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.47</version>
+      <scope>runtime</scope>
     </dependency>
     <!--c3p0、dbcp、druid三大数据库连接池/数据源,jdbc只提供一个接口。-->
     <!-- 阿里巴巴连接池druid，包含用于对象字符串转换的fastjson ，如果没有配置type: com.alibaba.druid.pool.DruidDataSource，可有可无-->
