@@ -5,7 +5,10 @@ import com.entity.Accountlist;
 import com.service.IAccountlistService;
 import com.utils.MapToBeanUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,7 +41,7 @@ public class AccountlistController implements ServletContextAware {
                 iterator.remove();
             }
         }
-        Accountlist accountlist = (Accountlist)MapToBeanUtil.backInstanceMapBean(new Accountlist(),params);
+        Accountlist accountlist = (Accountlist) MapToBeanUtil.backInstanceMapBean(new Accountlist(),params);
         int i = iAccountlistService.insertSelective(accountlist);
         return JSON.toJSONString(i);
     }

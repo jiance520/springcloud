@@ -1,7 +1,11 @@
 server:
   port: 8761
-#  servlet:
-#    context-path: /eurekaserver
+  servlet:
+    #如果引用的oneupdate中读取了context-path，就不能注释context-path，会报错，默认是/！
+    #eureka最好不配置context-path,或配置成/。其它服务可以配置context-path！
+    #如果eureka配置context-path，需要添加其它配置https://blog.csdn.net/hubo_88/article/details/80684339
+    #defaultZone中eureka是注册地址，且是固定写法，跟context-path无关还是冲突？修改会无法注册！
+    context-path: /
 
 spring:
   application:
@@ -26,6 +30,7 @@ spring:
 #      timeout-seconds: 10
 
   #引用类带mysql相关？，必须配置以下数据库内容！。
+  datasource:
     name: shiro
     driver-class-name: com.mysql.jdbc.Driver
     #用于6以上版本mysql，MySQL 5.5.45+，6+版本默认要求建立SSL连接。
@@ -67,6 +72,15 @@ eureka:
     #linux容器，有可能读取的不是虚拟机IP，而是容器的子网IP。
     hostname: localhost
     #hostname: 106.13.100.117
+
+    # 如果项目配置有 server.servlet.context-path 属性，想要被 spring boot admin 监控，当前服务就要配置以下属性
+    #metadata-map:
+    #  management:
+    #    context-path: /eureka/actuator
+    #health-check-url: http://localhost:${server.port}/eureka/actuator/health
+    #status-page-url: http://localhost:${server.port}/eureka/actuator/info
+    ##home-page-url: http://localhost:${server.port}/
+
   client:
     #是否将自己注册到Eureka Server上，默认为true
     registerWithEureka: false
@@ -74,6 +88,7 @@ eureka:
     fetchRegistry: false
     #test时报错：com.sun.jersey.api.client.ClientHandlerException: 把以上两个true改成false。
     serviceUrl:
+      ##defaultZone中eureka是注册地址，且是固定写法，跟context-path无关？修改会无法注册！
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
       #defaultZone: http://localhost:8761/eureka/
   server:

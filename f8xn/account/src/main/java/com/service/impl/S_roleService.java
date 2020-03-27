@@ -1,9 +1,8 @@
 package com.service.impl;
 
-import com.dao.*;
-
-import com.entity.*;
-import com.service.*;
+import com.dao.S_roleMapper;
+import com.entity.S_role;
+import com.service.IS_roleService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

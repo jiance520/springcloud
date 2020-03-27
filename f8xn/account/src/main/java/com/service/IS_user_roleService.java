@@ -1,6 +1,5 @@
 package com.service;
 
-import com.entity.S_role_permssion;
 import com.entity.S_user_role;
 
 public interface IS_user_roleService {

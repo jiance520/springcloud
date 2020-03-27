@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*,java.sql.*,org.slf4j.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="com.oracle_jdbc.*,java.util.*,java.sql.*,org.slf4j.*" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 String path = request.getContextPath();
@@ -52,7 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </tr>
         <tr>
         	<td>验证码</td>
-        	<td><input type="text" name="code" id="code" value="1"/><img src="" alt="点击更新" title="点击更新"></td>
+        	<td><input type="text" name="code" id="code" value="1"/><img src="ImageAction" alt="点击更新" title="点击更新"></td>
         </tr>
         <tr>
             <td><input type="submit" value="注册"></td>

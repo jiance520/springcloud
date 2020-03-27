@@ -3,8 +3,11 @@ package com.dao;
 import com.entity.Userinfo;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 @Repository
 public interface UserinfoMapper {
+    Userinfo selectLogin(Map map);
     int deleteByPrimaryKey(Integer userid);
 
     int insert(Userinfo record);

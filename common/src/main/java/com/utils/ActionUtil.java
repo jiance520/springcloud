@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Map;
 
 //必须获取主键，不能用于查询所有。
-@Component
 public class ActionUtil implements ApplicationContextAware {
     private static final Logger logger = LoggerFactory.getLogger(ActionUtil.class);
     private static String daoFolderName = "dao";

@@ -6,15 +6,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="orderservice" />
-        <module name="autof8" />
+        <module name="eurekaserver" />
         <module name="productservice" />
         <module name="common" />
+        <module name="configserver" />
         <module name="buy51cto" />
         <module name="apigateway" />
         <module name="account" />
-        <module name="configserver" />
-        <module name="eurekaserver" />
+        <module name="autof8" />
+        <module name="orderservice" />
         <module name="untitled" />
       </profile>
     </annotationProcessing>

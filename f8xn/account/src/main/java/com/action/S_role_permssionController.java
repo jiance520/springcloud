@@ -5,7 +5,10 @@ import com.entity.S_role_permssion;
 import com.service.IS_role_permssionService;
 import com.utils.MapToBeanUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,7 +41,7 @@ public class S_role_permssionController implements ServletContextAware {
                 iterator.remove();
             }
         }
-        S_role_permssion s_role_permssion = (S_role_permssion)MapToBeanUtil.backInstanceMapBean(new S_role_permssion(),params);
+        S_role_permssion s_role_permssion = (S_role_permssion) MapToBeanUtil.backInstanceMapBean(new S_role_permssion(),params);
         int i = iS_role_permssionService.insertSelective(s_role_permssion);
         return JSON.toJSONString(i);
     }

@@ -1,9 +1,8 @@
 package com.service.impl;
 
-import com.dao.*;
-
-import com.entity.*;
-import com.service.*;
+import com.dao.AccountlistMapper;
+import com.entity.Accountlist;
+import com.service.IAccountlistService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @MapperScan(basePackages = "com.dao")
 @Service("accountlistService")
-public class AccountlistService implements  IAccountlistService{
+public class AccountlistService implements IAccountlistService {
     @Autowired
     private AccountlistMapper accountlistMapper;
     @Override

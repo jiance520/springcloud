@@ -1,7 +1,8 @@
 server:
   port: 8781
-#  servlet:
-#    context-path: /orderservice
+  servlet:
+    #如果引用的oneupdate中读取了context-path，就不能注释context-path，会报错，默认是/！
+    context-path: /orderservice
 
 spring:
   application:

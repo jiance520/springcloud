@@ -6,7 +6,6 @@ com\utils\FoldersDeep.class
 com\utils\MapToBeanUtil.class
 com\utils\MyBatisUtil.class
 com\utils\TestPattern.class
-com\utils\Configf8xn.class
 com\utils\StrToDate.class
 com\utils\OneUpdate.class
 com\utils\SpringUtil.class

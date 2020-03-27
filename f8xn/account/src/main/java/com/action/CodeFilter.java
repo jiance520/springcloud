@@ -1,8 +1,10 @@
 package com.action;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
+//@WebFilter(filterName = "codeFilter",urlPatterns = "/*")
 public class CodeFilter implements Filter{
 
 	private String codestr;
@@ -25,7 +27,7 @@ public class CodeFilter implements Filter{
 
 	public void init(FilterConfig arg0) throws ServletException {
 		codestr = arg0.getInitParameter("codestr");
-		System.out.println(" codestr = "+codestr);
+		System.out.println(" 字符过滤器codestr = "+codestr);
 	}
 
 }

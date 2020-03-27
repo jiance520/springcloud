@@ -24,8 +24,6 @@ import java.util.regex.Pattern;
 @Component
 public class OneUpdate {
     private static final Logger logger = LoggerFactory.getLogger(OneUpdate.class);
-    @Autowired
-    private Configf8xn configf8xn;
     //private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(OneUpdate.class.getName());
     private String jarName = "";//mysql-connector-java-5.1.47.jar
     private String propertiesName="";//config.properties
@@ -47,7 +45,7 @@ public class OneUpdate {
     private String userId;//root
     @Value("${spring.datasource.password}")
     private String password;//root
-    @Value("${server.servlet.context-path}")
+    //@Value("${server.servlet.context-path}") //由于springcloud的yml不配置context-path，这里读取会报错，
     private String projectName;//zufang,工程名不一定是数据库名，所以generator.xml要检查。
     private String generatorPath = "D:/workspace/idea/springcloud/f8xn/src/resources/mybatisGenerator/";// D:/workspace/idea/springcloud/f8xn/src/resources/mybatisGenerator/，不能是路径\\
     private String jarMybatis = "mybatis-generator-core-1.3.2.jar";

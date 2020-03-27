@@ -1,6 +1,6 @@
 # Project exclude paths
 /f8xn/apigateway/target/
 /f8xn/configserver/target/
-/f8xn/eurekaserver/target/
+/f8xn/eureka/target/
 /f8xn/orderservice/target/
 /f8xn/productservice/target/

@@ -1,9 +1,8 @@
 package com.service.impl;
 
-import com.dao.*;
-
-import com.entity.*;
-import com.service.*;
+import com.dao.S_role_permssionMapper;
+import com.entity.S_role_permssion;
+import com.service.IS_role_permssionService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @MapperScan(basePackages = "com.dao")
 @Service("s_role_permssionService")
-public class S_role_permssionService implements  IS_role_permssionService{
+public class S_role_permssionService implements IS_role_permssionService {
     @Autowired
     private S_role_permssionMapper s_role_permssionMapper;
     @Override

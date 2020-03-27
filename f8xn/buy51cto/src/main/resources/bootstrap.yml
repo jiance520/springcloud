@@ -3,7 +3,7 @@
 server:
   port: 8082
   servlet:
-    #工程名，不是数据库名，也不是
+    #如果引用的oneupdate中读取了context-path，就不能注释context-path，会报错，默认是/！
     context-path: /buy51cto
 
 spring:

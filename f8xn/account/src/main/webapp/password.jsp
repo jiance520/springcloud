@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="java.sql.*" %>
+<%@ page import="com.oracle_jdbc.*,java.sql.*" %>
 <%-- <%@ include file="loginControl.jsp" %> --%>
 <%
 String path = request.getContextPath();

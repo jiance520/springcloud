@@ -2,7 +2,6 @@ package com;
 
 
 import com.service.IT_userService;
-import com.utils.Configf8xn;
 import com.utils.JdbcUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +29,6 @@ import java.io.FileNotFoundException;
 public class Autof8Test {
     //private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final Logger logger = LoggerFactory.getLogger(Autof8Test.class);
-    @Autowired
-    private Configf8xn configf8xn;
     @Autowired
     private  JdbcUtil jdbcUtil;
     @Autowired

@@ -1,9 +1,8 @@
 package com.service.impl;
 
-import com.dao.*;
-
-import com.entity.*;
-import com.service.*;
+import com.dao.IncomeMapper;
+import com.entity.Income;
+import com.service.IIncomeService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

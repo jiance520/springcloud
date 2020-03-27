@@ -87,11 +87,11 @@
     </dependency>-->
 
     <!--被thymeleaf修饰的页面一般是thymeleaf默认在resources>templates目录下，并且默认首页是index.html，默认端口8080-->
-    <!--controller return "index"页面时。必须加上才能渲染和显示-->
-    <dependency>
+    <!--controller return "index"页面时。必须加上才能渲染和显示,不能和web工程共存-->
+    <!--<dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
-    </dependency>
+    </dependency>-->
     <!--日志方式二，用于Logger.getLogger(getClass()，使用最多1万，2012年，不用添加依赖，spring-boot自带-->
     <!--<dependency>
       <groupId>log4j</groupId>

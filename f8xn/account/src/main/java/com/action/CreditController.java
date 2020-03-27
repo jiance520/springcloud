@@ -5,7 +5,10 @@ import com.entity.Credit;
 import com.service.ICreditService;
 import com.utils.MapToBeanUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,7 +41,7 @@ public class CreditController implements ServletContextAware {
                 iterator.remove();
             }
         }
-        Credit credit = (Credit)MapToBeanUtil.backInstanceMapBean(new Credit(),params);
+        Credit credit = (Credit) MapToBeanUtil.backInstanceMapBean(new Credit(),params);
         int i = iCreditService.insertSelective(credit);
         return JSON.toJSONString(i);
     }

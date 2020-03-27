@@ -1,20 +1,27 @@
 package com.service.impl;
 
-import com.dao.*;
-
-import com.entity.*;
-import com.service.*;
+import com.dao.UserinfoMapper;
+import com.entity.Userinfo;
+import com.service.IUserinfoService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
+
 @Transactional
 @MapperScan(basePackages = "com.dao")
 @Service("userinfoService")
-public class UserinfoService implements  IUserinfoService{
+public class UserinfoService implements IUserinfoService {
     @Autowired
     private UserinfoMapper userinfoMapper;
+
+    @Override
+    public Userinfo selectLogin(Map map) {
+        return userinfoMapper.selectLogin(map);
+    }
+
     @Override
     public int deleteByPrimaryKey(Integer uid) {
 

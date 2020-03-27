@@ -1,7 +1,6 @@
 package com.service;
 
 import com.entity.S_role_permssion;
-import com.service.impl.S_role_permssionService;
 
 public interface IS_role_permssionService {
     int insert(S_role_permssion record);

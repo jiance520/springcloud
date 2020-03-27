@@ -5,7 +5,10 @@ import com.entity.Income;
 import com.service.IIncomeService;
 import com.utils.MapToBeanUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,7 +41,7 @@ public class IncomeController implements ServletContextAware {
                 iterator.remove();
             }
         }
-        Income income = (Income)MapToBeanUtil.backInstanceMapBean(new Income(),params);
+        Income income = (Income) MapToBeanUtil.backInstanceMapBean(new Income(),params);
         int i = iIncomeService.insertSelective(income);
         return JSON.toJSONString(i);
     }

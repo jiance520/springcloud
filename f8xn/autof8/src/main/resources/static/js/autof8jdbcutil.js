@@ -43,7 +43,7 @@ $(document).ready(function () {
     }
 });
 
-//使用jquery方法就必须放在ready内。但是ready()外的事件无法调用。因为后声明。
+//使用jquery方法就必须放在ready内。但是ready()外的事件无法调用jquery内的方法。因为后声明。
 //ajax不跳转提交表单，一是点击form外的按钮，二是点击form的button按钮事件onclick="submitForm()"。不刷新提交表单？
 //form不再需要action，在ajax指定。能获取formdata.append后加入的值！
 //$("#submitid").submit(function (e) {})是直接点击submit按钮，默认跳转到action，通过onclick事件的函数，加入ajax不跳转提交表单。

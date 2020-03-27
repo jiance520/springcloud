@@ -1,7 +1,6 @@
 package com.dao;
 
 import com.entity.S_role_permssion;
-import com.service.impl.S_role_permssionService;
 import org.springframework.stereotype.Repository;
 
 @Repository

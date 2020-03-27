@@ -1,7 +1,11 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%--oracle.jdbc.OracleTypes--%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
-<%@ page import="java.sql.*" %>
+<%@ page import="com.oracle_jdbc.*,oracle.jdbc.*,com.mysql.jdbc.Driver,java.sql.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page isELIgnored="false" %>
+<%--<%@ page contentType="text/html; charset=UTF-8"%> --%>
+<%-- <%@ include file="loginControl.jsp" %> --%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -11,7 +15,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
     <base href="<%=basePath%>">
-    
     <title>My JSP 'index.jsp' starting page</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -24,12 +27,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
+  <a href="testModelAndView?abc=123">testModelAndView</a>
   	<%pageContext.setAttribute("value",123); %>
   	<input type="text" name="inputPwd6" id="inputPwd6" value="<%=pageContext.getAttribute("value") %>" required>
-    <%=session.getId()%>
-    
-    <sql:setDataSource var="snapshot" driver="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@localhost:1521/orcl" user="mytable"  password="mytable"/>
-    <sql:query dataSource="${snapshot}" var="result">select * from userdata</sql:query>
+ <%-- <sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+					 url="jdbc:mysql://localhost:3306/account"
+					 user="root"  password="autof8Ol10"/>
+
+  <sql:query dataSource="${snapshot}" sql="select * from userdata" var="result" />--%>
+	testsessiontest=<%=session.getAttribute("test") %>
+	test=${test}
+	testmap=${testmap}
 	<table border="1" width="100%">
 	<tr>
 	<th>www</th>
@@ -37,14 +45,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<th>pwd10</th>
 	<th>pwd6</th>
 	</tr>
-	<c:forEach var="row" items="${result.rows}">
+	<%--<c:forEach var="row" items="${result.rows}">
 	<tr>
 		<td><c:out value="${row.www}"/></td>
 		<td><c:out value="${row.username}"/></td>
 		<td><c:out value="${row.pwd10}"/></td>
 		<td><c:out value="${row.pwd6}"/></td>
 	</tr>
-	</c:forEach>
+	</c:forEach>--%>
 	</table>
+  <h2>Hello World!${indexPageShow}23</h2>
   </body>
 </html>

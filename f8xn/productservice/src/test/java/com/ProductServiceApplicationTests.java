@@ -1,6 +1,5 @@
 package com;
 
-import com.utils.Configf8xn;
 import com.utils.JdbcUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,8 +24,6 @@ public class ProductServiceApplicationTests {
     //private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final Logger logger = LoggerFactory.getLogger(ProductServiceApplicationTests.class);
     @Autowired
-    private Configf8xn configf8xn;
-    @Autowired
     private JdbcUtil jdbcUtil;
     @Test
     @Transactional
@@ -43,7 +40,6 @@ public class ProductServiceApplicationTests {
         Object object = jdbcUtil.exectueQuery2("select * from t_user");
         logger.debug("--logger---test:"+object);
         System.out.println("---test:"+object);
-        System.out.println("---getContextPath:"+configf8xn.getContextPath());
 //        Object object2 = it_userService.selectByPrimaryKey(1);
 //        System.out.println("---test:"+object2.toString());
     }
