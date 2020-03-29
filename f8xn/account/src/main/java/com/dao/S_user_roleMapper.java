@@ -5,11 +5,15 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface S_user_roleMapper {
+    int deleteByPrimaryKey(Integer surid);
+
     int insert(S_user_role record);
 
     int insertSelective(S_user_role record);
-    int deleteByPrimaryKey(Integer integer);
-    S_user_role selectByPrimaryKey(Integer integer);
-    int updateByPrimaryKeySelective(S_user_role s_user_role);
-    int updateByPrimaryKey(S_user_role s_user_role);
+
+    S_user_role selectByPrimaryKey(Integer surid);
+
+    int updateByPrimaryKeySelective(S_user_role record);
+
+    int updateByPrimaryKey(S_user_role record);
 }

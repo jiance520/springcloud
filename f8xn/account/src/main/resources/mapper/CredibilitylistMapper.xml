@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.CredibilitylistMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Credibilitylist" >
+    <id column="creditid" property="creditid" jdbcType="INTEGER" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="creditscore" property="creditscore" jdbcType="INTEGER" />
+    <result column="cdate" property="cdate" jdbcType="TIMESTAMP" />
+    <result column="citem" property="citem" jdbcType="VARCHAR" />
+    <result column="cother1" property="cother1" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    creditid, userid, creditscore, cdate, citem, cother1
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from credibilitylist
+    where creditid = #{creditid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from credibilitylist
+    where creditid = #{creditid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Credibilitylist" >
+    insert into credibilitylist (creditid, userid, creditscore, 
+      cdate, citem, cother1
+      )
+    values (#{creditid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{creditscore,jdbcType=INTEGER}, 
+      #{cdate,jdbcType=TIMESTAMP}, #{citem,jdbcType=VARCHAR}, #{cother1,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Credibilitylist" >
+    insert into credibilitylist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="creditid != null" >
+        creditid,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="creditscore != null" >
+        creditscore,
+      </if>
+      <if test="cdate != null" >
+        cdate,
+      </if>
+      <if test="citem != null" >
+        citem,
+      </if>
+      <if test="cother1 != null" >
+        cother1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="creditid != null" >
+        #{creditid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="creditscore != null" >
+        #{creditscore,jdbcType=INTEGER},
+      </if>
+      <if test="cdate != null" >
+        #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="citem != null" >
+        #{citem,jdbcType=VARCHAR},
+      </if>
+      <if test="cother1 != null" >
+        #{cother1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Credibilitylist" >
+    update credibilitylist
+    <set >
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="creditscore != null" >
+        creditscore = #{creditscore,jdbcType=INTEGER},
+      </if>
+      <if test="cdate != null" >
+        cdate = #{cdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="citem != null" >
+        citem = #{citem,jdbcType=VARCHAR},
+      </if>
+      <if test="cother1 != null" >
+        cother1 = #{cother1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where creditid = #{creditid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Credibilitylist" >
+    update credibilitylist
+    set userid = #{userid,jdbcType=INTEGER},
+      creditscore = #{creditscore,jdbcType=INTEGER},
+      cdate = #{cdate,jdbcType=TIMESTAMP},
+      citem = #{citem,jdbcType=VARCHAR},
+      cother1 = #{cother1,jdbcType=VARCHAR}
+    where creditid = #{creditid,jdbcType=INTEGER}
+  </update>
+</mapper>

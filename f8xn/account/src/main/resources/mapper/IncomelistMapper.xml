@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.IncomelistMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.Incomelist" >
+    <id column="incomeid" property="incomeid" jdbcType="INTEGER" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="imoney" property="imoney" jdbcType="REAL" />
+    <result column="idate" property="idate" jdbcType="TIMESTAMP" />
+    <result column="iitem" property="iitem" jdbcType="VARCHAR" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="iother1" property="iother1" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    incomeid, userid, imoney, idate, iitem, account, iother1
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from incomelist
+    where incomeid = #{incomeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from incomelist
+    where incomeid = #{incomeid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Incomelist" >
+    insert into incomelist (incomeid, userid, imoney, 
+      idate, iitem, account, 
+      iother1)
+    values (#{incomeid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{imoney,jdbcType=REAL}, 
+      #{idate,jdbcType=TIMESTAMP}, #{iitem,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
+      #{iother1,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Incomelist" >
+    insert into incomelist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="incomeid != null" >
+        incomeid,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="imoney != null" >
+        imoney,
+      </if>
+      <if test="idate != null" >
+        idate,
+      </if>
+      <if test="iitem != null" >
+        iitem,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="iother1 != null" >
+        iother1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="incomeid != null" >
+        #{incomeid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="imoney != null" >
+        #{imoney,jdbcType=REAL},
+      </if>
+      <if test="idate != null" >
+        #{idate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iitem != null" >
+        #{iitem,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="iother1 != null" >
+        #{iother1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Incomelist" >
+    update incomelist
+    <set >
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="imoney != null" >
+        imoney = #{imoney,jdbcType=REAL},
+      </if>
+      <if test="idate != null" >
+        idate = #{idate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iitem != null" >
+        iitem = #{iitem,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="iother1 != null" >
+        iother1 = #{iother1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where incomeid = #{incomeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Incomelist" >
+    update incomelist
+    set userid = #{userid,jdbcType=INTEGER},
+      imoney = #{imoney,jdbcType=REAL},
+      idate = #{idate,jdbcType=TIMESTAMP},
+      iitem = #{iitem,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      iother1 = #{iother1,jdbcType=VARCHAR}
+    where incomeid = #{incomeid,jdbcType=INTEGER}
+  </update>
+</mapper>

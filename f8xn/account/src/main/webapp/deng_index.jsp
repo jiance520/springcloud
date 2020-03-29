@@ -10,6 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <base href="<%=basePath%>">
     <meta charset="UTF-8">
     <title>登陆</title>
     <meta charset="UTF-8">
@@ -96,6 +97,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         * {
             margin: 0 auto;
             padding: 0;
+            border: 1px solid #444;
             /*font:normal 30px "微软雅黑 Light";*//*不要在这里设置样式，权值太低，无效*/
         }
         html,body {
@@ -132,20 +134,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="form-group" style="margin-right:0;margin-left:0;text-align: right;">
             <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label" style="padding:0;" for="username">用户名:</label>
             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7" style="margin-right:0;margin-left:0;">
-                <input type="text" style="" class="form-control" name="username" value="" placeholder="" id="username" required autofocus autocomplete="on"/>
+                <input type="text" style="" class="form-control" name="username" value="" id="username" required autofocus autocomplete="on"/>
             </div>
         </div>
         <div></div>
         <div class="form-group" style="margin-right:0;margin-left:0;text-align: right">
             <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label" style="padding:0;" for="password">密码:</label>
             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7" style="margin-right:0;margin-left:0;">
-                <input type="text" style="" class="form-control" name="password" placeholder="" id="password" value="" required/>
+                <input type="text" style="" class="form-control" name="password" id="password" value="" required/>
             </div>
         </div>
         <div class="form-group" style="margin-right:0;margin-left:0;text-align: right">
             <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label" style="padding:0;" for="v-code">验证码:</label>
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="margin-right:0;margin-left:0;padding-right:0;">
-                <input type="text" style="padding-right:0;" class="form-control veryCode" value="123456" placeholder="" id="v-code" required autofocus/>
+                <input type="text" style="padding-right:0;" class="form-control veryCode" value="123456" id="v-code" required autofocus/>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" id="vc_div" style="margin-right:0;margin-left:0;padding-left:0;text-align: center;">
                 <img id="veryCode" src="ImageAction" style="padding-right:0;border-radius: 3px;-moz-border-radius:3px;" alt=""/>
@@ -161,7 +163,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <button type="button" class="log-button btn btn-primary" style="display:block;margin:0 auto;width:25%" id="submitid">登陆</button>
         </div>
         <div class="form-group" style="margin-right:0;margin-left:0;text-align:center">
-            <a href="register.jsp" class="reg-button col-md-4 col-sm-4 col-xs-4">注册</a>
+            <a href="#mymodal2" class="reg-button col-md-4 col-sm-4 col-xs-4" data-toggle="modal">注册</a>
             <a class="div-a  col-md-6 col-sm-6 col-xs-6 text-center" href="javascript:void(0)">忘记密码</a>
         </div>
     </form>
@@ -197,7 +199,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 let frm =$("#ffindex");
                 $.ajax({
                     type:"POST",
-                    url: "http://localhost:8083/account/loginAction",
+                    url: "loginAction",
+                    //url: "http://localhost:8083/account/loginAction",
+                    //url: ${bathPath}+"loginAction",
                     data:formData,
                     //url: frm.attr("http://localhost:8083/account/loginAction"),
                     //data:frm.serialize(),
@@ -282,7 +286,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="modal-content col-md-offset-2" style="width:60%;"><!-- modal-content模态框的边框、边距、背景色、阴影效果。-->
             <div class="modal-header">
                 <button class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">登陆微票儿</h4>
+                <h4 class="modal-title">登陆</h4>
             </div>
             <div class="media-body">
 
@@ -290,7 +294,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <form action="#" class="form-horizontal">
                     <div class="form-group" style="display: flex; justify-content: center;">
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" placeholder="手机/邮箱/用户名"/>
+                            <input class="form-control" type="text" placeholder="用户名"/>
                         </div>
                     </div>
                     <div class="form-group"  style="display: flex; justify-content: center;">
@@ -323,7 +327,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="modal-content col-md-offset-2" style="width:60%;"><!-- modal-content模态框的边框、边距、背景色、阴影效果。-->
             <div class="modal-header">
                 <button class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">注册微票儿</h4>
+                <h4 class="modal-title">注册</h4>
             </div>
             <div class="media-body">
 
@@ -331,17 +335,47 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <form action="#" class="form-horizontal">
                     <div class="form-group" style="display: flex; justify-content: center;">
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" placeholder="手机/邮箱/用户名"/>
+                            <span id="check-id">
+				                <c:if test="${param.flagid !=null && param.flagid=='1'}">
+                                    <c:out value="已存在"/>
+                                </c:if>
+		                        <c:if test="${param.flagid !=null && param.flagid=='0'}">
+                                    <c:out value="可注册。"/>
+                                </c:if>
+                            </span><a href="#" id="check">检查帐号</a>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: flex; justify-content: center;">
+                        <div class="col-sm-10">
+                            用户名(必填):<input class="form-control" type="text" id="cardId"/>
                         </div>
                     </div>
                     <div class="form-group"  style="display: flex; justify-content: center;">
                         <div class="col-sm-10">
-                            <input class="form-control" type="email" placeholder="请输入你的密码"/>
+                            请输入你的密码(必填):<input class="form-control" type="password"/>
                         </div>
                     </div>
                     <div class="form-group"  style="display: flex; justify-content: center;">
                         <div class="col-sm-10">
-                            <input class="form-control" type="email" placeholder="请输入你的密码"/>
+                            请确认你的密码(必填)：<input class="form-control" type="email"/>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: flex; justify-content: center;">
+                        <div class="col-sm-10">
+                            手机号(选填):<input class="form-control" type="text"/>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display: flex; justify-content: center;">
+                        <div class="col-sm-10">
+                            邮箱(选填):<input class="form-control" type="text"/>
+                        </div>
+                    </div>
+                    <div class="form-group"  style="display: flex; justify-content: center;">
+                        <div class="col-sm-5">
+                            <input class="form-control" type="text"/>
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="text" style="padding-right:0;" class="form-control veryCode" value="123456" id="v-code-model"/>
                         </div>
                     </div>
                     <div class="form-group"  style="display: flex; justify-content: center;">
@@ -356,5 +390,124 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    var flag = true;/*判断空内容*/
+    var flag1 = true;/*判断格式错误*/
+    // var cardIdReg = /^[a-zA-Z]\w{5,9}$/;/*用户名6-10位的字母，数字或下划线，首字字母。*/
+    // var passwordReg = /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*_).{6,12}/;/*密码6-12位，包含大小写，数字和下划线*/
+    var cardIdReg = /.*/;///^\d{15}$|^\d{18}$/身份证
+    var passwordReg = /.*/;
+    $(document).ready(function () {
+        $('#cardId').blur(function () {
+            $('#check-id').html('');
+            if($(this).val()==''){
+                $(this).next().html('身份证不能为空');
+                $(this).next().css('color','red');
+                return false;
+            }
+            else {
+                if(cardIdReg.test($(this).val())==true){
+                    $(this).next().html('');
+                    // $(this).next().html('身份证正确');
+                    // $(this).next().css('color','green');
+                    return true;
+                }
+                else {
+                    $(this).next().html('身份证15-18位的字母，数字。');
+                    $(this).next().css('color','red');
+                    flag1 = false;
+                    return false;
+                }
+            }
+        })
+        //通过点击检查用户名格式及是否存在
+        $('#check').click(function () {
+            if($('#cardId').val()==''){
+                $('#cardId').next().html('身份证不能为空');
+                $('#cardId').next().css('color','red');
+                return false;
+            }
+            else {
+                if(cardIdReg.test($('#cardId').val())==true){
+                    //判断注册的身份证帐号是否已存在，如果存在，则必须重新注册
+                    //http://reg.email.163.com/unireg/call.do?cmd=register.entrance&from=email163&regPage=163
+                    var id = $('#cardId').val();
+                    $('#check').attr('href','CheckUser?cardId='+id);
+                    $('#cardId').next().html('');
+                    // $('#cardId').next().html('身份证正确');
+                    // $('#cardId').next().css('color','green');
+                    return true;
+                }
+                else {
+                    $('#cardId').next().html('身份证15-18位的字母，数字。');
+                    $('#cardId').next().css('color','red');
+                    flag1 = false;
+                    return false;
+                }
+            }
+        })
+        $('#password').blur(function () {
+            if($(this).val()==''){
+                $(this).next().html('密码不能为空');
+                $(this).next().css('color','red');
+                return false;
+            }
+            else {
+                if(passwordReg .test($(this).val())==true){
+                    $(this).next().html('');
+                    // $(this).next().html('密码格式正确');
+                    // $(this).next().css('color','green');
+                    return true;
+                }
+                else {
+                    $(this).next().html('密码6-12位，包含大小写，数字和下划线');
+                    $(this).next().css('color','red');
+                    flag1 = false;
+                    return false;
+                }
+            }
+        })
+        $('#password2').blur(function () {
+            if($(this).val()==''){
+                $(this).next().html('密码不能为空');
+                $(this).next().css('color','red');
+                return false;
+            }
+            else {
+                if($(this).val()==$('#password').val()){
+                    $(this).next().html('');
+                    // $(this).next().html('密码正确');
+                    // $(this).next().css('color','green');
+                    return true;
+                }
+                else {
+                    $(this).next().html('两次输入的密码不一致');
+                    $(this).next().css('color','red');
+                    flag1 = false;
+                    return false;
+                }
+            }
+        })
+        $("form:eq(0)").submit(function () {/*如果是非form不能使用submit()方法*/
+            $('input').each(function (index,element) {/*==$.each($('.inputs'), function() {}*/
+                element.value.trim();/*去空格*/
+                if(element.value==''){/*element非jquery对象，不能用val()*/
+                    flag = false;
+                    return false;/*当前方法的return只能中断当前方法的执行*/
+                }
+            });
+            if(flag==false){
+                alert('内容不能为空');
+                return false;/*中断click方法，后面的不再执行*/
+            }
+            if(flag1 == false){
+                alert('格式错误');
+                return false;
+            }
+            alert('确认提交');
+            return true;
+        })
+    });
+</script>
 </body>
 </html>

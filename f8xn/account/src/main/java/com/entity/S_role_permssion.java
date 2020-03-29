@@ -1,9 +1,19 @@
 package com.entity;
 
 public class S_role_permssion {
+    private Integer srpid;
+
     private Integer roleid;
 
     private Integer permssionid;
+
+    public Integer getSrpid() {
+        return srpid;
+    }
+
+    public void setSrpid(Integer srpid) {
+        this.srpid = srpid;
+    }
 
     public Integer getRoleid() {
         return roleid;

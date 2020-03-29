@@ -2,16 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dao.S_role_permssionMapper" >
   <resultMap id="BaseResultMap" type="com.entity.S_role_permssion" >
+    <id column="srpid" property="srpid" jdbcType="INTEGER" />
     <result column="roleid" property="roleid" jdbcType="INTEGER" />
     <result column="permssionid" property="permssionid" jdbcType="INTEGER" />
   </resultMap>
+  <sql id="Base_Column_List" >
+    srpid, roleid, permssionid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from s_role_permssion
+    where srpid = #{srpid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from s_role_permssion
+    where srpid = #{srpid,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.entity.S_role_permssion" >
-    insert into s_role_permssion (roleid, permssionid)
-    values (#{roleid,jdbcType=INTEGER}, #{permssionid,jdbcType=INTEGER})
+    insert into s_role_permssion (srpid, roleid, permssionid
+      )
+    values (#{srpid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}, #{permssionid,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.entity.S_role_permssion" >
     insert into s_role_permssion
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="srpid != null" >
+        srpid,
+      </if>
       <if test="roleid != null" >
         roleid,
       </if>
@@ -20,6 +39,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="srpid != null" >
+        #{srpid,jdbcType=INTEGER},
+      </if>
       <if test="roleid != null" >
         #{roleid,jdbcType=INTEGER},
       </if>
@@ -28,4 +50,22 @@
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.S_role_permssion" >
+    update s_role_permssion
+    <set >
+      <if test="roleid != null" >
+        roleid = #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="permssionid != null" >
+        permssionid = #{permssionid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where srpid = #{srpid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.S_role_permssion" >
+    update s_role_permssion
+    set roleid = #{roleid,jdbcType=INTEGER},
+      permssionid = #{permssionid,jdbcType=INTEGER}
+    where srpid = #{srpid,jdbcType=INTEGER}
+  </update>
 </mapper>

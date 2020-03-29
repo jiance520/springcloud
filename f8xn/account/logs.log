@@ -1,0 +1,142 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : mysql-阿里-centos
+ Source Server Type    : MySQL
+ Source Server Version : 50728
+ Source Host           : 47.107.171.60:3306
+ Source Schema         : mytable
+
+ Target Server Type    : MySQL
+ Target Server Version : 50728
+ File Encoding         : 65001
+
+ Date: 26/03/2020 04:59:41
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for carddata
+-- ----------------------------
+DROP TABLE IF EXISTS `carddata`;
+CREATE TABLE `carddata`  (
+  `CARDID` DECIMAL(18, 0) NOT NULL,
+  `PASSWORD` VARCHAR(18) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`CARDID`) USING BTREE
+) ENGINE = INNODB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of carddata
+-- ----------------------------
+INSERT INTO `carddata` VALUES (430523198311070056, '123');
+INSERT INTO `carddata` VALUES (430523198311070057, '123');
+INSERT INTO `carddata` VALUES (430523198311070058, '123');
+INSERT INTO `carddata` VALUES (430523198311070059, '123');
+INSERT INTO `carddata` VALUES (430523198311070060, '123');
+INSERT INTO `carddata` VALUES (430523198311070061, '123');
+INSERT INTO `carddata` VALUES (430523198311070062, '123');
+INSERT INTO `carddata` VALUES (430523198311070097, '123');
+INSERT INTO `carddata` VALUES (430523198311070098, '123');
+INSERT INTO `carddata` VALUES (430523198311070099, '123');
+
+-- ----------------------------
+-- Table structure for modifyrecord
+-- ----------------------------
+DROP TABLE IF EXISTS `modifyrecord`;
+CREATE TABLE `modifyrecord`  (
+  `RECORDID` decimal(10, 0) NOT NULL,
+  `USERNAME` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `WWW` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `OLDPWD10` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `OLDPWD6` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `OLDSECONDPWD` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `OLDMODIFYDATE` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `OLDPWDSAFE` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `OLDSTRNUM` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`RECORDID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of modifyrecord
+-- ----------------------------
+INSERT INTO `modifyrecord` VALUES (1, 'jiance520', 'www.hao123.com', 'DqMnfdJe5wX', '041600', NULL, '2018-05-11 17:35:50', NULL, NULL);
+INSERT INTO `modifyrecord` VALUES (41, 'jiance520', 'www.hao123.com', 'DqMnfdJe5wX', '041600', NULL, '2018-05-11 22:58:33', NULL, NULL);
+INSERT INTO `modifyrecord` VALUES (60, 'jiance520', 'www.hao123.com', 'DqMnfdJe5wX', '041600', NULL, '2018-05-16 21:27:01', NULL, NULL);
+INSERT INTO `modifyrecord` VALUES (80, 'jiance520', 'www.hao123.com', 'DqMnfdJe5wX', '041600', NULL, '2018-05-18 13:31:10', NULL, NULL);
+INSERT INTO `modifyrecord` VALUES (100, 'jiance520', 'www.hao123.com', 'DqMnfdJe5wX', '041600', NULL, '2018-05-18 23:02:02', NULL, NULL);
+INSERT INTO `modifyrecord` VALUES (120, 'jiance520', 'www.hao123.com', 'DqMnfdJe5wX', '041600', NULL, '2018-05-24 22:53:20', NULL, NULL);
+INSERT INTO `modifyrecord` VALUES (140, 'jiance520', 'www.hao123.com', 'DqMnfdJe5wX', '041600', NULL, '2018-05-25 00:39:06', NULL, NULL);
+INSERT INTO `modifyrecord` VALUES (160, 'jiance520', 'www.baidu.com', 'DqH3nr0ykDH', '047550', NULL, '2018-05-25 01:29:26', NULL, NULL);
+INSERT INTO `modifyrecord` VALUES (161, 'jiance520', 'www.baidu.com', 'DqH3nr0ykDH', '047550', NULL, '2018-05-25 01:45:21', NULL, NULL);
+INSERT INTO `modifyrecord` VALUES (180, 'jiance520', 'www.baidu.com', 'DqH3nr0ykDH', '047550', NULL, '2018-05-25 02:15:33', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for test
+-- ----------------------------
+DROP TABLE IF EXISTS `test`;
+CREATE TABLE `test`  (
+  `ID` decimal(10, 0) NOT NULL,
+  `NAME` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`ID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of test
+-- ----------------------------
+INSERT INTO `test` VALUES (5, '小明');
+INSERT INTO `test` VALUES (14, '小明');
+INSERT INTO `test` VALUES (15, '小明');
+INSERT INTO `test` VALUES (18, '小明');
+
+-- ----------------------------
+-- Table structure for userdata
+-- ----------------------------
+DROP TABLE IF EXISTS `userdata`;
+CREATE TABLE `userdata`  (
+  `USERNAME` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `WWW` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `USERID` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `NAME` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `PWD10` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `PWD6` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `SECONDPWD` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `TEL` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `TEL1` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `EMAIL` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `EMAIL1` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `REGISTERDATE` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `PWDSAFE` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `NOTE` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `STRNUM` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `CARDIMAGE` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  PRIMARY KEY (`WWW`, `USERNAME`) USING BTREE,
+  CONSTRAINT `SYS_C0011171` FOREIGN KEY (`WWW`) REFERENCES `wwwdata` (`WWW`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of userdata
+-- ----------------------------
+INSERT INTO `userdata` VALUES ('jiance520', 'www.baidu.com', NULL, NULL, 'DqH3nr0ykDH', '047550', NULL, NULL, NULL, NULL, NULL, '2018-05-25 02:15:33', NULL, '手机:13973909476、邮箱:jiance520@163.com', NULL, 'http://himg2.huanqiu.com/attachment2010/2018/0523/20180523084556149.jpg');
+INSERT INTO `userdata` VALUES ('jiance520', 'www.hao123.com', NULL, NULL, 'DqMnfdJe5wX', '041600', NULL, NULL, NULL, NULL, NULL, '2018-05-25 00:39:06', NULL, '手机:13973909476、邮箱:jiance520@163.com', NULL, 'images/中文件2.jpg');
+
+-- ----------------------------
+-- Table structure for wwwdata
+-- ----------------------------
+DROP TABLE IF EXISTS `wwwdata`;
+CREATE TABLE `wwwdata`  (
+  `WWW` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `CARDID` decimal(18, 0) NOT NULL,
+  PRIMARY KEY (`WWW`) USING BTREE,
+  INDEX `SYS_C0011172`(`CARDID`) USING BTREE,
+  CONSTRAINT `SYS_C0011172` FOREIGN KEY (`CARDID`) REFERENCES `carddata` (`CARDID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of wwwdata
+-- ----------------------------
+INSERT INTO `wwwdata` VALUES ('www.baidu.com', 430523198311070056);
+INSERT INTO `wwwdata` VALUES ('www.hao123.com', 430523198311070056);
+
+SET FOREIGN_KEY_CHECKS = 1;

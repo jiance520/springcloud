@@ -13,12 +13,12 @@
   <!--登陆验证-->
   <filter>
     <filter-name>sessionFilter</filter-name>
-    <filter-class>com.action.SessionFilter</filter-class>
+    <filter-class>com.listencerandfilter.SessionFilter</filter-class>
   </filter>
   <!--编码格式过滤转换-->
   <filter>
     <filter-name>codeFilter</filter-name>
-    <filter-class>com.action.CodeFilter</filter-class>
+    <filter-class>com.listencerandfilter.CodeFilter</filter-class>
     <init-param>
       <param-name>codestr</param-name>
       <param-value>UTF-8</param-value>
@@ -38,73 +38,73 @@
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>QueryUser</servlet-name>
-    <servlet-class>com.action.QueryUser</servlet-class>
+    <servlet-class>com.mytableaction.QueryUser</servlet-class>
   </servlet>
   <servlet>
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>QueryRecord</servlet-name>
-    <servlet-class>com.action.QueryRecord</servlet-class>
+    <servlet-class>com.mytableaction.QueryRecord</servlet-class>
   </servlet>
   <servlet>
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>QueryNote</servlet-name>
-    <servlet-class>com.action.QueryNote</servlet-class>
+    <servlet-class>com.mytableaction.QueryNote</servlet-class>
   </servlet>
   <servlet>
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>SaveAction</servlet-name>
-    <servlet-class>com.action.SaveAction</servlet-class>
+    <servlet-class>com.mytableaction.SaveAction</servlet-class>
   </servlet>
   <servlet>
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>LoadPwd</servlet-name>
-    <servlet-class>com.action.LoadPwd</servlet-class>
+    <servlet-class>com.mytableaction.LoadPwd</servlet-class>
   </servlet>
   <servlet>
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>CheckUser</servlet-name>
-    <servlet-class>com.action.CheckUser</servlet-class>
+    <servlet-class>com.mytableaction.CheckUser</servlet-class>
   </servlet>
   <servlet>
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>Register</servlet-name>
-    <servlet-class>com.action.Register</servlet-class>
+    <servlet-class>com.mytableaction.Register</servlet-class>
   </servlet>
   <servlet>
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>ModifyNote</servlet-name>
-    <servlet-class>com.action.ModifyNote</servlet-class>
+    <servlet-class>com.mytableaction.ModifyNote</servlet-class>
   </servlet>
   <servlet>
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>ModifyPwd6</servlet-name>
-    <servlet-class>com.action.ModifyPwd6</servlet-class>
+    <servlet-class>com.mytableaction.ModifyPwd6</servlet-class>
   </servlet>
   <servlet>
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>DeleteRecord</servlet-name>
-    <servlet-class>com.action.DeleteRecord</servlet-class>
+    <servlet-class>com.mytableaction.DeleteRecord</servlet-class>
   </servlet>
   <servlet>
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>QueryNoteUser</servlet-name>
-    <servlet-class>com.action.QueryNoteUser</servlet-class>
+    <servlet-class>com.mytableaction.QueryNoteUser</servlet-class>
   </servlet>
   <servlet>
     <description>This is the description of my J2EE component</description>
     <display-name>This is the display name of my J2EE component</display-name>
     <servlet-name>UpdatePwd6</servlet-name>
-    <servlet-class>com.action.UpdatePwd6</servlet-class>
+    <servlet-class>com.mytableaction.UpdatePwd6</servlet-class>
   </servlet>
 
   <servlet-mapping>

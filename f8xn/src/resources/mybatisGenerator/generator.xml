@@ -35,23 +35,8 @@
            <property name="enableSubPackages" value="true" />
        </javaClientGenerator>
 
-       <table schema="account" tableName="Accountlist"
-            domainObjectName="Accountlist" enableCountByExample="false"
-            enableUpdateByExample="false" enableDeleteByExample="false"  
-            enableSelectByExample="false" selectByExampleQueryId="false">
-       </table>  
-       <table schema="account" tableName="Credit"
-            domainObjectName="Credit" enableCountByExample="false"
-            enableUpdateByExample="false" enableDeleteByExample="false"  
-            enableSelectByExample="false" selectByExampleQueryId="false">
-       </table>  
-       <table schema="account" tableName="Income"
-            domainObjectName="Income" enableCountByExample="false"
-            enableUpdateByExample="false" enableDeleteByExample="false"  
-            enableSelectByExample="false" selectByExampleQueryId="false">
-       </table>  
-       <table schema="account" tableName="S_permssion"
-            domainObjectName="S_permssion" enableCountByExample="false"
+       <table schema="account" tableName="S_role_permssion"
+            domainObjectName="S_role_permssion" enableCountByExample="false"
             enableUpdateByExample="false" enableDeleteByExample="false"  
             enableSelectByExample="false" selectByExampleQueryId="false">
        </table>  
@@ -60,13 +45,28 @@
             enableUpdateByExample="false" enableDeleteByExample="false"  
             enableSelectByExample="false" selectByExampleQueryId="false">
        </table>  
-       <table schema="account" tableName="S_role_permssion"
-            domainObjectName="S_role_permssion" enableCountByExample="false"
+       <table schema="account" tableName="Credibilitylist"
+            domainObjectName="Credibilitylist" enableCountByExample="false"
             enableUpdateByExample="false" enableDeleteByExample="false"  
             enableSelectByExample="false" selectByExampleQueryId="false">
        </table>  
        <table schema="account" tableName="S_user_role"
             domainObjectName="S_user_role" enableCountByExample="false"
+            enableUpdateByExample="false" enableDeleteByExample="false"  
+            enableSelectByExample="false" selectByExampleQueryId="false">
+       </table>  
+       <table schema="account" tableName="Incomelist"
+            domainObjectName="Incomelist" enableCountByExample="false"
+            enableUpdateByExample="false" enableDeleteByExample="false"  
+            enableSelectByExample="false" selectByExampleQueryId="false">
+       </table>  
+       <table schema="account" tableName="S_permssion"
+            domainObjectName="S_permssion" enableCountByExample="false"
+            enableUpdateByExample="false" enableDeleteByExample="false"  
+            enableSelectByExample="false" selectByExampleQueryId="false">
+       </table>  
+       <table schema="account" tableName="Accountlist"
+            domainObjectName="Accountlist" enableCountByExample="false"
             enableUpdateByExample="false" enableDeleteByExample="false"  
             enableSelectByExample="false" selectByExampleQueryId="false">
        </table>  

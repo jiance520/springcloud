@@ -3,7 +3,7 @@ package com.entity;
 public class S_permssion {
     private Integer permssionid;
 
-    private String name;
+    private String spname;
 
     private Integer permssion;
 
@@ -15,12 +15,12 @@ public class S_permssion {
         this.permssionid = permssionid;
     }
 
-    public String getName() {
-        return name;
+    public String getSpname() {
+        return spname;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setSpname(String spname) {
+        this.spname = spname == null ? null : spname.trim();
     }
 
     public Integer getPermssion() {

@@ -2,7 +2,6 @@ package com.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -821,14 +820,17 @@ public class OneUpdate {
         iServiceToService();
     }
     //生成Controller
-    public void controller(String actionName,String tableNames,String groupId) throws IOException {
+    public void controller(String actionName,String groupId,String tableNames) throws IOException {
         String tableName = "";
         if(tableNames==null||"".equals(tableNames)){
-            tableNames = "t_permission\n" +
-                    "t_role\n" +
-                    "t_role_permission\n" +
-                    "t_user\n" +
-                    "t_user_role";
+            tableNames = "s_role_permssion\n" +
+                    "s_role\n" +
+                    "credibilitylist\n" +
+                    "s_user_role\n" +
+                    "incomelist\n" +
+                    "s_permssion\n" +
+                    "accountlist\n" +
+                    "userinfo";
         }
         String strController = "package com.action;\n" +
                 "\n" +
@@ -975,19 +977,18 @@ public class OneUpdate {
         //手动配置好config.properties
         //String daoFolderName,String daoLastName,String serviceFolderName,Object... tableNames
 //        String tableStr="t_decisemanagetable\n" + "t_flatequip_correspond";
-        String tableStr = "t_weapon_photoelectricity_info\n" +
-                "t_troops_basic_uint\n" +
-                "t_troops_uint\n" +
-                "t_user\n" +
-                "t_weapon_communicate_info\n" +
-                "t_flatequip_correspond\n" +
-                "t_weapon_logistics_info\n" +
-                "t_weaponammo_correspond\n" +
-                "t_weapon_cannon_info";
+        String tableStr = "s_role_permssion\n" +
+                "s_role\n" +
+                "credibilitylist\n" +
+                "s_user_role\n" +
+                "incomelist\n" +
+                "s_permssion\n" +
+                "accountlist\n" +
+                "userinfo";
         //读取配置文件值https://blog.csdn.net/jiangyu1013/article/details/82188593,能读a.bc=3和a.c: 4格式，不分yml或properties。但是不支持getProperty读取不在同一行的bootstrap.yml格式！
         //执行前，必须先build生成target,否则无法获取路径，使用mysql5，不要用6和8.要改配置。
         //OneUpdate oneUpdate = new OneUpdate("config.properties","mysql-connector-java-5.1.20.jar", "dao","Mapper", "service","impl",true,tableStr);
-        OneUpdate oneUpdate = new OneUpdate("config.properties","mysql-connector-java-5.1.20.jar", "dao","entity","Mapper", "service","impl",true,"T_user");
+        OneUpdate oneUpdate = new OneUpdate("config.properties","mysql-connector-java-5.1.20.jar", "dao","entity","Mapper", "service","impl",true,tableStr);
         //根据传入的表(一个或多个)进行重新生成该表的相关信息，tableNames在调用时指定.
         oneUpdate.runFun();//最后输出-----serviceFile，生成xml配置文件，生成实体类，生成服务接口，实现接口，可拆分执行。
 
@@ -995,6 +996,6 @@ public class OneUpdate {
 //        OneUpdate oneUpdate = new OneUpdate();
         //oneUpdate.controller("D:\\workspace\\idea\\springcloud\\f8xn\\autof8\\src\\main\\java\\com\\action","t_decisemanagetable");
         //可以不指定actionPath,tableNames要么在方法里指定，要么调用时指定.
-        oneUpdate.controller("action","T_user","com");
+        oneUpdate.controller("action","com",tableStr);
     }
 }

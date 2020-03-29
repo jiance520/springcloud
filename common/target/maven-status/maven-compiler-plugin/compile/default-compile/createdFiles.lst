@@ -1,4 +1,5 @@
 com\utils\PoiUtil.class
+com\utils\MyHttpSpiderUtil.class
 com\utils\ActionUtil.class
 com\App.class
 com\utils\DelRepository.class
@@ -7,9 +8,10 @@ com\utils\MapToBeanUtil.class
 com\utils\MyBatisUtil.class
 com\utils\TestPattern.class
 com\utils\StrToDate.class
+com\utils\MyStreamUtil.class
+com\utils\My51ctoChromeSpider.class
 com\utils\OneUpdate.class
 com\utils\SpringUtil.class
-com\utils\UserPasswordUtil.class
 com\utils\StringIndex.class
 com\action\CodeFilter.class
 com\utils\JdbcUtil.class

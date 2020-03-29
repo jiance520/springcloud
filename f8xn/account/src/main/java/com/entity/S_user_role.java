@@ -1,16 +1,18 @@
 package com.entity;
 
 public class S_user_role {
-    private Integer userid;
+    private Integer surid;
 
     private Integer roleid;
 
-    public Integer getUserid() {
-        return userid;
+    private Integer userid;
+
+    public Integer getSurid() {
+        return surid;
     }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setSurid(Integer surid) {
+        this.surid = surid;
     }
 
     public Integer getRoleid() {
@@ -19,5 +21,13 @@ public class S_user_role {
 
     public void setRoleid(Integer roleid) {
         this.roleid = roleid;
+    }
+
+    public Integer getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Integer userid) {
+        this.userid = userid;
     }
 }

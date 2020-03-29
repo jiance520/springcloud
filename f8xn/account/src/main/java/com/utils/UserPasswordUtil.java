@@ -8,6 +8,7 @@ import javax.crypto.spec.DESKeySpec;
 import java.security.Key;
 
 //import com.sumit.common.except.PasswordCodeException;
+//此工具UserPasswordUtil跟UtilController必须放在当前项目内，否则报错！
 public class UserPasswordUtil {
 	private static final String KEY = "SMARTPAY";//8位密码钥匙，只有知道这个，就能进行加密解密。
 	private static Cipher cipher = null;
