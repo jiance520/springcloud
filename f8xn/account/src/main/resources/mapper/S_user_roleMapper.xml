@@ -19,13 +19,13 @@
     delete from s_user_role
     where surid = #{surid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.entity.S_user_role" >
+  <insert id="insert" parameterType="com.entity.S_user_role" useGeneratedKeys="true" keyProperty="surid" >
     insert into s_user_role (surid, roleid, userid
       )
     values (#{surid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.entity.S_user_role" >
+  <insert id="insertSelective" parameterType="com.entity.S_user_role" useGeneratedKeys="true" keyProperty="surid" >
     insert into s_user_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="surid != null" >

@@ -90,7 +90,7 @@
     delete from accountlist
     where auserid = #{auserid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.entity.Accountlist" >
+  <insert id="insert" parameterType="com.entity.Accountlist" useGeneratedKeys="true" keyProperty="auserid" >
     insert into accountlist (auserid, userid, username, 
       password, cpasswd, jpasswd, 
       pin, question1, question2, 
@@ -134,7 +134,7 @@
       #{hobby,jdbcType=VARCHAR}, #{uother1,jdbcType=VARCHAR}, #{mapjson,jdbcType=LONGVARCHAR}, 
       #{note,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.entity.Accountlist" >
+  <insert id="insertSelective" parameterType="com.entity.Accountlist" useGeneratedKeys="true" keyProperty="auserid" >
     insert into accountlist
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="auserid != null" >

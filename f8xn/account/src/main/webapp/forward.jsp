@@ -25,6 +25,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     <!-- 用于跳转 -->
-    <jsp:forward page="testModelAndView?abc=321"></jsp:forward>
+    <jsp:forward page="testActionConnParams?abc=321"></jsp:forward>
   </body>
 </html>

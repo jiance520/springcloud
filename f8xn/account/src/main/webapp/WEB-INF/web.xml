@@ -172,7 +172,6 @@
   <welcome-file-list>
     <!--解决不能在<welcome-file>IndexAction</welcome-file>直接进入@Controller的@RequestMapping("/IndexAction")的问题-->
     <welcome-file>password.jsp</welcome-file>
-    <welcome-file>deng_index.jsp</welcome-file>
     <welcome-file>forward.jsp</welcome-file>
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>index.html</welcome-file>

@@ -23,7 +23,7 @@
     delete from incomelist
     where incomeid = #{incomeid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.entity.Incomelist" >
+  <insert id="insert" parameterType="com.entity.Incomelist" useGeneratedKeys="true" keyProperty="incomeid" >
     insert into incomelist (incomeid, userid, imoney, 
       idate, iitem, account, 
       iother1)
@@ -31,7 +31,7 @@
       #{idate,jdbcType=TIMESTAMP}, #{iitem,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
       #{iother1,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.entity.Incomelist" >
+  <insert id="insertSelective" parameterType="com.entity.Incomelist" useGeneratedKeys="true" keyProperty="incomeid" >
     insert into incomelist
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="incomeid != null" >

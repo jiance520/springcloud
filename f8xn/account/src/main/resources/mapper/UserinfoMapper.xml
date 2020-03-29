@@ -94,7 +94,7 @@
     delete from userinfo
     where userid = #{userid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.entity.Userinfo" >
+  <insert id="insert" parameterType="com.entity.Userinfo" useGeneratedKeys="true" keyProperty="userid">
     insert into userinfo (userid, username, password, 
       cpasswd, jpasswd, pin, 
       question1, question2, question3, 
@@ -136,7 +136,7 @@
       #{aes256,jdbcType=VARCHAR}, #{hobby,jdbcType=VARCHAR}, #{uother1,jdbcType=VARCHAR}, 
       #{mapjson,jdbcType=LONGVARCHAR}, #{note,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.entity.Userinfo" >
+  <insert id="insertSelective" parameterType="com.entity.Userinfo" useGeneratedKeys="true" keyProperty="userid" >
     insert into userinfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userid != null" >

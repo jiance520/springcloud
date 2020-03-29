@@ -12,6 +12,7 @@ com\utils\MyStreamUtil.class
 com\utils\My51ctoChromeSpider.class
 com\utils\OneUpdate.class
 com\utils\SpringUtil.class
+com\utils\UserPasswordUtil.class
 com\utils\StringIndex.class
 com\action\CodeFilter.class
 com\utils\JdbcUtil.class

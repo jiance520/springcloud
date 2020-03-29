@@ -22,7 +22,7 @@
     delete from credibilitylist
     where creditid = #{creditid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.entity.Credibilitylist" >
+  <insert id="insert" parameterType="com.entity.Credibilitylist" useGeneratedKeys="true" keyProperty="creditid" >
     insert into credibilitylist (creditid, userid, creditscore, 
       cdate, citem, cother1
       )
@@ -30,7 +30,7 @@
       #{cdate,jdbcType=TIMESTAMP}, #{citem,jdbcType=VARCHAR}, #{cother1,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.entity.Credibilitylist" >
+  <insert id="insertSelective" parameterType="com.entity.Credibilitylist" useGeneratedKeys="true" keyProperty="creditid" >
     insert into credibilitylist
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="creditid != null" >
