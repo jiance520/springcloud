@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%--<%@ page language="java" import="java.util.*"  pageEncoding="UTF-8"%>
+<!--<%@ page language="java" import="java.util.*"  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -7,11 +7,10 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>--%>
+%>-->
 <html lang="en">
 <head>
     <!--<base href="<%=basePath%>">-->
-    <meta charset="UTF-8">
     <title>登陆</title>
     <meta charset="UTF-8">
     <meta name="keywords" content="帐号,账号,密码,小号,生成,批量,游戏,f8xn"><!--网站关键字-->
@@ -296,6 +295,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     function clearForm(){
         $('#dlform').form('clear');
     }
+    let str93 = 'abcdefghijklmnopqrstuvwxyz1234567890_ABCDEFGHIJKLMNOPQRSTUVWXYZ`~!@#$%^&*()-_=+[]{}|;:",.<>/?';
     window.onload=function(){
         $("#submitid").click(function () {
             //如果有错误提示信息，不能提交表单
@@ -387,12 +387,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         // var cardIdReg = /^[a-zA-Z]\w{5,9}$/;/*用户名6-10位的字母，数字或下划线，首字字母。*/
         $("#mzusername").blur(function () {
             let mzusernamevalue = $("#mzusername").val();
-            let usernameReg = /^\w{2,32}$/;/*2-32位的字母，数字或下划线*/
-            let flag = usernameReg.test(mzusernamevalue);
+            //let usernameReg = /^\w{2,32}$/;/*2-32位的字母，数字或下划线*/
+            //let flag = usernameReg.test(mzusernamevalue);
+            let flag = myRegFun(mzusernamevalue,str93,1,32);
             if(!flag){
                 console.log("用户名格式错误");
                 $("#mzhidden").show();
-                $("#mzerror").html("用户名格式错误,请用32个以内的字母/数字/下划线");
+                $("#mzerror").html("请用32个以内的字母/数字/下划线/键盘特殊字符");
                 return false;
             }
             if(mzusernamevalue!=null&&mzusernamevalue!=false){
@@ -422,12 +423,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         // var passwordReg = /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*_).{1,32}/; /*密码1-32位，包含大小写，数字和下划线*/
         $("#mzpassword1").blur(function () {
             let mzpassword1value= $("#mzpassword1").val();
-            let passwordReg = /^\w{2,32}$/;/*2-32位的字母，数字或下划线*/
-            let flag = passwordReg.test(mzpassword1value);
+            //let passwordReg = /^\w{2,32}$/;/*2-32位的字母，数字或下划线*/
+            //let flag = passwordReg.test(mzpassword1value);
+            let flag = myRegFun(mzpassword1value,str93,1,32);
             if(!flag){
                 console.log("密码格式错误");
                 $("#mzhidden").show();
-                $("#mzerror").html("密码格式错误,请用32个以内的字母/数字/下划线");
+                $("#mzerror").html("请用32个以内的字母/数字/下划线/键盘特殊字符");
             }else {
                 $("#mzerror").html("");
                 $("#mzhidden").hide();
@@ -517,6 +519,57 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         });
         //获取焦点时，取消错误提示
     };
+
+    //判断是否符合正则表达式：只能使用指定的字符和指定的长度。
+    //myReg是只能使用这些字符，myStr要判断的字符，startNum规定的最小长度，endNum规定的最大长度。
+    function myRegFun(myReg,myStr,startNum,endNum){
+
+        //js字符串与Unicode编码互相转换,
+        //myStr.charCodeAt(i).toString(16)返回16进制:含字母
+        /*let unicodeStr;
+        for(i=0;i<myStr.length;i++){
+            let unicode = myStr.charCodeAt(i);//charCodeAt()返回指定位置字符的Unicode编码。返回值是0-65535之间的整数。
+            if(i==0){
+                unicodeStr=unicode;
+            }
+            else{
+                unicodeStr=unicodeStr+"|"+unicode;
+            }
+        }
+        console.log("unicodeStr:"+unicodeStr);*/
+        //unicode码转字符串
+        //String.fromCharCode(2001)
+
+        //如果字符串包括中文的长度获取。
+        String.prototype.gblen = function() { //字符串原型对象的长度属性gblen方法。
+            let len = 0;
+            for (let i=0; i<this.length; i++) {
+                if (this.charCodeAt(i)>127 || this.charCodeAt(i)==94) {
+                    len += 2;
+                } else {
+                    len ++;
+                }
+            }
+            return len;
+        };
+        let len = myStr.gblen();
+
+        if(len>=startNum && len<=endNum){
+            let strArr = myStr.split("");
+            for(i=0;i<strArr.length;i++){
+                let code = strArr[i];
+                if(myReg.indexOf(code)==-1){
+                    $("#error").html("格式不符合,含有非法字符:"+code);
+                    return false;
+                }
+            }
+        }else {
+            $("#error").html("长度不符合，请输入"+startNum+"至"+endNum+"个字符");
+            return false;
+        }
+        $("#error").html("");
+        return true;
+    }
 </script>
 </body>
 </html>

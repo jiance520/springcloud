@@ -1,60 +1,701 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="en">
 <head>
-    <title>test page</title>
-    <meta http-equiv="Content-Type" content="multipart/form-data;charset=utf-8" />
-    <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
-    <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
-    <!--&lt;!&ndash;<script type="text/javascript" src="../myjs/myjs.js"></script>&ndash;&gt;-->
-    <!--<script type="text/javascript" href="../css/vue.js" ></script>-->
-    <!--去除html页面中GET http://localhost:8080/favicon.ico 404 (Not Found)-->
-    <link rel="shortcut icon" href="#" />
+    <base href="<%=basePath%>">
+    <meta charset="UTF-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <!--<link rel="stylesheet" type="text/css" href="styles.css">-->
+    <title>生成密码</title>
     <style type="text/css">
-        *{
-            /*font:normal 14px/24px 宋体;*/
-            /*border:1px solid #444;*/
+        form{
+            border: 1px solid #c0c0c0;
         }
-        td,input{
-            line-height: 32px;
+        #main {
+            margin: 0 auto;
+            width: 1000px;
+            border: 1px solid red;
+            height: 930px;
+        }
+        #left {
+            float:left;
+            width: 400px;
+            height: 900px;
+            margin: 5px;
+            padding: 5px;
+            border: 1px solid #c0c0c0;
+            font: normal 16px 宋体;
+            line-height: 24px;
+        }
+        #right {
+            float:left;
+            width: 550px;
+            height: 900px;
+            margin: 5px;
+            padding: 5px;
+            border: 1px solid #c0c0c0;
+            font: normal 16px 宋体;
+            line-height: 24px;
+        }
+        input {
+            line-height: 24px;
+            font: normal 16px 宋体;
+        }
+        #get10,#getjpasswd {
+            display: inline-block;
+            font: normal 16px 宋体;
+        }
+        .submit {
+            font: bold 16px 宋体;
+        }
+        #right1{
+            width: 200px;
+            float: left;
+        }
+        table,tr,td{
+            border: 1px solid #444;
         }
     </style>
 </head>
-<body class="text-center">
-    <form class="form-signin">
-        <h1 class="h3 mb-3 font-weight-normal">接口测试3</h1>
-        <label for="inputEmail" class="my-sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="my-form-control" placeholder="Email address" required autofocus>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">提交测试</button>
+
+<body id="main">
+<div id="left">
+    <form action="#" id="info">
+        <h3>固定特征信息(32个以内)</h3>
+        <!--str_10+strab_26+strAB_26+str_xian+str_30=93位-->
+        <div>网址、身份证号、生日、手机号、域名、IP地址(只允许键盘上有的半角字符)</div>
+        <div style="display: flex; justify-content: center;" id="hidden" hidden>
+            <span class="text-center" id="error" style="color: red;font: normal 18px/24px 微软雅黑"></span>
+        </div>
+        <input type="text" style="display: block;width: 100%" name="aes256" id="aes256" value="" required placeholder="特征码,如:taobao.com">
+        <h3>生成单个固定密码</h3>
+        <div>用户名(32个以内)</div>
+        <input type="text" style="display: block;width: 100%" name="username" id="username" value="" required>
+        <div>
+            <span>勾选或输入密码的组成字符(只允许键盘字符)</span>
+            <input type="text" style="display: block;width: 100%" name="strzdy" id="strzdy" value='' placeholder="">
+        </div>
+        <div id="choose">
+            <input type="checkbox" name="boxpwd10" id="boxNum" value='' checked/>数字
+            <input type="checkbox" name="boxpwd10" id="boxLower" value='' checked/>小写字母
+            <input type="checkbox" name="boxpwd10" id="boxUp" value='' checked/>大写字母
+            <input type="checkbox" name="boxpwd10" id="boxXian" value='' checked/>下划线
+            <input type="checkbox" name="boxpwd10" id="boxFu" value='' checked/>特殊符号
+            <input type="checkbox" name="boxpwd10" id="boxFirst" value=''/>大写字母开头
+        </div>
+        <input type="button" id="get10" value="生成固定密码"/>
+        <br>
+        <input type="text" style="display: inline-block;width: 70%" name="pwd10" id="pwd10" value='' required>
+        <input type="button" id="copy10" style="display: inline-block;"value="点击复制">
+        <br>
+        <input type="button" id="getjpasswd" value="生成6位固定数字交易密码"/>
+        <br>
+        <input type="text" style="display: inline-block;width: 70%" name="jpasswd" id="jpasswd" value='' required>
+        <input type="button" id="copyjpasswd" style="display:inline-block;" value="点击复制">
+        <br>
+        <input type="button" id="getpasswdn" value="生成指定长度密码1-8"/><input type="text" id="pwdlength" name="pwdlength" value="8" required>
+        <br>
+        <input type="text" style="display: inline-block;width: 70%" name="passwdn" id="passwdn" value='' required>
+        <input type="button" id="copypasswdn" style="display:inline-block;" value="点击复制">
+        <br>
+        <h3>批量生成帐号和密码</h3>
+        <div>
+            <span>勾选或输入用户名的组成字符(只允许键盘字符)</span>
+            <input type="text" style="display: block;width: 100%" name="pustrzdy" id="pustrzdy" value='' placeholder="">
+        </div>
+        <div id="puchoose">
+            <input type="checkbox" name="puboxpwd10" id="puboxNum" value='' checked/>数字
+            <input type="checkbox" name="puboxpwd10" id="puboxLower" value='' checked/>小写字母
+            <input type="checkbox" name="puboxpwd10" id="puboxUp" value='' checked/>大写字母
+            <input type="checkbox" name="puboxpwd10" id="puboxXian" value=''/>下划线
+            <input type="checkbox" name="puboxpwd10" id="puboxFu" value=''/>特殊符号
+            <!--<input type="checkbox" name="puboxpwd10" id="puboxFirst" value=''/>大写字母开头-->
+        </div>
+        <span>用户名长度(1-99)</span><input type="text" id="puusernamelength" name="puusernamelength" value="10" required>
+        <div>
+            <span>勾选或输入密码的组成字符(只允许键盘字符)</span>
+            <input type="text" style="display: block;width: 100%" name="pmstrzdy" id="pmstrzdy" value='' placeholder="">
+        </div>
+        <div id="pmchoose">
+            <input type="checkbox" name="pmboxpwd10" id="pmboxNum" value='' checked/>数字
+            <input type="checkbox" name="pmboxpwd10" id="pmboxLower" value='' checked/>小写字母
+            <input type="checkbox" name="pmboxpwd10" id="pmboxUp" value='' checked/>大写字母
+            <input type="checkbox" name="pmboxpwd10" id="pmboxXian" value=''/>下划线
+            <input type="checkbox" name="pmboxpwd10" id="pmboxFu" value=''/>特殊符号
+            <!--<input type="checkbox" name="pmboxpwd10" id="pmboxFirst" value=''/>大写字母开头-->
+        </div>
+        <span>密码长度(1-99)</span><input type="text" id="pmpwdlength" name="pmpwdlength" value="10" required>
+        <br>
+        <span>指定生成数量(1-99)</span><input type="text" id="pum" name="pum" value="10" required>
+        <br>
+        <input type="button" id="getuserandpasswdn" value="点击批量生成帐号和密码"/>
     </form>
-    <p>
-        <input type="button" class="ajax2" value="$.ajax测试"/>
-        <!--<input type="button" class="post2" value="$.post测试"/>-->
-    </p>
-</body>
+</div>
+<div id="right">
+    <div id="right1">
+        <form action='#' method='post'>
+            <div>请输入要查询的特征码</div>
+            <input type='text' name='qaes256' id='qaes256' value='taobao.com' required/>
+            <div>请输入要查询的用户名</div>
+            <input type='text' name='qusername' id='qusername' value='jiance520' required/>
+            <br/>
+            <input type='submit' id='submit' class='submit' value='查询帐号修改记录'/>
+        </form>
+    </div>
+    <div style="clear: both">
+        <span style="font:bold 18px/22px 微软雅黑">随机密码列表</span>
+        <input type="button" id="copyn" value="点击复制"/>
+        <table id="accountlist" hidden="false">
+        </table>
+    </div>
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script type="text/javascript">
-    $(document).ready(function(){
-        //alert(0);
-        $('.ajax2').click(function(){
-            //alert($(this).val());
-            //发送ajax;
-            $.ajax({
-                type:"POST",
-                url:"/autof8/insertOne",
-                data:{},//"name=John&location=Boston",
-                async:false,/* 默认异步，是true,false是先执行ajax,再执行后面的内容 */
-                dataType:"json",//text,json.html
-                success:function(data){
-                    alert("ajax-data:"+data);
+
+    /*BoardWords.prototype = {
+        str_10: '0123456789', /!*键盘半角数字*!/
+        strab_26: 'abcdefghijklmnopqrstuvwxyz', /!*键盘半角小写字母*!/
+        strAB_26: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', /!*键盘半角大写字母*!/
+        str_xian: '_', /!*下划线*!/
+        str_30: '`~!@#$%^&*()-_=+[]{}|;:",.<>/?', /!*键盘半角特殊字符，\'转义，代表'=String.fromCharCode(39),不包括'，会出现undefined*!/
+        strq10: '０１２３４５６７８９', /!*键盘全角数字*!/
+        strabq26: 'ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ', /!*键盘全角小写字母*!/
+        strABq26: 'ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ', /!*键盘全角大写字母*!/
+        str_q68: '｀～！＠＃＄％＾＆＊（）－＿＝＋［］｛｝｜；：＂＇，．＜＞／？·￥……——【】、“”‘’。《》、·￥……×——“”《》【】＼‘’。、￣＼', /!*键盘全角特殊字符*!/
+    };*/
+    class BoardWords {
+        constructor(){
+            this.str_10 = '0123456789', /*键盘半角数字*/
+            this.strab_26 = 'abcdefghijklmnopqrstuvwxyz', /*键盘半角小写字母*/
+            this.strAB_26 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', /*键盘半角大写字母*/
+            this.str_xian = '_', /*下划线*/
+            this.str_30 = '`~!@#$%^&*()-_=+[]{}|;:",.<>/?', /*键盘半角特殊字符，\'转义，代表'=String.fromCharCode(39),不包括'，会出现undefined*/
+            this.strq10 = '０１２３４５６７８９', /*键盘全角数字*/
+            this.strabq26 = 'ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ', /*键盘全角小写字母*/
+            this.strABq26 = 'ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ', /*键盘全角大写字母*/
+            this.str_q68 = '｀～！＠＃＄％＾＆＊（）－＿＝＋［］｛｝｜；：＂＇，．＜＞／？·￥……——【】、“”‘’。《》、·￥……×——“”《》【】＼‘’。、￣＼' /*键盘全角特殊字符*/
+        }
+    };
+    let boardWords = new BoardWords();
+    let strNum = '';
+    let str38 = 'abcdefghijklmnopqrstuvwxyz.-1234567890';
+    /*用于用户名,进制越大，数值越大，密码越长*/
+    let str63 = 'abcdefghijklmnopqrstuvwxyz1234567890_ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let str93 = 'r{#ZlEO[=z&"].0Soq/K2I!Jx)vCdHA`BPj_*t83L~Xc^sMG;iyUw?7N(WR<,mYk-FD%15@h}4_Tpb|fgnu+e6>aV9Q$:';
+    //去重复
+    let str843 = '';
+    let strNo_Repeat = '';
+    /*存放非重复字符*/
+    let strRepeat = '';
+
+    /*存放重复字符*/
+    // strRepeat = repeat(strNum);/*返回重复内容*/
+    function Repeat(strNum) {
+        let strNo_Repeat = '';
+        let strRepeat = '';
+        for (let i = 0; i < strNum.length; i++) {
+            if (strNo_Repeat.indexOf(strNum.charAt(i)) === -1) {/*如果不在里面，则添加*/
+                strNo_Repeat = strNo_Repeat + strNum.charAt(i);
+            }
+            else {//找到重复：∶∧∑∏％‰⊥﹃﹄
+                strRepeat = strRepeat + strNum.charAt(i);
+            }
+        }
+        return strRepeat;
+    }
+
+    // strNo_Repeat = noRepeat(strNum);/*去重复内容，返回新字符串*/
+    function NoRepeat(strNum) {
+        let strNo_Repeat = '';
+        let strRepeat = '';
+        for (let i = 0; i < strNum.length; i++) {
+            if (strNo_Repeat.indexOf(strNum.charAt(i)) === -1) {/*如果不在里面，则添加*/
+                strNo_Repeat = strNo_Repeat + strNum.charAt(i);
+            }
+            else {//找到重复：∶∧∑∏％‰⊥﹃﹄
+                strRepeat = strRepeat + strNum.charAt(i);
+            }
+        }
+        return strNo_Repeat;
+    }
+
+    //全角转化为半角// a.全角空格为12288，半角空格为32 b.其他字符半角(33-126)与全角(65281-65374)的对应关系是：均相差65248
+
+    let date = new Date();
+    let month = date.getMonth();
+    let monthCh = String.fromCharCode(64 + month+1);//将 Unicode 编码转为一个字符，1-12月会变成monthCh=A、B、、、L
+    /*A-L版本号跟修改的月份有关*/
+    // 获取93位32个以内特征码
+    let strAes256_32_93 = document.getElementById('aes256').value;
+    /*用户名93位32个以内*/
+    let strUserName32_93 = document.getElementById('username').value;
+    let strAutof8xn_93="autof8xn"; //为了保证至少8位密码。
+    //将10进制转38、63、93等任意进制。//数必须是BigInt类型
+    function Convert10_strNum(num10, strNum) {
+        let num10n = BigInt(num10);
+        let str10_strNum = '';
+        let arrStrNum = new Array();
+        for (let i = 0; i < strNum.length; i++) {
+            arrStrNum[i] = strNum.charAt(i);
+        }
+        if (num10n == 0n) {
+            alert('\'请输入大于0的数\'');
+        }
+        while (num10n > 0n) {
+            let m = num10n % BigInt(strNum.length);
+            /*取模*/
+            if (m == 0n) {
+                m = BigInt(strNum.length);
+            }
+            str10_strNum = arrStrNum[m - 1n] + str10_strNum;
+            /*高位数在最左边,toFixed() 方法可把 Number 四舍五入为指定小数位数的数字*/ /*不是取整，是除法，必需加.toFixed(0)，否则除法错误*/
+            //num10 = ((num10 - m) / strNum.length).toFixed(0);
+            num10n = (num10n - m) / BigInt(strNum.length);//BigInt除法(/)运算符的结果会自动向下舍入到最接近的整数,自带toFixed(0)的效果！。
+        }
+        return str10_strNum;
+    };
+
+    //除法,使用BinInt来解决以下问题。
+    //说明：javascript的除法结果会有误差，在两个浮点数相除的时候会比较明显。这个函数返回较为精确的除法结果。
+    //调用：accDiv(arg1,arg2)
+    //返回值：arg1除以arg2的精确结果
+    function accDiv(arg1, arg2) {
+        let t1 = 0, t2 = 0, r1, r2;
+        try {
+            t1 = arg1.toString().split(".")[1].length
+        } catch (e) {
+        }
+        try {
+            t2 = arg2.toString().split(".")[1].length
+        } catch (e) {
+        }
+        with (Math) {
+            r1 = Number(arg1.toString().replace(".", ""))
+            r2 = Number(arg2.toString().replace(".", ""))
+            return (r1 / r2) * pow(10, t2 - t1);
+        }
+    }
+    /*网上转过来的*/
+    //给Number类型增加一个div方法，调用起来更加方便。
+    Number.prototype.div = function (arg) {/*网上转过来的*/
+        return accDiv(this, arg);
+    };
+
+    //将38、63、93等任意进制转BigInt-10进制。如将93进制特征码hao123.com转10进制，不转，无法实现与其它进制进行计算。
+    function ConvertStrNum_10(strnum, strNum) {
+        let strNum_10 = 0n; //n表示转为BigInt类型
+        let flag = true;
+        /*进制字符串去重复*/
+        strNoRepeat = NoRepeat(strNum);
+        for (let i = 0; i < strnum.length; i++) {
+            for (let j = 0; j < strNoRepeat.length; j++) {
+                if (strnum.charAt(i) == strNoRepeat.charAt(j)) {/*求出字符串中的每个字符在进制中的排位，排位按10进制计算，(在字符串中的位置或数组中的位置)*/
+                    if (strnum.length - i - 1 > 0) {/*非个位数，当i=0时，是最高位，当i=length-1时是最低位个位,要排除*/
+                        //let maxnum = BigInt(Math.pow(strNoRepeat.length, strnum.length - i - 1));
+                        strNum_10 = strNum_10 + BigInt((j + 1))*BigInt(Math.pow(strNoRepeat.length, strnum.length - i - 1));
+                        /*j+1数字要比下标大1，最高位下标i=0，它的幂length-1*/
+                    }
+                    else {
+                        strNum_10 = strNum_10 + BigInt((j + 1));
+                        /*个位数*/
+                    }
+                    flag = true;
+                    break;
                 }
+                else {
+                    flag = false;
+                    /*如果没有匹配到，标记为false,循环结束后提示*/
+                }
+            }
+        }
+        if (flag == false) {
+            alert('其它进制10进制没有匹配到字符,或者进制字符有重复');
+        }
+        return strNum_10;//返回BigInt
+    };
+    // 测试进制转换https://tool.oschina.net/hexconvert/，0表示数值刚好满进制，放最后。
+    //let num = ConvertStrNum_10("A2","123456789ABCDEF0");
+    //console.log("num:"+num); //162
+
+    //判断是否符合正则表达式：只能使用指定的字符和指定的长度。
+    //myReg是只能使用这些字符，myStr要判断的字符，startNum规定的最小长度，endNum规定的最大长度。
+    function myRegFun(myReg,myStr,startNum,endNum){
+
+        //js字符串与Unicode编码互相转换,
+        //myStr.charCodeAt(i).toString(16)返回16进制:含字母
+        /*let unicodeStr;
+        for(i=0;i<myStr.length;i++){
+            let unicode = myStr.charCodeAt(i);//charCodeAt()返回指定位置字符的Unicode编码。返回值是0-65535之间的整数。
+            if(i==0){
+                unicodeStr=unicode;
+            }
+            else{
+                unicodeStr=unicodeStr+"|"+unicode;
+            }
+        }
+        console.log("unicodeStr:"+unicodeStr);*/
+        //unicode码转字符串
+        //String.fromCharCode(2001)
+
+        //如果字符串包括中文的长度获取。
+        String.prototype.gblen = function() { //字符串原型对象的长度属性gblen方法。
+            let len = 0;
+            for (let i=0; i<this.length; i++) {
+                if (this.charCodeAt(i)>127 || this.charCodeAt(i)==94) {
+                    len += 2;
+                } else {
+                    len ++;
+                }
+            }
+            return len;
+        };
+        let len = myStr.gblen();
+
+        if(len>=startNum && len<=endNum){
+            let strArr = myStr.split("");
+            for(i=0;i<strArr.length;i++){
+                let code = strArr[i];
+                if(myReg.indexOf(code)==-1){
+                    $("#error").html("格式不符合,含有非法字符:"+code);
+                    return false;
+                }
+            }
+        }else {
+            $("#error").html("长度不符合，请输入"+startNum+"至"+endNum+"个字符");
+            return false;
+        }
+        $("#error").html("");
+        return true;
+    }
+
+    $(document).ready(function () {/*for...in可以遍历所有对象的属性和方法*/
+        //确定组成随机密码的字符
+        let flagaes256 = false;
+        let flagusername = false;
+        let flagstrzdy = false;
+        let flagpwdlength = false;
+        function funCheckBox() {
+            let strNum = '';
+            if ($('#boxNum').prop('checked') === true) {/*如果被选中，则把BoardWords.str_10放入对象StrNumObj的实例对象中，否则移除*/
+                $('#boxNum').val(boardWords.str_10);
+            }
+            else {
+                $('#boxNum').val('');
+            }
+            if ($('#boxLower').prop('checked') === true) {
+                $('#boxLower').val(boardWords.strab_26);
+            }
+            else {
+                $('#boxLower').val('');
+            }
+            if ($('#boxUp').prop('checked') === true) {
+                $('#boxUp').val(boardWords.strAB_26);
+            }
+            else {
+                $('#boxUp').val('');
+            }
+            if ($('#boxXian').prop('checked') === true) {
+                $('#boxXian').val(boardWords.str_xian);
+            }
+            else {
+                $('#boxXian').val('');
+            }
+            if ($('#boxFu').prop('checked') === true) {
+                $('#boxFu').val(boardWords.str_30);
+            }
+            else {
+                $('#boxFu').val('');
+            }
+            $('input[name=boxpwd10]').each(function () {
+                strNum = strNum + $(this).val();
             });
-            //alert('end ajax');/* 异步时先弹出 */
+            strNum = strNum + $('#strzdy').val();
+            /*获取自定义字符*/
+            return strNum;
+        }
+        $("#aes256").blur(function () {
+            strAes256_32_93 = document.getElementById('aes256').value;
+            flagaes256 = myRegFun(str93,strAes256_32_93,2,32);
         });
-        $('.post2').click(function(){
-            var str = '/autof8/insertOne';
-            $.post(str,{name:'Tom',location:'USA'},function(data){/* function(data){}相当于success部分,data=msg */
-                alert("服务器信息"+data);
-            },'text');
+        $("#username").blur(function () {
+            strUserName32_93 = document.getElementById('username').value;
+            flagusername=myRegFun(str93,strUserName32_93,2,32);
         });
-    })
+        $("#strzdy").blur(function () {
+            strUserName32_93 = document.getElementById('strzdy').value;
+            flagstrzdy=myRegFun(str93,strUserName32_93,0,93);
+        });
+        $("#pwdlength").blur(function () {
+            strUserName32_93 = document.getElementById('pwdlength').value;
+            flagpwdlength=myRegFun("12345678",strUserName32_93,1,8);
+        });
+        /*该方法获取密码的组成内容*/
+        //93进制特征码加93进制用户名，一起再转Num进制，生成固定密码,md5加密也使用的此方法，生成的密码长度大于等于特征码和用户名的长度。
+        //生成随机密码
+        $('#get10').click(function () {
+            strAes256_32_93 = document.getElementById('aes256').value;
+            flagaes256 = myRegFun(str93,strAes256_32_93,2,32);
+            strUserName32_93 = document.getElementById('username').value;
+            flagusername=myRegFun(str93,strUserName32_93,2,32);
+            //如果有错误提示信息，不能提交表单
+            if(flagaes256==false||flagusername==false){
+                $("#error").html("格式错误，请重新输入");
+                return false;
+            }
+            strAes256_32_93 = $('#aes256').val();
+            strUserName32_93 = $('#username').val();
+            //将38、63、93等任意进制转10进制。如将93进制特征码hao123.com转10进制，不转，无法实现与其它进制进行计算。
+            let numAes256Value32_93_10 = ConvertStrNum_10(strAes256_32_93, str93);
+            //93进制用户名，转10进制
+            let numStrUserName32_93_10 = ConvertStrNum_10(strUserName32_93, str93);
+            //为了保证至少8位密码。
+            let numAutof8xn_93_10=ConvertStrNum_10(strAutof8xn_93,str93);
+            let sum10 =numAutof8xn_93_10+numAes256Value32_93_10 + numStrUserName32_93_10; //为了保证至少8位密码。
+            strNum = funCheckBox();
+            //入参数必须是BigInt类型，且里面的数也一样。
+            let pwd10_Num = Convert10_strNum(sum10, strNum);
+            //判断是否勾选首字母且大写。
+            if ($('#boxFirst').prop('checked') === true) {
+                $('#pwd10').val(monthCh + pwd10_Num);//随机密码带修改月份。
+            }
+            else {
+                $('#pwd10').val(pwd10_Num);//随机密码带修改月份。
+            }
+            // return false;
+        });
+        //生成纯数字6位交易密码
+        $('#getjpasswd').click(function () {/*每次点击要更新数据，按钮button必须规定type为button*/
+            strAes256_32_93 = document.getElementById('aes256').value;
+            flagaes256 = myRegFun(str93,strAes256_32_93,2,32);
+            strUserName32_93 = document.getElementById('username').value;
+            flagusername=myRegFun(str93,strUserName32_93,2,32);
+            if(flagaes256==false||flagusername==false){
+                $("#error").html("格式错误，请重新输入");
+                return false;
+            }
+            strAes256_32_93 = $('#aes256').val();
+            strUserName32_93 = $('#username').val();
+            let numAes256Value32_93_10 = ConvertStrNum_10(strAes256_32_93, str93);
+            let numStrUserName32_93_10 = ConvertStrNum_10(strUserName32_93, str93);
+            let numAutof8xn_93_10=ConvertStrNum_10(strAutof8xn_93,str93); //为了保证至少8位密码。
+            let sum10 =numAutof8xn_93_10+numAes256Value32_93_10 + numStrUserName32_93_10;
+            let strSum10 = sum10 + '';
+            let pwdstr_4 = strSum10.slice(strSum10.length-6);
+            //js 如何把天文数字显示全？如5.78960446186581e+76这样的一个数字让他显示完整
+            //Math.pow() 方法可返回 x 的 y 次幂的值。
+            //BigInt(Math.pow(2, 255)); // 578960446186580977117854925043439539266349923328
+            $('#jpasswd').val(pwdstr_4);
+        });
+        //生成指定长度随机密码
+        $('#getpasswdn').click(function () {
+            strAes256_32_93 = document.getElementById('aes256').value;
+            flagaes256 = myRegFun(str93,strAes256_32_93,2,32);
+            strUserName32_93 = document.getElementById('username').value;
+            flagusername=myRegFun(str93,strUserName32_93,2,32);
+            strUserName32_93 = document.getElementById('pwdlength').value;
+            flagpwdlength=myRegFun("12345678",strUserName32_93,1,8);
+            if(flagaes256==false||flagusername==false||flagpwdlength==false){
+                $("#error").html("格式错误，请重新输入");
+                return false;
+            }
+            strAes256_32_93 = $('#aes256').val();
+            strUserName32_93 = $('#username').val();
+            //将38、63、93等任意进制转10进制。如将93进制特征码hao123.com转10进制，不转，无法实现与其它进制进行计算。
+            let numAes256Value32_93_10 = ConvertStrNum_10(strAes256_32_93, str93);
+            //93进制用户名，转10进制
+            let numStrUserName32_93_10 = ConvertStrNum_10(strUserName32_93, str93);
+            //为了保证至少8位密码。
+            let numAutof8xn_93_10=ConvertStrNum_10(strAutof8xn_93,str93);
+            let sum10 =numAutof8xn_93_10+numAes256Value32_93_10 + numStrUserName32_93_10; //为了保证至少8位密码。
+            strNum = funCheckBox();
+            //入参数必须是BigInt类型，且里面的数也一样。
+            let pwd10_Num = Convert10_strNum(sum10, strNum);
+            let pwdlength = $("#pwdlength").val();
+            //判断是否勾选首字母且大写。
+            if ($('#boxFirst').prop('checked') === true) {
+                $('#passwdn').val(monthCh+pwd10_Num.slice(pwd10_Num.length-pwdlength+1));//随机密码带修改月份。
+            }
+            else {
+                $('#passwdn').val(pwd10_Num.slice(pwd10_Num.length-pwdlength));
+            }
+        });
+        $("#copy10").click(function () {
+            let copy10Val = $("#pwd10").val();
+            copyInputToClip(copy10Val);
+        });
+        $("#copyjpasswd").click(function () {
+            let copy10Val = $("#jpasswd").val();
+            copyInputToClip(copy10Val);
+        });
+        $("#copypasswdn").click(function () {
+            let copy10Val = $("#passwdn").val();
+            copyInputToClip(copy10Val);
+        });
+
+        //批量生成帐号密码
+        function funCheckBoxpu() {
+            let strNum = '';
+            if ($('#puboxNum').prop('checked') === true) {/*如果被选中，则把BoardWords.str_10放入对象StrNumObj的实例对象中，否则移除*/
+                $('#puboxNum').val(boardWords.str_10);
+            }
+            else {
+                $('#puboxNum').val('');
+            }
+            if ($('#puboxLower').prop('checked') === true) {
+                $('#puboxLower').val(boardWords.strab_26);
+            }
+            else {
+                $('#puboxLower').val('');
+            }
+            if ($('#puboxUp').prop('checked') === true) {
+                $('#puboxUp').val(boardWords.strAB_26);
+            }
+            else {
+                $('#puboxUp').val('');
+            }
+            if ($('#puboxXian').prop('checked') === true) {
+                $('#puboxXian').val(boardWords.str_xian);
+            }
+            else {
+                $('#puboxXian').val('');
+            }
+            if ($('#puboxFu').prop('checked') === true) {
+                $('#puboxFu').val(boardWords.str_30);
+            }
+            else {
+                $('#puboxFu').val('');
+            }
+            $('input[name=puboxpwd10]').each(function () {
+                strNum = strNum + $(this).val();
+            });
+            strNum = strNum + $('#pustrzdy').val();
+            /*获取自定义字符*/
+            return strNum;
+        }
+        function funCheckBoxpm() {
+            let strNum = '';
+            if ($('#pmboxNum').prop('checked') === true) {/*如果被选中，则把BoardWords.str_10放入对象StrNumObj的实例对象中，否则移除*/
+                $('#pmboxNum').val(boardWords.str_10);
+            }
+            else {
+                $('#pmboxNum').val('');
+            }
+            if ($('#pmboxLower').prop('checked') === true) {
+                $('#pmboxLower').val(boardWords.strab_26);
+            }
+            else {
+                $('#pmboxLower').val('');
+            }
+            if ($('#pmboxUp').prop('checked') === true) {
+                $('#pmboxUp').val(boardWords.strAB_26);
+            }
+            else {
+                $('#pmboxUp').val('');
+            }
+            if ($('#pmboxXian').prop('checked') === true) {
+                $('#pmboxXian').val(boardWords.str_xian);
+            }
+            else {
+                $('#pmboxXian').val('');
+            }
+            if ($('#pmboxFu').prop('checked') === true) {
+                $('#pmboxFu').val(boardWords.str_30);
+            }
+            else {
+                $('#pmboxFu').val('');
+            }
+            $('input[name=pmboxpwd10]').each(function () {
+                strNum = strNum + $(this).val();
+            });
+            strNum = strNum + $('#pmstrzdy').val();
+            /*获取自定义字符*/
+            return strNum;
+        }
+        //批定字符串，指定随机密码长度。
+        function randomString(strNum,len){
+            //默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1
+            //let chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
+            let chars = strNum;
+            let tempLen = chars.length, tempStr='';
+            for(var i=0; i<len; ++i){
+                tempStr += chars.charAt(Math.floor(Math.random() * tempLen ));
+            }
+            return tempStr;
+        }
+        let accountlistStr = '';
+        $("#getuserandpasswdn").click(function () {
+            let strNumpu = funCheckBoxpu();
+            let strNumpm = funCheckBoxpm();
+            let puusernamelength = $("#puusernamelength").val();
+            let pmpwdlength = $("#pmpwdlength").val();
+            let pum = $("#pum").val();
+            let flagpuusernamelength = myRegFun("0123456789",puusernamelength,1,2);
+            let flagpmpwdlength = myRegFun("0123456789",pmpwdlength,1,2);
+            let flagpum = myRegFun("0123456789",pum,1,2);
+            if(flagpuusernamelength==false||flagpmpwdlength==false||flagpum==false){
+                alert("长度或格式错误，请重新输入");
+                return false;
+            }
+            let strAes256_32_93 = document.getElementById('aes256').value;
+            if(strAes256_32_93==null||strAes256_32_93==false){
+                $("#aes256").val(prompt("请输入任意特征码来备注帐号密码的归类，否则请取消"));
+            }
+            let blankStr = '';
+            for(i=0;i<puusernamelength;i++){
+                blankStr = blankStr+' ';
+            }
+            accountlistStr = "用户名"+blankStr+"密码";
+            let accounthead=`            <tr>
+                <td>用户名</td>
+                <td>密码</td>
+            </tr>`;
+            $("#accountlist").html("").append(accounthead).show();
+            for(i=0;i<pum;i++){
+                let puusername = randomString(strNumpu,puusernamelength);
+                let pmpassword = randomString(strNumpm,pmpwdlength);
+                let accountnode=`            <tr>
+                <td>${puusername}</td>
+                <td>${pmpassword}</td>
+            </tr>`;
+                $("#accountlist").append(accountnode);
+                accountlistStr = accountlistStr+"\n"+puusername+"    "+pmpassword;
+            }
+        });
+        //复制input里面的值到粘贴板，结果只有一行。
+        function copyInputToClip(content) {
+            var aux = document.createElement("input");
+            aux.setAttribute("value", content);
+            document.body.appendChild(aux);
+            aux.select();
+            document.execCommand("copy");
+            document.body.removeChild(aux);
+        }
+        //复制textarea里面的值到粘贴板，结果显示多行。
+        function copyTextareaToClip(content) {
+            let textarea = document.createElement("textarea");
+            textarea.innerHTML=content;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+        }
+        //复制textarea里面的值到粘贴板
+        $("#copyn").click(function () {
+            copyTextareaToClip(accountlistStr);
+        });
+
+        //打乱字符串或数组
+        function resetArr(arr){
+            return arr.sort(function(){ return Math.random() - 0.5});
+        }
+        let arrStr = 'abc';
+        arrStr = resetArr(arrStr.split("")).join("");
+        console.log("arrStr:"+arrStr);
+    });
 </script>
+
+</body>
 </html>
