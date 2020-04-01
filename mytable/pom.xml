@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.example</groupId>
+  <artifactId>mytable</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>${project.artifactId}</name>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.1.12.RELEASE</version>
+    <!--<version>2.1.4.RELEASE</version>会报错-->
+    <!--    <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+  </parent>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>1.8</java.version>
+    <spring-cloud.version>Greenwich.SR5</spring-cloud.version>
+    <!-- 新增docker镜像名称配置 -->
+    <docker.image.prefix>f8xn</docker.image.prefix>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jdbc</artifactId>
+    </dependency>
+    <!-- Sprig Boot/SpringJUnit支持 测试支持,spring-boot-starter-test中已经集成了junit4.12，org.springframework:spring-test-->
+    <!--spring-boot-starter-test 和org.springframework.boot:spring-boot-test两者的依赖包一样-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <!--test，只在测试时使用，用于编译和运行测试代码。不会随项目发布。-->
+      <scope>test</scope>
+    </dependency>
+    <!-- web支持，SpringMVC， Servlet支持等 -->
+    <!--要加，否则接口不返回数据，rundashboard不显示端口？-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <!--mysql 6以下版本已废弃-->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.47</version>
+      <scope>runtime</scope>
+    </dependency>
+    <!--c3p0、dbcp、druid三大数据库连接池/数据源,jdbc只提供一个接口。-->
+    <!-- 阿里巴巴连接池druid，包含用于对象字符串转换的fastjson ，如果没有配置type: com.alibaba.druid.pool.DruidDataSource，可有可无-->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.1.20</version>
+    </dependency>
+    <!--日志方式一自带的-->
+    <!--spring-boot-starter-parent包括starter，spring-boot-starter包含spring-boot-starter-logging，
+    spring-boot-starter-logging包括log4j-api+slf4j+logback-core,Spring Boot默认的日志框架 logback。spring-boot框架自带slf4j。
+    Thymeleaf依赖中同样包含了spring-boot-starter，最终我只要引入Thymeleaf即可。-->
+    <!--启动tomcat会默认映射到resources的static或templates目录，而不是webapp-->
+    <!--所有的项目都要添加依赖spring-boot-starter-logging-->
+    <!--<dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-logging</artifactId>
+    </dependency>-->
+
+    <!--被thymeleaf修饰的页面一般是thymeleaf默认在resources>templates目录下，并且默认首页是index.html，默认端口8080-->
+    <!--controller return "index"页面时。必须加上才能渲染和显示,不能和web工程共存-->
+    <!--<dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>-->
+    <!--日志方式二，用于Logger.getLogger(getClass()，使用最多1万，2012年，不用添加依赖，spring-boot自带-->
+    <!--<dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
+    </dependency>-->
+    <!-- SpringBoot的Mybatis启动器 -->
+    <dependency>
+      <groupId>org.mybatis.spring.boot</groupId>
+      <artifactId>mybatis-spring-boot-starter</artifactId>
+      <!--<version>1.3.2</version>-->
+      <version>2.1.1</version>
+    </dependency>
+
+
+    <!--poi导出导入excel-->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>1.2.58</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>3.17</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>3.17</version>
+    </dependency>
+
+    <!--爬虫，阿里巴巴连接池druid，包含用于对象字符串转换的fastjson-->
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.10</version>
+    </dependency>
+
+    <!-- seleniuminhq+chromedrive.exe(根治反爬)，直接运行在浏览器里面，就像真人在操作一样。 -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>3.141.59</version>
+    </dependency>
+    <dependency>
+      <groupId>com.codeborne</groupId>
+      <artifactId>phantomjsdriver</artifactId>
+      <version>1.4.4</version>
+    </dependency>
+    <!--xpath操作xml-->
+    <dependency>
+      <groupId>us.codecraft</groupId>
+      <artifactId>xsoup</artifactId>
+      <version>0.3.1</version>
+    </dependency>
+
+    <!--以下自己加的，加了f8xn,控制台不输出启动记录！-->
+    <!--jsp页面使用jstl标签-->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <!--provided，类似compile，期望JDK、容器或使用者会提供这个依赖。如servlet.jar-->
+      <scope>provided</scope>
+    </dependency>
+    <!--用于编译jsp-->
+    <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-jasper</artifactId>
+      <!--provided，类似compile，期望JDK、容器或使用者会提供这个依赖。如servlet.jar-->
+      <scope>provided</scope>
+    </dependency>
+    <!--启用spring boot内嵌tomcat,使用springboot方式启动时，访问jsp页面必须要！-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+      <!--provided，类似compile，期望JDK、容器或使用者会提供这个依赖。如servlet.jar-->
+      <scope>provided</scope>
+    </dependency>
+    <!--Warning:java: 未知的枚举常量 javax.annotation.meta.When.MAYBE-->
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>annotations</artifactId>
+      <version>3.0.1</version>
+    </dependency>
+
+    <!--thymeleaf，th标签 -->
+    <!-- 也可在html中加<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml"> -->
+    <!--<dependency>
+        <groupId>org.thymeleaf</groupId>
+        <artifactId>thymeleaf</artifactId>
+        <version>3.0.11.RELEASE</version>
+    </dependency>-->
+    <dependency>
+      <groupId>com.oracle</groupId>
+      <artifactId>ojdbc6</artifactId>
+      <version>11.2.0.4.0-atlassian-hosted</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <!--test，只在测试时使用，用于编译和运行测试代码。不会随项目发布。-->
+      <scope>test</scope>
+    </dependency>
+    <!--可使用dependencyManagement，也可不使用直接引入,右键add deppendences来添加。-->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.47</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>mytable</finalName>
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+      <plugins>
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>3.1.0</version>
+        </plugin>
+        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.0</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.22.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>3.2.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>

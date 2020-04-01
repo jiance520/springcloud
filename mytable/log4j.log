@@ -1,0 +1,18 @@
+    Userinfo selectLogin(Map map);
+    int deleteByPrimaryKey(Integer userid);
+
+    int insert(Userinfo record);
+
+    int insertSelective(Userinfo record);
+
+    Userinfo selectByPrimaryKey(Integer userid);
+
+    int updateByPrimaryKeySelective(Userinfo record);
+
+    int updateByPrimaryKeyWithBLOBs(Userinfo record);
+
+    int updateByPrimaryKey(Userinfo record);
+
+      <select id="selectLogin" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT * from userinfo WHERE USERNAME = #{username,jdbcType=VARCHAR} and PASSWORD = #{password,jdbcType=VARCHAR}
+      </select>

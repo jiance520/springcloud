@@ -1,0 +1,157 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="../css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/demo.css"><!--这是窗口的样式，影响头部样式-->
+    <script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/datagrid-detailview.js"></script>
+    <script type="text/javascript" src="../js/easyui-lang-zh_CN.js"></script>
+    <script src="../build/dist/echarts-all.js"></script><!--导入本地js-->
+    <script type="text/javascript" src="../myjs/myjs.js"></script>
+        <style type="text/css">
+        #mywestcss,*{
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            /*border:red solid 1px;*/
+        }
+        html,body{
+            height: 100%;
+            width: 100%;
+        }
+        #myhead1 *{
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="easyui-layout" style="background-color:#5B96D7;">
+<div id="myhead1" style="padding:0 20px 0 50px;color:white;font-weight:bold;height:60px;display:flex; align-items: center;" >
+    <!--<img src="../img/brand/logo.png" style="vertical-align: middle"/>-->
+    <span style="font:bold 24px 宋体;width:1200px;">后台数据管理系统</span>
+    <a href="../img/brand/home.png" style="vertical-align:middle"></a>
+    <span style="vertical-align:middle">&nbsp;欢迎你:</span>&nbsp;&nbsp;
+    <span id="logininfo" style="">管理员。</span>&nbsp;&nbsp;|
+    <a href="javascript:void(0)" style="width:70px;font:bold 14px/30px 宋体;text-align:center;line-height:30px;color:white;border-radius:3px;text-decoration:none;margin:20px 0 20px 0" onclick="exit()">注销</a>
+<!--    <span>&nbsp;或&nbsp;</span>-->
+<!--    <a href="http://localhost:8070/" style="width:100px;font:bold 14px/30px 宋体;text-align:center;line-height:30px;color:white;border-radius:3px;text-decoration:none;margin:20px 0 20px 0">去商店看看</a>-->
+</div>
+<div style=";background-color:#E2ECF5;padding:3px 3px 3px 40px;font:normal 9px/24px 宋体;color:#808589;display:flex; align-items: center;">
+    <span id="show_time"></span>
+    <span style="margin-right:10px;transform:translate(1350px,0);">温馨提示:请使用高版本浏览器</span>
+</div>
+<div class="easyui-layout" style="width:100%;height:80%;">
+    <div id="mywestcss" data-options="region:'west',split:true" title="导航菜单" style="width:10%;">
+        <div class="easyui-accordion" data-options="fit:true,border:false">
+            <div title="订单管理" style="padding:10px;">
+                <br>
+                <div style="cursor:pointer;" class="showpage" onclick="leftshowpage('sellorder.html',' #sellorder_content','订单列表')"><img src="../img/brand/double.png"><span>订单列表</span></div>
+                <hr style="border: 1px dashed #c0c0c0;margin: 10px 0 10px 0">
+                <div style="cursor:pointer;" class="showpage" onclick="leftshowpage('express.html',' #express_content','快递公司管理')"><img src="../img/brand/double.png"><span>快递公司管理</span></div>
+                <hr style="border: 1px dashed #c0c0c0;margin: 10px 0 10px 0">
+                <div style="cursor:pointer;" class="showpage" onclick="leftshowpage('orderstate.html',' #orderstate_content','订单状态管理')"><img src="../img/brand/double.png"><span>订单状态管理</span></div>
+                <hr style="border: 1px dashed #c0c0c0;margin: 10px 0 10px 0">
+                <div style="cursor:pointer;" class="showpage" onclick="leftshowpage('service.html',' #service_content','售后管理')"><img src="../img/brand/double.png"><span>售后管理</span></div>
+                <hr style="border: 1px dashed #c0c0c0;margin: 10px 0 10px 0">
+                <br>
+            </div>
+
+            <div title="会员管理" data-options="selected:true" style="padding:10px;">
+                <br>
+                <div style="cursor:pointer;" class="showpage" onclick="leftshowpage('vip.html',' #vip_content','会员列表')"><img src="../img/brand/double.png"><span>会员列表</span></div>
+            </div>
+            <div title="商品管理" style="padding:10px">
+                <br>
+                <div style="cursor:pointer;" class="showpage" onclick="leftshowpage('product.html',' #product_content','商品列表')"><img src="../img/brand/double.png"><span>商品列表</span></div>
+                <br>
+                <div style="cursor:pointer;" class="showpage" onclick="leftshowpage('brand.html',' #brand_content','品牌管理')"><img src="../img/brand/double.png"><span>品牌管理</span></div>
+                <br>
+                <div style="cursor:pointer;" class="showpage" onclick="leftshowpage('feature.html',' #feature_content','属性管理')"><img src="../img/brand/double.png"><span>属性管理</span></div>
+                <br>
+                <div style="cursor:pointer;" class="showpage" onclick="leftshowpage('supplier.html',' #supplier_content','供货商管理')"><img src="../img/brand/double.png"><span>供货商管理</span></div>
+                <br>
+            </div>
+            <div title="营销推广" style="padding:10px">
+                <br>
+                <div style="cursor:pointer;" class="showpage" onclick="leftshowpage('advert.html',' #advert_content','营销推广')"><img src="../img/brand/double.png"><span>营销推广</span></div>
+                <br>
+                <div style="cursor:pointer;" class="showpage" onclick="leftshowpage('friendship.html',' #friendship_content','友情链接')"><img src="../img/brand/double.png"><span>友情链接</span></div>
+            </div>
+            <div title="系统管理" style="padding:10px">
+                <br>
+                <div style="cursor:pointer;" class="showpage" onclick="leftshowpage('manager.html',' #manager_content','后台管理员')"><img src="../img/brand/double.png"><span>后台管理员</span></div>
+            </div>
+        </div>
+    </div>
+    <div data-options="region:'center',title:'',iconCls:'icon-ok'">
+        <div class="easyui-tabs" id="easyui-tabs" data-options="fit:true,border:false,plain:true,cache:false">
+            <div title="管理中心" id="system" href="system.html" style="padding:10px"></div>
+            <!--<div title="订单列表" id="sellorder" href="sellorder/sellorder.html" data-options="closable:true" style="padding:10px;"></div>-->
+            <!--<div title="快递公司管理" id="sellorder" href="sellorder/sellorder.html" data-options="closable:true" style="padding:10px"></div>-->
+            <!--<div title="订单状态管理" id="sellorder" href="sellorder/sellorder.html" data-options="closable:true" style="padding:10px"></div>-->
+            <!--<div title="售后管理" id="sellorder" href="sellorder/sellorder.html" data-options="closable:true" style="padding:10px"></div>-->
+            <!--<div title="会员等级" id="sellorder" href="sellorder/sellorder.html" data-options="closable:true" style="padding:10px"></div>-->
+        </div>
+    </div>
+    <div class="" style="text-align: right"><span>时间就是金钱</span></div>
+</div>
+
+</body>
+</html>
+<!--显示网页-->
+<script type="text/javascript">
+    $(document).ready(function () {
+    })
+    function leftshowpage(url,selectid,title) {//selectid格式：" #selectid"
+        if($("#easyui-tabs").tabs("exists",title)){/*通过标题判断，不是id*/
+            $("#easyui-tabs").tabs("select",title);
+            var tabpanel = $("#easyui-tabs").tabs("getSelected");/*发生选中事件*/
+            tabpanel.href('');//不清空，新添加的内容的id会与之前的冲突，导致内容不显示！
+            tabpanel.load(url+selectid,function (result) {
+                $(result).find("script").appendTo(tabpanel);
+                tabpanel.attr("title",title);/*这是选项卡是标题，不是面板的*/
+            });
+        }else{
+            $("#easyui-tabs").tabs("add",{//当添加一个新的标签页面板（tab panel）时，它将被选中。这是一个ajax!发生选中事件。
+                title : title,//面板标题,title值在tab对象中!
+                href:url,//加载远程内容来填充标签页面板（tab panel）的 URL。
+                closable : true//可关闭
+            });
+        }
+    }
+
+    //返回?后的json对象
+    function getRequest() {
+        //获取url中"?"符后的字串
+        var url = location.search;
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            var strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                //theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                //theRequest[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
+                theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+    //    登陆状态
+    var username = getRequest()["username"];
+    if(username!=null && username!=''){
+        $("#logininfo").html(username);
+    }
+    // 退出
+    function exit() {
+        $.post("../exitAction",{},function (data) {
+            window.location.href="../deng_index.jsp";
+        },'json')
+    }
+    function backSellorder() {
+        window.location.href="deng_web/hmanager.html";
+    }
+    $.parser.parse(".easyui-layout");
+</script>

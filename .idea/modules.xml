@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/f8xn/configserver/configserver.iml" filepath="$PROJECT_DIR$/f8xn/configserver/configserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/f8xn/eurekaserver/eurekaserver.iml" filepath="$PROJECT_DIR$/f8xn/eurekaserver/eurekaserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/f8xn/f8xn.iml" filepath="$PROJECT_DIR$/f8xn/f8xn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mytable/mytable.iml" filepath="$PROJECT_DIR$/mytable/mytable.iml" />
       <module fileurl="file://$PROJECT_DIR$/f8xn/orderservice/orderservice.iml" filepath="$PROJECT_DIR$/f8xn/orderservice/orderservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/f8xn/productservice/productservice.iml" filepath="$PROJECT_DIR$/f8xn/productservice/productservice.iml" />
     </modules>

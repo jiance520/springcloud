@@ -6,15 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="eurekaserver" />
+        <module name="orderservice" />
+        <module name="autof8" />
         <module name="productservice" />
         <module name="common" />
-        <module name="configserver" />
+        <module name="mytable" />
         <module name="buy51cto" />
         <module name="apigateway" />
         <module name="account" />
-        <module name="autof8" />
-        <module name="orderservice" />
+        <module name="configserver" />
+        <module name="eurekaserver" />
         <module name="untitled" />
       </profile>
     </annotationProcessing>
@@ -28,6 +29,7 @@
       <module name="configserver" target="1.8" />
       <module name="eurekaserver" target="1.8" />
       <module name="f8xn" target="1.8" />
+      <module name="mytable" target="1.8" />
       <module name="orderservice" target="1.8" />
       <module name="productservice" target="1.8" />
       <module name="untitled" target="1.8" />
@@ -43,6 +45,7 @@
       <module name="common (1) (f8xn)" options="-parameters" />
       <module name="configserver" options="-parameters" />
       <module name="eurekaserver" options="-parameters" />
+      <module name="mytable" options="-parameters" />
       <module name="orderservice" options="-parameters" />
       <module name="productservice" options="-parameters" />
       <module name="untitled" options="-parameters" />

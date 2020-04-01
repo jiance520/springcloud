@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+<!--<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >-->
+
+  <display-name>Archetype Created Web Application</display-name>
+
+  <!--服务器监听-->
+  <!--<listener>
+    <listener-class>com.action.ApplicationListener</listener-class>
+  </listener>-->
+  <!--登陆验证-->
+  <filter>
+    <filter-name>sessionFilter</filter-name>
+    <filter-class>com.listencerandfilter.SessionFilter</filter-class>
+  </filter>
+  <!--编码格式过滤转换-->
+  <filter>
+    <filter-name>codeFilter</filter-name>
+    <filter-class>com.listencerandfilter.CodeFilter</filter-class>
+    <init-param>
+      <param-name>codestr</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <!--<servlet>
+    <servlet-name>example</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:springmvc.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>&lt;!&ndash; 使用mvc时延迟一秒启动，让后面的<welcome-file>forward.jsp先加载 &ndash;&gt;
+  </servlet>-->
+
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>QueryUser</servlet-name>
+    <servlet-class>com.mytableaction.QueryUser</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>QueryRecord</servlet-name>
+    <servlet-class>com.mytableaction.QueryRecord</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>QueryNote</servlet-name>
+    <servlet-class>com.mytableaction.QueryNote</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>SaveAction</servlet-name>
+    <servlet-class>com.mytableaction.SaveAction</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>LoadPwd</servlet-name>
+    <servlet-class>com.mytableaction.LoadPwd</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>CheckUser</servlet-name>
+    <servlet-class>com.mytableaction.CheckUser</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>Register</servlet-name>
+    <servlet-class>com.mytableaction.Register</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>ModifyNote</servlet-name>
+    <servlet-class>com.mytableaction.ModifyNote</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>ModifyPwd6</servlet-name>
+    <servlet-class>com.mytableaction.ModifyPwd6</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>DeleteRecord</servlet-name>
+    <servlet-class>com.mytableaction.DeleteRecord</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>QueryNoteUser</servlet-name>
+    <servlet-class>com.mytableaction.QueryNoteUser</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>UpdatePwd6</servlet-name>
+    <servlet-class>com.mytableaction.UpdatePwd6</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>QueryUser</servlet-name>
+    <url-pattern>/QueryUser</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>QueryRecord</servlet-name>
+    <url-pattern>/QueryRecord</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>QueryNote</servlet-name>
+    <url-pattern>/QueryNote</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SaveAction</servlet-name>
+    <url-pattern>/SaveAction</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LoadPwd</servlet-name>
+    <url-pattern>/LoadPwd</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CheckUser</servlet-name>
+    <url-pattern>/CheckUser</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Register</servlet-name>
+    <url-pattern>/Register</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ModifyNote</servlet-name>
+    <url-pattern>/ModifyNote</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ModifyPwd6</servlet-name>
+    <url-pattern>/ModifyPwd6</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DeleteRecord</servlet-name>
+    <url-pattern>/DeleteRecord</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>QueryNoteUser</servlet-name>
+    <url-pattern>/QueryNoteUser</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UpdatePwd6</servlet-name>
+    <url-pattern>/UpdatePwd6</url-pattern>
+  </servlet-mapping>
+
+  <filter-mapping>
+    <filter-name>sessionFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>codeFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <!--<servlet-mapping>
+    <servlet-name>example</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>-->
+
+  <welcome-file-list>
+    <!--解决不能在<welcome-file>IndexAction</welcome-file>直接进入@Controller的@RequestMapping("/IndexAction")的问题-->
+    <welcome-file>password.jsp</welcome-file>
+    <welcome-file>forward.jsp</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+</web-app>
