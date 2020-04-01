@@ -16,14 +16,14 @@
         }
         #main {
             margin: 0 auto;
-            width: 1000px;
+            width: 1150px;
             border: 1px solid red;
-            height: 930px;
+            height: 700px;
         }
         #left {
             float:left;
-            width: 400px;
-            height: 900px;
+            width: 550px;
+            height: 650px;
             margin: 5px;
             padding: 5px;
             border: 1px solid #c0c0c0;
@@ -33,7 +33,7 @@
         #right {
             float:left;
             width: 550px;
-            height: 900px;
+            height: 650px;
             margin: 5px;
             padding: 5px;
             border: 1px solid #c0c0c0;
@@ -62,16 +62,17 @@
 </head>
 
 <body id="main">
+<div style="font:bold 18px/22px 微软雅黑;text-align: center;color: #ff290e">在线生成随机帐号密码，批量生成小号</div>
 <div id="left">
     <form action="#" id="info">
-        <h3>固定特征信息(32个以内)</h3>
+        <div style="font:bold 18px/22px 微软雅黑">固定特征信息(32个以内)</div>
         <!--str_10+strab_26+strAB_26+str_xian+str_30=93位-->
         <div>网址、身份证号、生日、手机号、域名、IP地址(只允许键盘上有的半角字符)</div>
         <div style="display: flex; justify-content: center;" id="hidden" hidden>
             <span class="text-center" id="error" style="color: red;font: normal 18px/24px 微软雅黑"></span>
         </div>
         <input type="text" style="display: block;width: 100%" name="aes256" id="aes256" value="" required placeholder="特征码,如:taobao.com">
-        <h3>生成单个固定密码</h3>
+        <div style="font:bold 18px/22px 微软雅黑">生成单个固定密码</div>
         <div>用户名(32个以内)</div>
         <input type="text" style="display: block;width: 100%" name="username" id="username" value="" required>
         <div>
@@ -101,7 +102,7 @@
         <input type="text" style="display: inline-block;width: 70%" name="passwdn" id="passwdn" value='' required>
         <input type="button" id="copypasswdn" style="display:inline-block;" value="点击复制">
         <br>
-        <h3>批量生成帐号和密码</h3>
+        <div style="font:bold 18px/22px 微软雅黑">批量生成帐号和密码</div>
         <div>
             <span>勾选或输入用户名的组成字符(只允许键盘字符)</span>
             <input type="text" style="display: block;width: 100%" name="pustrzdy" id="pustrzdy" value='' placeholder="">
@@ -135,16 +136,6 @@
     </form>
 </div>
 <div id="right">
-    <div id="right1">
-        <form action='#' method='post'>
-            <div>请输入要查询的特征码</div>
-            <input type='text' name='qaes256' id='qaes256' value='taobao.com' required/>
-            <div>请输入要查询的用户名</div>
-            <input type='text' name='qusername' id='qusername' value='jiance520' required/>
-            <br/>
-            <input type='submit' id='submit' class='submit' value='查询帐号修改记录'/>
-        </form>
-    </div>
     <div style="clear: both">
         <span style="font:bold 18px/22px 微软雅黑">随机密码列表</span>
         <input type="button" id="copyn" value="点击复制"/>
