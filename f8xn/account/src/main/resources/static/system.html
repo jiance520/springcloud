@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../css/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../css/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/demo.css"><!--这是窗口的样式，影响头部样式-->
+    <script type="text/javascript" src="../js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+
+    <script src="../build/dist/echarts-all.js"></script><!--导入本地js-->
+    <style>
+        *{
+            /*border: 1px solid #444;*/
+        }
+        div{
+            /*display: inline-block;*/
+        }
+    </style>
+</head>
+<body>
+ <div id="syscontent" style="line-height:100%">
+    <div id="left" style="width: 40%;line-height:28px;margin:10px;vertical-align:top;display:inline-block;">
+        <div style="border:1px dashed #ccc;">
+            <div id="titleInfo" style="background-color:#EFF5FA;border-bottom:1px dashed #ccc;">
+                <span style="font:bold 14px/28px 宋体;">信息统计</span>
+                <a href="javascript:void(0)" style="font:bold 14px/28px 宋体" onclick="init()">/刷新</a>
+            </div>
+            <div style="border-bottom:1px dashed #ccc;">
+                <div style="width:25%;display:inline-block">帐号数量</div>
+                <div id="productNum" style="width:73%;display:inline-block">13</div>
+            </div>
+            <div style="border-bottom:1px dashed #ccc;">
+                <div style="width:25%;display:inline-block">成交单数</div>
+                <div id="sellproductNum" style="width:73%;display:inline-block">1</div>
+            </div>
+            <div  style="border-bottom:1px dashed #ccc;">
+                <div style="width:25%;display:inline-block">会员数</div>
+                <div id="vipNum" style="width:73%;display:inline-block">3</div>
+            </div>
+            <div id="transInfo" style="background-color:#EFF5FA;border-bottom:1px dashed #ccc;">
+                <span style="font:bold 14px/28px 宋体;">待处理事务</span>
+            </div>
+            <div style="border-bottom:1px dashed #ccc;">
+                <div style="width:25%;display:inline-block">未发货订单</div>
+                <div id="order1Num" style="width:73%;display:inline-block">2</div>
+            </div>
+            <div style="border-bottom:1px dashed #ccc;">
+                <div style="width:25%;display:inline-block">待处理订单</div>
+                <div id="order3Num" style="width:73%;display:inline-block">2</div>
+            </div>
+        </div>
+        <br>
+        <div style="border:1px dashed #ccc;">
+            <div style="background-color:#EFF5FA;border-bottom:1px dashed #ccc;">
+                <span style="font:bold 14px/28px 宋体;">系统信息</span>
+            </div>
+            <div style="border-bottom:1px dashed #ccc;">
+                <div style="width:25%;display:inline-block">java版本</div>
+                <div style="width:73%;display:inline-block">1.8.0_161</div>
+            </div>
+            <div style="border-bottom:1px dashed #ccc;">
+                <div style="width:25%;display:inline-block">数据库版本</div>
+                <div style="width:73%;display:inline-block">Oracle 11g</div>
+            </div>
+            <div style="border-bottom:1px dashed #ccc;">
+                <div style="width:25%;display:inline-block">服务器系统</div>
+                <div style="width:73%;display:inline-block">windows2003</div>
+            </div>
+            <div>
+                <div style="width:25%;display:inline-block">Service</div>
+                <div style="width:73%;display:inline-block">Apache Tomcat 8.0</div>
+            </div>
+        </div>
+    </div>
+    <div id="right" style="width:50%;margin:10px;vertical-align:top;display:inline-block"></div>
+     <script type="text/javascript">
+         if($("#left").height() > $("#right").height()){
+             $("#right").css("height",$("#left").height())
+         }else{
+             $("#left").css("height",$("#right").height())
+         }
+         var namelist = 0;
+         var numlist = 0;
+         init();
+         function init() {
+             $.post("../indexAction",{},function (data) {
+                 var productNum = data.productNum;/*帐号数量*/
+                 var sellproductNum = data.sellproductNum;/*成交单数*/
+                 var vipNum = data.vipNum;/*会员数*/
+                 var order1Num = data.order1Num;
+                 var order3Num = data.order3Num;
+                 namelist = data.namelist;
+                 numlist = data.numlist;
+                 $("#productNum").html(productNum);
+                 $("#sellproductNum").html(sellproductNum);
+                 $("#vipNum").html(vipNum);
+                 $("#order1Num").html(order1Num);
+                 $("#order3Num").html(order3Num);
+
+                 // 基于准备好的dom，初始化echarts实例
+                 var myChart = echarts.init(document.getElementById('right'));
+
+                 // 指定图表的配置项和数据
+                 var option = {
+                     title: {
+                         text: '笔记本品牌销量统计图',
+                         x:'center',
+                         y:'top'
+                     },
+                     tooltip: {},
+//             legend: {
+//                 data:['销量']
+//             },
+                     xAxis: {
+                         axisLabel: {
+                             interval:0,
+                             rotate:40
+                         },
+                         grid: {
+                             left: '10%',
+                             bottom:'35%'
+                         },
+                         data: namelist
+                     },
+                     yAxis: {
+                         show:true,
+                         name:"销售数据据(个/套)",
+                         nameLocation:'middle',
+                         nameGap:10,
+                         nameRotate:90
+                     },
+                     series: [{
+                         name: '销量',
+                         type: 'bar',
+                         data: numlist
+                     }]
+                 };
+                 // 使用刚指定的配置项和数据显示图表。
+                 myChart.setOption(option);
+             },"json")
+         }
+     </script>
+ </div>
+</body>
+</html>

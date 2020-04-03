@@ -30,7 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<%pageContext.setAttribute("value",123); %>
   	<input type="text" name="inputPwd6" id="inputPwd6" value="<%=pageContext.getAttribute("value") %>" required>
  <%-- <sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
-					 url="jdbc:mysql://localhost:3306/account"
+					 url="jdbc:mysql://localhost:3306/mytable"
 					 user="root"  password="autof8Ol10"/>
 
   <sql:query dataSource="${snapshot}" sql="select * from userdata" var="result" />--%>

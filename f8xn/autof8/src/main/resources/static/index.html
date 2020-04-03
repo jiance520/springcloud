@@ -6,16 +6,14 @@
     <script type="text/javascript" src="js/jquery-1.12.4.js"></script>
     <script src="js/autoTextarea.js"></script>
     <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
-    <script src="js/cookietool.js"></script><!--必须放在jdbcutil前，否则找不到方法-->
-    <script src="js/autof8jdbcutil.js"></script>
+    <script src="js/cookietool.js"></script><!--必须放在jdbcutil前，否则找不到方法，-->
+    <script src="./js/autof8jdbcutil.js"></script><!--如果cookietool.js中有类，必须inport,且 type="module"-->
     <link rel="stylesheet" href="css/autof8.css">
     <!--<script type="text/javascript" href="../css/vue.js" ></script>-->
     <!--去除html页面中GET http://localhost:8080/favicon.ico 404 (Not Found)-->
     <!--<link rel="shortcut icon" href="#" />-->
     <link href="favicon.ico" rel="shortcut icon">
-    <script type="text/javascript">
-
-    </script>
+    <script></script>
     <style type="text/css">
         *{
             /*font:normal 14px/24px 宋体;*/
@@ -46,28 +44,28 @@
             <td><label for="driverNamedjj" class="my-sr-only">数据库驱动driverNamedjj</label></td>
             <td>
                 <input type="text"  id="driverNamedjj" class="my-form-control" placeholder="driverNamedjj" name="driverNamedjj" value="com.mysql.jdbc.Driver" required autofocus>
-                <input type="button" value="deleterow" onclick="deleterow(this)">
+                <input type="button" value="clearrow" onclick="clearrow(this)">
             </td>
         </tr>
         <tr>
             <td><label for="datasourceUrldjj" class="my-sr-only">数据库连接地址端口和表datasourceUrldjj</label></td>
             <td>
                 <input type="text"  id="datasourceUrldjj" class="my-form-control" placeholder="datasourceUrldjj" name="datasourceUrldjj" value="jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8" required autofocus>
-                <input type="button" value="deleterow" onclick="deleterow(this)">
+                <input type="button" value="clearrow" onclick="clearrow(this)">
             </td>
         </tr>
         <tr>
             <td><label for="userNamedjj" class="my-sr-only">数据库用户名userNamedjj</label></td>
             <td>
                 <input type="text"  id="userNamedjj" class="my-form-control" placeholder="userNamedjj" name="userNamedjj" value="root" autocomplete="on" required autofocus><!--autocomplete="on"表示自动填表，在 chrome无效-->
-                <input type="button" value="deleterow" onclick="deleterow(this)">
+                <input type="button" value="clearrow" onclick="clearrow(this)">
             </td>
         </tr>
         <tr>
             <td><label for="passworddjj" class="my-sr-only">数据库密码passworddjj</label></td>
             <td>
                 <input type="password"  id="passworddjj" class="my-form-control" placeholder="passworddjj" name="passworddjj" value="root" required autofocus>
-                <input type="button" value="deleterow" onclick="deleterow(this)">
+                <input type="button" value="clearrow" onclick="clearrow(this)">
             </td>
         </tr>
         <tr>
@@ -76,15 +74,23 @@
         </tr>
         <tr>
             <td><label for="tabnamedjj" class="my-sr-only">表名tabnamedjj</label></td>
-            <td><input type="text"  id="tabnamedjj" class="my-form-control" placeholder="tabnamedjj" name="tabnamedjj" value="t_user" required autofocus></td>
+            <td>
+                <input type="text"  id="tabnamedjj" class="my-form-control" placeholder="tabnamedjj" name="tabnamedjj" value="t_user" required autofocus>
+                <input type="button" value="clearrow" onclick="clearrow(this)">
+            </td>
         </tr>
         <tr>
             <td><label for="pidnamedjj1" class="my-sr-only">主键字段名pidnamedjj1</label></td>
-            <td><input type="text"  id="pidnamedjj1" class="my-form-control" placeholder="pidnamedjj1" name="pidnamedjj1" value="id" required autofocus></td>
+            <td>
+                <input type="text"  id="pidnamedjj1" class="my-form-control" placeholder="pidnamedjj1" name="pidnamedjj1" value="id" required>
+                <input type="button" value="clearrow" onclick="clearrow(this)">
+            </td>
         </tr>
         <tr>
             <td><label for="pidnamedjj2" class="my-sr-only">主键字段名pidnamedjj2</label></td>
-            <td><input type="text"  id="pidnamedjj2" class="my-form-control" placeholder="pidnamedjj2" name="pidnamedjj2" value="id2" required disabled></td>
+            <td>
+                <input type="text"  id="pidnamedjj2" class="my-form-control" placeholder="pidnamedjj2" name="pidnamedjj2" value="id2" required disabled>
+            </td>
         </tr>
         <tr>
             <td><label for="acttypedjj" class="my-sr-only">增删改查acttypedjj</label></td>
@@ -102,7 +108,7 @@
             <td><label for="id" class="my-sr-only">字段id的值</label></td>
             <td>
                 <input type="text"  id="id" class="my-form-control" placeholder="id" name="id" value="1" required autofocus>
-                <input type="button" value="deleterow" onclick="deleterow(this)">
+                <input type="button" value="clearrow" onclick="clearrow(this)">
             </td>
         </tr>
         &lt;!&ndash;<tr>
@@ -113,14 +119,14 @@
             <td><label for="name" class="my-sr-only">字段name的值</label></td>
             <td>
                 <input type="text" id="name" class="my-form-control" placeholder="name" name="name" value="admin" required autofocus>
-                <input type="button" value="deleterow" onclick="deleterow(this)">
+                <input type="button" value="clearrow" onclick="clearrow(this)">
             </td>
         </tr>
         <tr>
             <td><label for="password" class="my-sr-only">字段password的值</label></td>
             <td>
                 <input type="password" id="password" class="my-form-control" placeholder="password" name="password" value="123" required autofocus>
-                <input type="button" value="deleterow" onclick="deleterow(this)">
+                <input type="button" value="clearrow" onclick="clearrow(this)">
             </td>
         </tr>-->
         <tr>
@@ -172,6 +178,7 @@
     <tr><td colspan="2"><label for="httpApi"></label><textarea id="httpApi" style="width: 99%"></textarea></td></tr>
     <tr><td colspan="2"><label for="datavalue"></label><textarea id="datavalue" style="width: 99%"></textarea></td></tr>
 </table>
+
 <p style="margin: 100px"></p>
 <div style="display:flex;justify-content:center;padding:20px 0;font: normal 20px/20px 微软雅黑">
     <div style="display: inline-block;">

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
-//import oracle.jdbc.OracleTypes;
+import oracle.jdbc.OracleTypes;
 
 /**
  * @version 时间：2018年5月10日 上午10:05:42
@@ -15,15 +15,13 @@ import java.util.logging.Logger;
 public class JdbcUtil {//工具类，针对不同的数据库，使用同样的jdbc方法。
 	private static Logger logger = Logger.getLogger(JdbcUtil.class.getName());
 	private static String driver = "com.mysql.jdbc.Driver";//
-	private static String url = "jdbc:mysql://47.107.171.60/account?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
+	private static String url = "jdbc:mysql://localhost/account?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
 	private static String user = "root";
-	private static String password = "autof8Ol10";
-/*
-	private static String driver = "oracle.jdbc.driver.OracleDriver";//
+	private static String password = "root";
+	/*private static String driver = "oracle.jdbc.driver.OracleDriver";//
 	private static String url = "jdbc:oracle:thin:@106.13.100.117:1521:helowin";
 	private static String user = "mytable";
-	private static String password = "mytable";
-*/
+	private static String password = "mytable";*/
 	private static Connection conn = null;
 	private static PreparedStatement pst = null;
 	private static ResultSet rst = null;

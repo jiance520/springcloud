@@ -1,3 +1,4 @@
+//使用类，防止方法变量污染
 //读取cookie
 //driverNamedjjcookie
 //datasourceUrldjjcookie
@@ -36,3 +37,5 @@ function setCookie(name, value)
     date.setTime(date.getTime() + exp * 24 * 3600 * 1000); //格式化为cookie识别的时间
     document.cookie=escape(name) + "=" + escape(value) + ";expires="+date.toGMTString(); //将name设置为3天后过期,超过这个时间name这条cookie会消失
 }
+//let cookietool = new Cookietool();
+//export default cookietool; //向外暴露的成员/变量，可以使用任意变量来接收！

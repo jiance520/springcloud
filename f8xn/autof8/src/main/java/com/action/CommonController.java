@@ -81,7 +81,7 @@ public class CommonController implements ServletContextAware {
             jdbcUtil.setDatasourceUrl(datasourceUrldjj);
             jdbcUtil.setUserName(userNamedjj);
             jdbcUtil.setPassword(passworddjj);
-            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            System.out.println("-----1jdbcUtil.toString84:"+jdbcUtil.toString());
             listMap = jdbcUtil.exectueQuery(sql);
             System.out.println("-----listMap:"+listMap);
         }
@@ -119,7 +119,8 @@ public class CommonController implements ServletContextAware {
             jdbcUtil.setDatasourceUrl(datasourceUrldjj);
             jdbcUtil.setUserName(userNamedjj);
             jdbcUtil.setPassword(passworddjj);
-            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            System.out.println("-----1jdbcUtil.toString122:"+jdbcUtil.toString());
+            System.out.println("-----sql:"+sql);
             hashMaps = jdbcUtil.queryOne(sql);
             System.out.println("-----hashMaps122:"+hashMaps);
         }
@@ -155,7 +156,7 @@ public class CommonController implements ServletContextAware {
             jdbcUtil.setDatasourceUrl(datasourceUrldjj);
             jdbcUtil.setUserName(userNamedjj);
             jdbcUtil.setPassword(passworddjj);
-            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            System.out.println("-----1jdbcUtil.toString158:"+jdbcUtil.toString());
             i = jdbcUtil.executeUpdate(sql);
         }
         else{
@@ -206,7 +207,7 @@ public class CommonController implements ServletContextAware {
             jdbcUtil.setDatasourceUrl(datasourceUrldjj);
             jdbcUtil.setUserName(userNamedjj);
             jdbcUtil.setPassword(passworddjj);
-            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            System.out.println("-----1jdbcUtil.toString209:"+jdbcUtil.toString());
             i = jdbcUtil.executeUpdate(sql);
         }
         else{
@@ -257,7 +258,7 @@ public class CommonController implements ServletContextAware {
             jdbcUtil.setDatasourceUrl(datasourceUrldjj);
             jdbcUtil.setUserName(userNamedjj);
             jdbcUtil.setPassword(passworddjj);
-            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            System.out.println("-----1jdbcUtil.toString260:"+jdbcUtil.toString());
             i = jdbcUtil.executeUpdate(sql);
         }
         else{
@@ -300,7 +301,7 @@ public class CommonController implements ServletContextAware {
             jdbcUtil.setDatasourceUrl(datasourceUrldjj);
             jdbcUtil.setUserName(userNamedjj);
             jdbcUtil.setPassword(passworddjj);
-            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            System.out.println("303"+jdbcUtil.toString());
             i = jdbcUtil.executeUpdate(sql);
         }
         else{
@@ -326,7 +327,7 @@ public class CommonController implements ServletContextAware {
             jdbcUtil.setDatasourceUrl(datasourceUrldjj);
             jdbcUtil.setUserName(userNamedjj);
             jdbcUtil.setPassword(passworddjj);
-            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            System.out.println("329"+jdbcUtil.toString());
             arrayList = jdbcUtil.exectueQuery(sql);
         }
         else{
@@ -352,7 +353,7 @@ public class CommonController implements ServletContextAware {
             jdbcUtil.setDatasourceUrl(datasourceUrldjj);
             jdbcUtil.setUserName(userNamedjj);
             jdbcUtil.setPassword(passworddjj);
-            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            System.out.println("-----1jdbcUtil.toString355:"+jdbcUtil.toString());
             i = jdbcUtil.executeUpdate(sql);
         }
         else{
@@ -438,7 +439,7 @@ public class CommonController implements ServletContextAware {
             jdbcUtil.setDatasourceUrl(datasourceUrldjj);
             jdbcUtil.setUserName(userNamedjj);
             jdbcUtil.setPassword(passworddjj);
-            System.out.println("-----1jdbcUtil.toString:"+jdbcUtil.toString());
+            System.out.println("-----1jdbcUtil.toString441:"+jdbcUtil.toString());
             object = jdbcUtil.columnListMysql(tabnamedjj);
         }
         else{

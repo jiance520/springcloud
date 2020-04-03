@@ -1,3 +1,5 @@
+//import cookietool from "./js"
+//let cookietool = new Cookietool();
 // console.log("cookie:"+document.cookie);
 //取cookie值
 let driverNamedjjcookie = getCookie("driverNamedjjcookie");
@@ -8,6 +10,9 @@ let tabnamedjjcookie = getCookie("tabnamedjjcookie");
 let pidnamedjj1cookie = getCookie("pidnamedjj1cookie");
 let pidnamedjj2cookie = getCookie("pidnamedjj2cookie");
 let acttypedjjcookie = getCookie("acttypedjjcookie");
+let exectueSqlcookie = getCookie("exectueSqlcookie");
+let apiUrlcookie = getCookie("apiUrlcookie");
+let callBackcookie = getCookie("callBackcookie");
 
 // delCookie("driverNamedjjcookie");
 // delCookie("datasourceUrldjjcookie");
@@ -17,6 +22,9 @@ let acttypedjjcookie = getCookie("acttypedjjcookie");
 // delCookie("pidnamedjj1cookie");
 // delCookie("pidnamedjj2cookie");
 // delCookie("acttypedjjcookie");
+// delCookie("exectueSqlcookie");
+// delCookie("apiUrlcookie");
+// delCookie("callBackcookie");
 
 $(document).ready(function () {
     //alert(1);
@@ -30,6 +38,9 @@ $(document).ready(function () {
         document.getElementById("pidnamedjj1").value=pidnamedjj1cookie;
         document.getElementById("pidnamedjj2").value=pidnamedjj2cookie;
         document.getElementById("acttypedjj").value=acttypedjjcookie;
+        document.getElementById("exectueSql").value=exectueSqlcookie;
+        document.getElementById("httpApi").value=apiUrlcookie;
+        document.getElementById("datavalue").value=callBackcookie;
     }else {
         document.getElementById("driverNamedjj").value="com.mysql.jdbc.Driver";
         document.getElementById("datasourceUrldjj").value="jdbc:mysql://47.107.171.60:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
@@ -40,6 +51,9 @@ $(document).ready(function () {
         document.getElementById("pidnamedjj1").value="id";
         document.getElementById("pidnamedjj2").value="id2";
         document.getElementById("acttypedjj").value="selectOne";
+        document.getElementById("exectueSql").value=exectueSqlcookie;
+        document.getElementById("httpApi").value=apiUrlcookie;
+        document.getElementById("datavalue").value=callBackcookie;
     }
 });
 
@@ -71,8 +85,6 @@ function ajaxForm() {
     let acttypedjj= document.getElementsByName("acttypedjj").item(0).value;//外部js只能是纯js，不能使用jquery取值。
     console.log("datasourceUrldjj:"+datasourceUrldjj);
     console.log("passworddjj:"+passworddjj);
-    console.log("pidnamedjj1:"+pidnamedjj1);
-    console.log("pidnamedjj2:"+pidnamedjj2);
     //设置cookie 3天后失效：每次操作更新cookie。
     setCookie("driverNamedjjcookie",driverNamedjj);
     setCookie("datasourceUrldjjcookie",datasourceUrldjj);
@@ -82,8 +94,6 @@ function ajaxForm() {
     setCookie("pidnamedjj1cookie",pidnamedjj1);
     setCookie("pidnamedjj2cookie",pidnamedjj2);
     setCookie("acttypedjjcookie",acttypedjj);
-    console.log("userNamedjjcookie:"+userNamedjj);
-    console.log("getuserNamedjjcookie:"+getCookie("userNamedjjcookie"));
     if(driverNamedjj==null||driverNamedjj==false||driverNamedjj=="undefined"){
         let connflag=confirm("没有配置数据库连接，是否要继续？");
         if(!connflag){
@@ -96,7 +106,30 @@ function ajaxForm() {
 /*$(document).ready(function () {
 });*/
 //只能有一个window.onload，多个没反应,但跟ready()不冲突。
+
 window.onload=()=>{
+    function formDataToUrlParams(formData){
+        let objData = {};
+        for (let entry of formData.entries()){
+            objData[entry[0]] = entry[1];
+        }
+//json对象转get请求拼接字符串
+        let formjosn = objData;//不能是JSON.stringify(objData);
+        let getUrlParams = Object.keys(formjosn).map(
+            function (key) {
+                return key + "=" + formjosn[key];
+                //转码 encodeURIComponent(key) + "=" + encodeURIComponent(formjosn[key]);
+            }
+        ).join("&");
+        return getUrlParams;
+    }
+    //formData转json对象,获取表单元素不能放在onload外。
+    //let formData = new FormData(document.querySelector("#formsignin"));
+    //let formData = new FormData($("#formsignin")[0]);
+    //let formData = new FormData(document.formsignin);
+    let formData = new FormData(document.forms["formsignin"]);
+    let formUrlParams = formDataToUrlParams(formData);
+
     //alert(222);//如果没反应，重启电脑，清理垃圾，重启idea和浏览器，多次刷新。
     //方式二(推荐)form外的button按钮点击事件，ajax不跳转提交。
     $('.ajax2').click(()=>{
@@ -104,19 +137,23 @@ window.onload=()=>{
         let pronamedjj= document.getElementById("pronamedjj").value;
         let acttypedjj= document.getElementsByName("acttypedjj").item(0).value;//外部js只能是纯js，不能使用jquery取值。
         let jdbc= document.getElementsByName("jdbc").item(0).value;
-        let formData = new FormData($("#formsignin")[0]);
-        //formData.append("acttypedjj",acttypedjj);
-        //formData.set("excelfiledjj","excelfiledjj");//修改
-        //formData.get("acttypedjj")
-        //console.log("formdata:"+JSON.stringify(formData));
-        console.log("acttypedjj:"+acttypedjj);
-        console.log("jdbc:"+jdbc);
         if(jdbc==="a1"){
             acttypedjj="actionAll"
         }
         if(jdbc==="a2"){
             acttypedjj="actionAllTwo"
         }
+        let primaryname= document.getElementById("pidnamedjj1").value;
+        let primaryval= document.getElementById(primaryname);
+        if(primaryval==null||primaryval==false){
+            alert("缺少主键值，点确定手动增加");
+            addrow();
+        }
+        let formData = new FormData($("#formsignin")[0]);
+        //formData.append("acttypedjj",acttypedjj);
+        //formData.set("excelfiledjj","excelfiledjj");//修改
+        //formData.get("acttypedjj")
+        //console.log("formdata:"+JSON.stringify(formData));
         $.ajax({
             type:"POST",
             url:"/"+pronamedjj+"/"+acttypedjj, //properties不加#server.servlet.context-path=/autof8，使用http://localhost:8081/autof8/t_userUpdate
@@ -140,13 +177,32 @@ window.onload=()=>{
             success:function(data){
                 let html = JSON.stringify(data,null, '  '); //'  '可以是空格，也可以是数字
                 console.log("ajax-data:"+html);
-                document.getElementById(httpApi.id).innerHTML=`接口地址:http://www.f8xn.top:8081/${pronamedjj}/${acttypedjj}`; //给节点赋值。
-                document.getElementById(datavalue.id).innerHTML=`返回数据：<pre>${html}</pre>`; //给节点赋值。
+                formUrlParams = formDataToUrlParams(formData);
+
+                let apiUrlcookie = `ajax接口地址:http://www.f8xn.top:8081/${pronamedjj}/${acttypedjj}?`+formUrlParams; //给节点赋值。
+                let callBackcookie = `返回数据：<pre>${html}</pre>`; //给节点赋值。
+                document.getElementById(httpApi.id).value=apiUrlcookie;
+                document.getElementById(datavalue.id).value=callBackcookie;
+                setCookie("apiUrlcookie",apiUrlcookie);
+                setCookie("callBackcookie",callBackcookie);
                 //后端Map+request.getParameter能取new FormData($(formid)[0])里的值;
                 //提交表单上传文件，后端可以使用MultipartFile excelfiledjj接收。
             }
             //alert('end ajax');/* 异步时先弹出 */
         });
+    }).mouseover(function () {
+        let pronamedjj= document.getElementById("pronamedjj").value;
+        let acttypedjj= document.getElementsByName("acttypedjj").item(0).value;//外部js只能是纯js，不能使用jquery取值。
+        let jdbc= document.getElementsByName("jdbc").item(0).value;
+        let formData = new FormData($("#formsignin")[0]);
+        if(jdbc==="a1"){
+            acttypedjj="actionAll"
+        }
+        if(jdbc==="a2"){
+            acttypedjj="actionAllTwo"
+        }
+        formUrlParams = formDataToUrlParams(formData);
+        document.getElementById(httpApi.id).value=`ajax接口地址:http://www.f8xn.top:8081/${pronamedjj}/${acttypedjj}?`+formUrlParams;
     });
 //方式三(不推荐)，ajax+jquery+eayui+form事件，不跳转提交。
     /*$('.ajax2').click(function(){
@@ -194,33 +250,30 @@ window.onload=()=>{
         },'text');
     });*/
 
-    //删除不要的行
-    function deleterowAll(){
+    //删除新增的行
+    function removerowAll(){
         let array = [];
         array.push("driverNamedjj","datasourceUrldjj","userNamedjj","passworddjj","pronamedjj","tabnamedjj","pidnamedjj1","pidnamedjj2","acttypedjj","jdbc");
         $("#addrow").find(".my-form-control").each(function (index,element) {
             let elementid = $(element).attr("id");
             let flag = array.includes(elementid);
             if(!flag){
-                console.log("element.id:"+$(element).attr("id"));
-                console.log(flag);
-                deleterow(element);
+                removerow(element);
             }
         })
     }
-    //删除不要的行
+    //删除新增的行
     $("#clearAll").click(()=>{
-        deleterowAll();
+        removerowAll();
     });
-    //先删除不要的行，再通过数据库连接自动生成空行。
+    //先删除新增的行，再通过数据库连接自动生成空行。
     $("#autoAdd").click(()=>{
-        deleterowAll();
+        removerowAll();
         let driverNamedjj = $('#driverNamedjj').val();
         let datasourceUrldjj = $('#datasourceUrldjj').val();
         let userNamedjj = $('#userNamedjj').val();
         let passworddjj = $('#passworddjj').val();
         let tabnamedjj= $("input[name='tabnamedjj']").val();
-        console.log("tabnamedjj:"+tabnamedjj);
         if(driverNamedjj==null||driverNamedjj==false){
             let connflag=confirm("没有配置数据库连接，是否要继续？");
             if(!connflag){
@@ -235,15 +288,13 @@ window.onload=()=>{
             async:false,
             dataType:'json',
             success:function(data){
-                //console.log("ajax-data:"+data);//[object Object]
                 console.log("JSON.stringify-data:"+JSON.stringify(data));//对象转字符串{}，obj = JSON.parse(string));把字符串转对象。
                 $.each(data,function(i,v){//data默认是对象，k是键或下标，v是值json字符串数组data中的成员,如果是对象，可以调用其属性。
-                    console.log("i:"+i+",v:"+v);
                     let childNode =`        <tr>
             <td><label for="password" class="my-sr-only">新增字段${i}</label></td>
             <td>
                 <input type="text" id="${v}" class="my-form-control" placeholder="${v}" name="${v}" value="" required autofocus>
-                <input type="button" value="deleterow" onclick="deleterow(this)">
+                <input type="button" value="clearrow" onclick="clearrow(this)">
             </td>
         </tr>`;
                     $("#addrow").append(childNode);
@@ -265,12 +316,12 @@ window.onload=()=>{
         let pronamedjj= document.getElementById("pronamedjj").value;
         let exectueSql= document.getElementById("exectueSql").value;
         let formData = new FormData($("#formsignin")[0]);
-        formData.append("exectueSql",exectueSql);
-        console.log("exectueSql:"+exectueSql);
         if(exectueSql==null||exectueSql==false||exectueSql=="undefined"){
             alert("没有写查询语句，退出执行。");
             return;
         }
+        formData.append("exectueSql",exectueSql);
+        setCookie("exectueSqlcookie",exectueSql);
         $.ajax({
             type:"POST",
             url:"/"+pronamedjj+"/exectueQueryAction",
@@ -281,15 +332,27 @@ window.onload=()=>{
             success:function(data){
                 let html = JSON.stringify(data,null, '  '); //'  '可以是空格，也可以是数字
                 console.log("ajax-data:"+html);
-                document.getElementById(datavalue.id).value=`返回数据：<pre>${html}</pre>`;
-                document.getElementById(httpApi.id).value="接口地址：http://www.f8xn.top:8081/"+pronamedjj+"/exectueQueryAction";
+                if(html==0){
+                    alert("sql语句错误，请重新填写");
+                }
+                formUrlParams = formDataToUrlParams(formData);
+                let apiUrlcookie = "查询接口地址：http://www.f8xn.top:8081/"+pronamedjj+"/exectueQueryAction？"+formUrlParams;
+                let callBackcookie = `返回数据：<pre>${html}</pre>`;
+                document.getElementById(httpApi.id).value=apiUrlcookie;
+                document.getElementById(datavalue.id).value=callBackcookie;
+                setCookie("apiUrlcookie",apiUrlcookie);
+                setCookie("callBackcookie",callBackcookie);
                 //document.getElementById(datavalue.id).innerHTML=html;
                 //$("#t1").text("AAA");
                 //$("#t2").val("BBB");
             }
         });
     }).mouseover(function () {
-        document.getElementById(httpApi.id).value="查询接口地址：http://www.f8xn.top:8081/autof8/exectueQueryAction";
+        let exectueSql= document.getElementById("exectueSql").value;
+        formData.append("exectueSql",exectueSql);
+        formData.delete("pidnamedjj1");
+        formUrlParams = formDataToUrlParams(formData);
+        document.getElementById(httpApi.id).value="查询接口地址：http://www.f8xn.top:8081/autof8/exectueQueryAction?"+formUrlParams;
     });
     //更改数据(增删改)
     $("#executeUpdateAction").click(function () {
@@ -298,11 +361,11 @@ window.onload=()=>{
         let exectueSql= document.getElementById("exectueSql").value;
         let formData = new FormData($("#formsignin")[0]);
         formData.append("exectueSql",exectueSql);
-        console.log("exectueSql:"+exectueSql);
         if(exectueSql==null||exectueSql==false||exectueSql=="undefined"){
             alert("没有写sql语句，退出执行。");
             return;
         }
+        setCookie("exectueSqlcookie",exectueSql);
         $.ajax({
             type:"POST",
             url:"/"+pronamedjj+"/executeUpdateAction",
@@ -313,23 +376,40 @@ window.onload=()=>{
             success:function(data){
                 let html = JSON.stringify(data,null, '  '); //'  '可以是空格，也可以是数字
                 console.log("ajax-data:"+html);
-                document.getElementById(datavalue.id).value=`返回数据：<pre>${html}</pre>`;
-                document.getElementById(httpApi.id).value="接口地址：http://www.f8xn.top:8081/"+pronamedjj+"/executeUpdateAction";
+                if(html==0){
+                    alert("sql语句错误，请重新填写");
+                }
+                formUrlParams = formDataToUrlParams(formData);
+                let apiUrlcookie = "修改接口地址：http://www.f8xn.top:8081/"+pronamedjj+"/executeUpdateAction?"+formUrlParams;
+                let callBackcookie = `返回数据：<pre>${html}</pre>`;
+                document.getElementById(httpApi.id).value=apiUrlcookie;
+                document.getElementById(datavalue.id).value=callBackcookie;
+                setCookie("apiUrlcookie",apiUrlcookie);
+                setCookie("callBackcookie",callBackcookie);
                 //document.getElementById(datavalue.id).innerHTML=html;
                 //$("#t1").text("AAA");
                 //$("#t2").val("BBB");
+            },
+            error:function (XMLHttpRequest, msg, e) {
+                //执行状态是非200时调用
+            },
+            complete : function(httpRequest, status){
+                //完成了一次请求时调用
             }
         });
     }).mouseover(function () {
-        document.getElementById(httpApi.id).value="增删改接口地址：http://www.f8xn.top:8081/autof8/executeUpdateAction";
+        let exectueSql= document.getElementById("exectueSql").value;
+        formData.append("exectueSql",exectueSql);
+        formData.delete("pidnamedjj1");
+        formUrlParams = formDataToUrlParams(formData);
+        document.getElementById(httpApi.id).value="修改接口地址：http://www.f8xn.top:8081/autof8/executeUpdateAction?"+formUrlParams;
     });
     //测试接口和数据库连接
     $("#testActionConnParams").click(function () {
         ajaxForm();
         let pronamedjj= document.getElementById("pronamedjj").value;
-        let exectueSql= document.getElementById("exectueSql").value;
         let formData = new FormData($("#formsignin")[0]);
-        formData.append("exectueSql",exectueSql);
+        formData.delete("acttypedjj");
         $.ajax({
             type:"POST",
             // url:"/"+pronamedjj+"/testActionConnParams",
@@ -341,47 +421,59 @@ window.onload=()=>{
             success:function(data){
                 let html = JSON.stringify(data,null, '  '); //'  '可以是空格，也可以是数字
                 console.log("ajax-data:"+html);
-                document.getElementById(datavalue.id).value=`返回数据：<pre>${html}</pre>`;
-                document.getElementById(httpApi.id).value="接口地址：http://www.f8xn.top:8081/"+pronamedjj+"/testActionConnParams";
+                formUrlParams = formDataToUrlParams(formData);
+                let apiUrlcookie = "测试接口地址：http://www.f8xn.top:8081/"+pronamedjj+"/testActionConnParams?"+formUrlParams;
+                let callBackcookie = `返回数据：<pre>${html}</pre>`;
+                document.getElementById(httpApi.id).value=apiUrlcookie;
+                document.getElementById(datavalue.id).value=callBackcookie;
+                setCookie("apiUrlcookie",apiUrlcookie);
+                setCookie("callBackcookie",callBackcookie);
                 //document.getElementById(datavalue.id).innerHTML=html;
                 //$("#t1").text("AAA");
                 //$("#t2").val("BBB");
             }
         });
     }).mouseover(function () {
-        document.getElementById(httpApi.id).value="测试接口和数据库连接：http://www.f8xn.top:8081/autof8/testActionConnParams";
+        formData.delete("acttypedjj");
+        formData.delete("pidnamedjj1");
+        formData.delete("exectueSql");
+        formUrlParams = formDataToUrlParams(formData);
+        document.getElementById(httpApi.id).value="测试接口地址：http://www.f8xn.top:8081/autof8/testActionConnParams?"+formUrlParams;
     });
 
 };
 
 //方式一(推荐)form内的button按钮点击事件，ajax不跳转提交。
 function submitForm() {
-    console.log(3);
     //submit.onSubmit=function(){};
     ajaxForm();
 }
 
-//删除和增加,必须放在ready外。
+//增加行,必须放在ready外。
 function addrow() {
     let inputname = prompt("请输入字段名：");
-     if(inputname!==false&&inputname!=null){//判断是空值或没有值用==和||,判断非空用!和&&(重点)。
-         let inputvalue = prompt("请输入字段的值：");
-         if(inputvalue!==false&&inputvalue!=null){//判断是空值或没有值用==和||,判断非空用!和&&(重点)。
-             let childNode =`        <tr>
+    if(inputname!==false&&inputname!=null){//判断是空值或没有值用==和||,判断非空用!和&&(重点)。
+        let inputvalue = prompt("请输入字段的值：");
+        if(inputvalue!==false&&inputvalue!=null){//判断是空值或没有值用==和||,判断非空用!和&&(重点)。
+            let childNode =`        <tr>
             <td><label for="password" class="my-sr-only">新增字段${inputname}</label></td>
             <td>
                 <input type="text" id="${inputname}" class="my-form-control" placeholder="${inputname}" name="${inputname}" value="${inputvalue}" required autofocus>
-                <input type="button" value="deleterow" onclick="deleterow(this)">
+                <input type="button" value="clearrow" onclick="clearrow(this)">
             </td>
         </tr>`;
-             $("#addrow").append(childNode);
-         }
-     }
-}
-//手动删除不要的行。
-function deleterow(e) {
-    e.parentElement.parentElement.remove();
+            $("#addrow").append(childNode);
+        }
+    }
 }
 
+//手动清空不要的行。
+function clearrow(e) {
+    e.previousElementSibling.value="";
+}
+//删除不要的行
+function removerow(e) {
+    e.parentElement.parentElement.remove();
+}
 
 //===========================================
