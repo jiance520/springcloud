@@ -1,0 +1,38 @@
+//使用脚手架的安装步骤
+cd D:\workspace\idea\springcloud\income\src\main\resources\static
+vue init webpack-simple vue-cli-webpack-simple
+cd vue-cli-webpack-simple
+cnpm install vue-router -S
+cnpm install axios -S
+cnpm install element-ui -S
+cnpm install vue-style-loader -D
+cnpm install
+修改main.js:import Vue from 'vue'
+          import App from './App.vue'
+          import VueRouter from 'vue-router';
+          import routerConfig from './router.config';
+          import axios from 'axios'
+          import ElementUI from 'element-ui'
+          import 'element-ui/lib/theme-chalk/index.css'
+          Vue.use(VueRouter);
+          Vue.use(ElementUI)
+          const router = new VueRouter(routerConfig);
+          Vue.prototype.axios=axios;
+            注册到Vue:router
+修改webpack.config.js
+{
+  test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
+  loader: 'file-loader'
+},
+
+npm run build
+
+vue init webpack vue-cli-webpack
+ESLint no
+unit no
+e2e no
+cd vue-cli-webpack
+cnpm install
+npm run build
+
+
