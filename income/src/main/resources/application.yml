@@ -1,0 +1,163 @@
+#读取配置文件的顺序优先级为谁在前(0a-z)就先读取谁！跟其它无关!application.yml>bootstrap.yml>config.properties
+#sprinb boot工程及其web工程只能读取application.properties和xxx.yml，不能读取config.properties!
+server:
+  port: 8084
+  servlet:
+    #如果引用的oneupdate中读取了context-path，就不能注释context-path，会报错，默认是/！
+    context-path: /income
+
+spring:
+  application:
+    name: income
+  profiles:
+    active: test
+
+---
+
+#开发环境
+#默认端口8080，Edit...配置的VM options:-Dserver.port=8084>git:http://localhost:9100/master/apigateway-dev.yml高于>bootstrap.yml/application.yml
+server:
+  port: 8084
+
+#服务的名称,不在git指定，在boostrap.yml指定
+spring:
+  application:
+    name: income
+  profiles: dev
+  datasource:
+    name: income
+    driver-class-name: com.mysql.jdbc.Driver
+    #用于6以上版本mysql，MySQL 5.5.45+，6+版本默认要求建立SSL连接。
+    url: jdbc:mysql://localhost:3306/account?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: root
+#mongodb配置
+  data:
+    mongodb:
+      uri: mongodb://47.107.171.60:27017/income
+  mvc:
+    static-path-pattern: /**
+    favicon:
+      enabled: false
+    view:
+      prefix: / #/templates #classpath:/templates/
+      suffix: .html #.html
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    auto-mapping-behavior: full
+    #解决spring boot整合mybatis时 返回map value为空字段不显示
+    call-setters-on-nulls: true
+    #在控制台上打印sql语句
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  #可有可无的配置
+  #引用类时，可简写，配置mapper.xml文件中，如com.entity.User在User,resultType="user"写成User
+  type-aliases-package: com.entity
+
+#log4j/log4j2
+#logging:
+#  level: info
+#  #放在resources下，如放在其他路径则对应修改
+#  config: classpath:log4j2_dev.xml
+#  在log日志中打印sql
+#  com.eth.wallet.mapper: debug
+
+#logging自定义日志路径,日志配置文件logback-spring.xml取值：<springProperty scope="context" name="logdir" source="logback.logdir" />
+#logback:
+#  logdir: D:\workspace\idea\springcloud\f8xn\income
+#  appname: sell
+
+---
+
+#测试环境
+server:
+  port: 8084
+
+spring:
+  application:
+    name: income
+  profiles: test
+  datasource:
+    name: income
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/account?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: root
+  #mongodb配置
+  data:
+    mongodb:
+      uri: mongodb://47.107.171.60:27017/income
+
+  mvc:
+    static-path-pattern: /**
+    favicon:
+      enabled: false
+    view:
+      prefix: /
+      suffix: .html
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    auto-mapping-behavior: full
+    call-setters-on-nulls: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.entity
+
+#logging:
+#  level: info
+#  config: classpath:log4j2_dev.xml
+#  com.eth.wallet.mapper: debug
+
+#logback:
+#  logdir: D:\workspace\idea\springcloud\f8xn\income
+#  appname: sell
+
+---
+
+#生产环境
+server:
+  port: 8084
+
+spring:
+  application:
+    name: income
+  profiles: prod
+  datasource:
+    name: income
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.107.171.60:3306/account?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: autof8Ol10
+  #mongodb配置
+  data:
+    mongodb:
+      uri: mongodb://47.107.171.60:27017/income
+
+  mvc:
+    static-path-pattern: /**
+    favicon:
+      enabled: false
+    view:
+      prefix: /
+      suffix: .html
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    auto-mapping-behavior: full
+    call-setters-on-nulls: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.entity
+
+#logging:
+#  level: info
+#  config: classpath:log4j2_dev.xml
+#  com.eth.wallet.mapper: debug
+
+#logback:
+#  logdir: D:\workspace\idea\springcloud\f8xn\income
+#  appname: sell
+

@@ -1,7 +1,5 @@
 package com;
 
-
-import com.service.IT_userService;
 import com.utils.JdbcUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +29,6 @@ public class Autof8Test {
     private static final Logger logger = LoggerFactory.getLogger(Autof8Test.class);
     @Autowired
     private  JdbcUtil jdbcUtil;
-    @Autowired
-    private IT_userService it_userService;
     //只要有@Test，就可以执行简单的测试。
     @Test
     @Transactional
