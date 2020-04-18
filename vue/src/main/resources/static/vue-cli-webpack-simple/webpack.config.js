@@ -16,8 +16,7 @@ module.exports = {
           'vue-style-loader',
           'css-loader'
         ],
-      },
-      {
+      },      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
@@ -41,7 +40,7 @@ module.exports = {
       {
         test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
         loader: 'file-loader'
-      },
+      }
     ]
   },
   resolve: {

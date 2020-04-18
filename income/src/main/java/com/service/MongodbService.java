@@ -1,6 +1,6 @@
 package com.service;
 
-import com.utils.Income;
+import com.entity.Income;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +60,12 @@ public class MongodbService {
         Query query = new Query(Criteria.where("name").is(name));
         return mongoTemplate.findOne(query, Income.class);
     }
+    //根据指定字段的指定值查询
+    public Income getIncomeByColumn(String column,String value) {
+        Query query = new Query(Criteria.where(column).is(value));
+        return mongoTemplate.findOne(query, Income.class);
+    }
+
 
     /**
      * 更新对象
