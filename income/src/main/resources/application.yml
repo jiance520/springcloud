@@ -10,7 +10,7 @@ spring:
   application:
     name: income
   profiles:
-    active: test
+    active: dev
 
 ---
 
@@ -36,6 +36,8 @@ spring:
   data:
     mongodb:
       uri: mongodb://47.107.171.60:27017/income
+      username: root
+      password: autof8Ol10
   mvc:
     static-path-pattern: /**
     favicon:
@@ -90,6 +92,8 @@ spring:
   data:
     mongodb:
       uri: mongodb://47.107.171.60:27017/income
+      username: root
+      password: autof8Ol10
 
   mvc:
     static-path-pattern: /**
@@ -136,6 +140,8 @@ spring:
   data:
     mongodb:
       uri: mongodb://47.107.171.60:27017/income
+      username: root
+      password: autof8Ol10
 
   mvc:
     static-path-pattern: /**
@@ -160,4 +166,4 @@ mybatis:
 #logback:
 #  logdir: D:\workspace\idea\springcloud\f8xn\income
 #  appname: sell
-
+# admin-user-role-binding.yaml

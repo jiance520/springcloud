@@ -1,7 +1,5 @@
 package com.utils;
 
-
-import com.service.IUserinfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +24,6 @@ import java.util.Random;
 public class UtilController implements ServletContextAware {
     private static String primarynameKey = "pidnamedjj";
     private ServletContext application;
-    @Autowired
-    private IUserinfoService iUserinfoService;
     @Override
     public void setServletContext(ServletContext servletContext) {
         this.application = servletContext;

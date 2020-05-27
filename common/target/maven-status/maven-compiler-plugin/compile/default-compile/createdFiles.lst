@@ -9,7 +9,6 @@ com\utils\MyBatisUtil.class
 com\utils\TestPattern.class
 com\utils\StrToDate.class
 com\utils\MyStreamUtil.class
-com\utils\My51ctoChromeSpider.class
 com\utils\OneUpdate.class
 com\utils\SpringUtil.class
 com\utils\UserPasswordUtil.class
