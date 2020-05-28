@@ -1,5 +1,6 @@
 package com.action;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.mongodb.*;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -7,6 +8,8 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 import com.service.DBDaoTest;
+import org.bson.BSONObject;
+import org.bson.BasicBSONObject;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+/*
+	* postman发送List参数，发送数据使用formdata,多个键名跟List接收变量名一致！>选Body>form-data>添加相同键值的多个参数。后台接收@RequestParam List<String> rowName //接收多个同名的参数，
+	*
+postman发送数组，发送数据同list,使用form-data,  后台接收多个同名的参数，@RequestParam String[] rowName，参数名跟发送变量名一样！可以用List或数组接收！
+	*
+postman发送带数组的json,（重点）POST>Body>raw>设置body的编码方式为raw，raw是发送纯文本，不包含任何空格的编码方式，同时将header的Content-Type设置为application/json，后台接收，使用@RequestBody Object object或@RequestBody Map<String,List>指定转换内容，不能使用 @RequestBody Map(因为如果map中有数组，则失败)和 @RequestParam Map!   json与map互相转换)
+
+*/
 
 @Controller
 public class IncomeController {
@@ -125,9 +136,14 @@ public class IncomeController {
 
     //条件查询主键rowName,in(1,2,3)
     @ResponseBody
-    @RequestMapping(value = "queryIn",produces = {"application/json; charset=UTF-8"})
-    public Object queryIn(HttpSession session,@RequestParam List listParams){
-        System.out.println("-----listParams:"+listParams);
+    @RequestMapping(value = "queryIn",produces={"application/json;chart=UTF-8"})
+    public Object queryIn(HttpSession session,@RequestParam List<String> rowName){//接收多个同名参数或使用数组代替？
+        System.out.println("-----listParams:"+rowName);
+        if(rowName.size()==0){
+            rowName = new ArrayList();
+            rowName.add("income2");
+            rowName.add("oho");
+        }
 
         String collectionName = null;
         Object object = session.getAttribute("collectionName");
@@ -139,10 +155,12 @@ public class IncomeController {
         }
 
         BasicDBObject basicDBObject = new BasicDBObject();
-        basicDBObject.put("rowName",new BasicDBObject("$in",listParams));
+        basicDBObject.put("rowName",new BasicDBObject("$in",rowName));
+
         List backList = new ArrayList();
 
         //方法三，查询有效
+        MongoDatabase db = mongoTemplate.getDb();
         FindIterable<Document> findIterable = mongoTemplate.getCollection(collectionName).find(basicDBObject);//不能用bson，
         findIterable.forEach(new Block<Document>() {
             public void apply(Document _doc) {
@@ -152,7 +170,42 @@ public class IncomeController {
         });
         return backList;
     }
-    //模糊查询n个字段rowName="come",name=""
+    //条件查询主键rowName,in(1,2,3)
+    @ResponseBody
+    @RequestMapping(value = "queryArray",produces={"application/json;chart=UTF-8"})
+    public Object queryArray(HttpSession session,@RequestParam String[] rowName){//接收多个同名参数或使用数组代替？
+        System.out.println("-----String[]:"+rowName[0]);
+        if(rowName.length==0){
+            rowName[0]="oho";
+            rowName[1]="income";
+        }
+
+        String collectionName = null;
+        Object object = session.getAttribute("collectionName");
+        if(object!=null&&!"".equals(object)){
+            collectionName = object.toString();
+        }
+        if(collectionName==null||"".equals(collectionName)){
+            collectionName = "income";
+        }
+
+        BasicDBObject basicDBObject = new BasicDBObject();
+        basicDBObject.put("rowName",new BasicDBObject("$in",rowName));
+
+        List backList = new ArrayList();
+
+        //方法三，查询有效
+        MongoDatabase db = mongoTemplate.getDb();
+        FindIterable<Document> findIterable = mongoTemplate.getCollection(collectionName).find(basicDBObject);//不能用bson，
+        findIterable.forEach(new Block<Document>() {
+            public void apply(Document _doc) {
+                backList.add(_doc);
+                System.out.println(_doc.toJson());//{ "_id" : { "$oid" : "5ecc6911a2f1d52df86055a8" }, "id" : "1", "name" : "琅琊决", "price" : "555", "rowName" : "income3" }
+            }
+        });
+        return backList;
+    }
+    //模糊查询0-n个字段rowName包含"come",并且name包含"xxx"
     @ResponseBody
     @RequestMapping(value = "queryRegex",produces = {"application/json; charset=UTF-8"})
     public Object queryRegex(HttpSession session,@RequestParam Map<String,Object> map){
@@ -196,6 +249,115 @@ public class IncomeController {
         List backList = new ArrayList();
 
         //方法三，查询有效
+        FindIterable<Document> findIterable = mongoTemplate.getCollection(collectionName).find(basicDBObject);//不能用bson，
+        findIterable.forEach(new Block<Document>() {
+            public void apply(Document _doc) {
+                backList.add(_doc);
+                System.out.println(_doc.toJson());//{ "_id" : { "$oid" : "5ecc6911a2f1d52df86055a8" }, "id" : "1", "name" : "琅琊决", "price" : "555", "rowName" : "income3" }
+            }
+        });
+        return backList;
+    }
+    //完全匹配查询0-n个字段rowName="income",并且name=""
+    @ResponseBody
+    @RequestMapping(value = "queryEquals",produces = {"application/json; charset=UTF-8"})
+    public Object queryEquals(HttpSession session,@RequestParam Map<String,Object> map){
+        System.out.println("-----map:"+map);
+
+        String collectionName = null;
+        Object object = map.get("collectionName");
+        if(object!=null&&!"".equals(object)){
+            collectionName = object.toString();
+        }
+        if(collectionName==null||"".equals(collectionName)){
+            object = session.getAttribute("collectionName");
+            if(object!=null&&!"".equals(object)){
+                collectionName = object.toString();
+            }
+        }
+        map.remove("collectionName");
+        if(collectionName==null||"".equals(collectionName)){
+            collectionName = "income";
+        }
+
+        //String rowName = null;
+        //object = map.get("rowName");
+        //if(object!=null&&!"".equals(object)){
+        //    rowName = object.toString();
+        //}
+        //if(rowName==null||"".equals(rowName)){
+        //    rowName = collectionName;
+        //}
+
+        BasicDBObject basicDBObject = new BasicDBObject();
+        for(Map.Entry<String, Object> mapEntry: map.entrySet()){
+            String key = mapEntry.getKey();
+            Object value = mapEntry.getValue();
+            if(value!=null){
+                basicDBObject=basicDBObject.append(key,value.toString());
+            }
+        }
+        List backList = new ArrayList();
+
+        //方法三，查询有效
+        FindIterable<Document> findIterable = mongoTemplate.getCollection(collectionName).find(basicDBObject);//不能用bson，
+        findIterable.forEach(new Block<Document>() {
+            public void apply(Document _doc) {
+                backList.add(_doc);
+                System.out.println(_doc.toJson());//{ "_id" : { "$oid" : "5ecc6911a2f1d52df86055a8" }, "id" : "1", "name" : "琅琊决", "price" : "555", "rowName" : "income3" }
+            }
+        });
+        return backList;
+    }
+
+    //条件查询0-n个字段,in(1,2,3)，posman header标记为Content-Type=application/json,使用body>raw发送map<String,数组/List>的json数据，
+    //必须使用@RequestBody接收，
+    //不能发送要查询的字段外的其它参数
+    @ResponseBody
+    @RequestMapping(value = "queryAnyIn",produces={"application/json;chart=UTF-8"})
+    public Object queryAnyIn(HttpSession session,@RequestBody Map<String,List> map){//String是字段名 ，List包含字段的值
+        //json与map互相转换,https://blog.csdn.net/cloudzpc/article/details/79458574
+        System.out.println("-----map:"+map);
+
+        List list = null;
+        //测试数据
+        //if(map.isEmpty()){
+        //    list = new ArrayList();
+        //    list.add("income");
+        //    map.put("rowName",list);
+        //}
+        String collectionName = null;
+        Object object = session.getAttribute("collectionName");
+        if(object!=null&&!"".equals(object)){
+            collectionName = object.toString();
+        }
+        if(collectionName==null||"".equals(collectionName)){
+            collectionName = "income";
+        }
+//
+//
+        BasicDBObject basicDBObject = new BasicDBObject();
+        BasicDBObject basicDBObjectand = new BasicDBObject();
+//
+        for(Map.Entry<String, List> mapEntry: map.entrySet()){
+            String key = mapEntry.getKey();
+            List value = mapEntry.getValue();
+            if(value.size()!=0){
+
+                //basicDBObject=basicDBObject.append(key,value.toString());
+                basicDBObject.put(key,new BasicDBObject("$in",map.get(key)));
+            }
+            else{
+                System.out.println("-----发送的list为空:"+value);
+            }
+        }
+//
+        //basicDBObject.put("rowName",new BasicDBObject("$in",map.get("rowName")));
+//
+        List backList = new ArrayList();
+//
+        //方法三，查询有效
+        MongoDatabase db = mongoTemplate.getDb();
         FindIterable<Document> findIterable = mongoTemplate.getCollection(collectionName).find(basicDBObject);//不能用bson，
         findIterable.forEach(new Block<Document>() {
             public void apply(Document _doc) {
