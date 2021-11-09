@@ -101,7 +101,7 @@ public class My51ctoChromeSpider {
 
         //页面标题
         String tigle = chromeDriver.getTitle();
-        //页面偌
+        //页面
         String html = chromeDriver.getPageSource();
         System.out.println("-----tigle:"+tigle);
         System.out.println("-----html:"+html.length());
