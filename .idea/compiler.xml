@@ -6,19 +6,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="orderservice" />
-        <module name="configserver" />
-        <module name="autof8" />
+        <module name="income" />
+        <module name="eurekaserver" />
         <module name="vue" />
-        <module name="common" />
         <module name="mytable" />
         <module name="buy51cto" />
         <module name="apigateway" />
         <module name="account" />
         <module name="productservice" />
-        <module name="income" />
-        <module name="eurekaserver" />
+        <module name="autof8" />
         <module name="untitled" />
+        <module name="orderservice" />
+        <module name="configserver" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
