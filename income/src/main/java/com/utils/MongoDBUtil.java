@@ -11,7 +11,7 @@ public class MongoDBUtil {
 	private Mongo mongo = null;
     private  String dbString = "income";//数据库名
     //private static String hostName = "127.0.0.1";
-    private  String hostName = "47.107.171.60"; //"localhost";//主机名
+    private  String hostName = "217.196.49.213"; //"localhost";//主机名
     private  int port = 27017;//端口号
     //private  int poolSize = 10;//连接池大小
 //    @Value("${mongo.dbString}")

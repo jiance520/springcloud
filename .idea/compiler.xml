@@ -6,35 +6,23 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="income" />
+        <module name="untitled1" />
+        <module name="apigateway" />
         <module name="eurekaserver" />
-        <module name="vue" />
         <module name="mytable" />
         <module name="buy51cto" />
-        <module name="apigateway" />
-        <module name="account" />
         <module name="productservice" />
-        <module name="autof8" />
-        <module name="untitled" />
-        <module name="orderservice" />
         <module name="configserver" />
+        <module name="autof8" />
+        <module name="account" />
+        <module name="orderservice" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
-      <module name="account" target="1.8" />
-      <module name="apigateway" target="1.8" />
-      <module name="autof8" target="1.8" />
-      <module name="buy51cto" target="1.8" />
-      <module name="common" target="1.8" />
       <module name="common (1) (f8xn)" target="1.8" />
-      <module name="configserver" target="1.8" />
-      <module name="eurekaserver" target="1.8" />
-      <module name="f8xn" target="1.8" />
       <module name="income" target="1.8" />
-      <module name="mytable" target="1.8" />
-      <module name="orderservice" target="1.8" />
-      <module name="productservice" target="1.8" />
-      <module name="untitled" target="1.8" />
+      <module name="untitled" target="1.5" />
+      <module name="untitled1" target="1.7" />
       <module name="vue" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -44,7 +32,7 @@
       <module name="apigateway" options="-parameters" />
       <module name="autof8" options="-parameters" />
       <module name="buy51cto" options="-parameters" />
-      <module name="common" options="-parameters" />
+      <module name="common" options="" />
       <module name="common (1) (f8xn)" options="-parameters" />
       <module name="configserver" options="-parameters" />
       <module name="eurekaserver" options="-parameters" />
@@ -52,7 +40,7 @@
       <module name="mytable" options="-parameters" />
       <module name="orderservice" options="-parameters" />
       <module name="productservice" options="-parameters" />
-      <module name="untitled" options="-parameters" />
+      <module name="untitled" options="" />
     </option>
   </component>
 </project>

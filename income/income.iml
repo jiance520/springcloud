@@ -77,7 +77,7 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:5.1.13.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:2.1.15.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:mongo-java-driver:3.10.2" level="project" />
-    <orderEntry type="module" module-name="common" />
+    <orderEntry type="library" name="Maven: top.f8xn:common:1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-jdbc:2.1.12.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.zaxxer:HikariCP:3.2.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:5.1.13.RELEASE" level="project" />

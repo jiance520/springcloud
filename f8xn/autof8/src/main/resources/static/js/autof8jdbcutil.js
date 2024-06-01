@@ -43,7 +43,7 @@ $(document).ready(function () {
         document.getElementById("datavalue").value=callBackcookie;
     }else {
         document.getElementById("driverNamedjj").value="com.mysql.jdbc.Driver";
-        document.getElementById("datasourceUrldjj").value="jdbc:mysql://47.107.171.60:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
+        document.getElementById("datasourceUrldjj").value="jdbc:mysql://217.196.49.213:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8";
         document.getElementById("userNamedjj").value="root";
         document.getElementById("passworddjj").value="root";
         document.getElementById("pronamedjj").value="autof8";

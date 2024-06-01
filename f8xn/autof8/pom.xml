@@ -13,14 +13,19 @@
   <packaging>jar</packaging>
 
   <name>${project.artifactId}</name>
-
+  <repositories>
+    <repository>
+      <id>aliyun</id>
+      <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+    </repository>
+  </repositories>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
     <spring-cloud.version>Greenwich.SR5</spring-cloud.version>
     <!-- 新增docker镜像名称配置 -->
-    <docker.image.prefix>f8xn</docker.image.prefix>
+    <docker.image.prefix>autof8</docker.image.prefix>
   </properties>
 
   <dependencyManagement>
@@ -176,58 +181,73 @@
       <artifactId>httpclient</artifactId>
       <version>4.5.10</version>
     </dependency>-->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.47</version> <!-- 确保使用最新稳定版本 -->
+    </dependency>
+
   </dependencies>
 
   <build>
     <finalName>${project.artifactId}</finalName>
     <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-      <!--使用docker-maven-plugin插件-->
-      <plugin>
-        <groupId>com.spotify</groupId>
-        <artifactId>docker-maven-plugin</artifactId>
-        <version>1.0.0</version>
-        <!--将插件绑定在某个phase执行-->
-        <executions>
-          <execution>
-            <id>build-image</id>
-            <!--将插件绑定在package这个phase上。也就是说，
-            用户只需执行mvn package ，就会自动执行mvn docker:build,Terminal下执行报错,只能在右边手动双击-->
-            <phase>package</phase>
-            <goals>
-              <goal>build</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <!--指定生成的镜像名,这里是我们的docker镜像名/项目名-->
-          <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-          <!--指定标签 这里指定的是镜像的版本，我们默认版本是latest-->
-          <imageTags>
-            <imageTag>latest</imageTag>
-          </imageTags>
-          <!-- 指定我们项目中Dockerfile文件的路径，可不加${project.basedir}-->
-          <dockerDirectory>${project.basedir}</dockerDirectory>
+      <!--2375端口用-->
+                  <plugin>
+                      <groupId>org.springframework.boot</groupId>
+                      <artifactId>spring-boot-maven-plugin</artifactId>
+                      <executions>
+                          <execution>
+                              <goals>
+                                  <goal>repackage</goal>
+                              </goals>
+                          </execution>
+                      </executions>
+                  </plugin>
 
-          <!--指定远程docker 地址,必须开放端口-，要加http://-->
-          <!--docker-maven-plugin上传镜像到远程私有仓库https://blog.csdn.net/u013326684/article/details/99350372-->
-          <dockerHost>http://10.0.0.31:2375</dockerHost>
-          <!--https://cr.console.aliyun.com/cn-shenzhen/instances/repositories-->
-          <!-- 这里是复制 jar 包到 docker 容器指定目录配置 -->
-          <resources>
-            <resource>
-              <targetPath>/</targetPath>
-              <!--jar包所在的路径  此处配置的即对应项目中target目录-->
-              <directory>${project.build.directory}</directory>
-              <!-- 需要包含的 jar包 ，这里对应的是 Dockerfile中添加的文件名,缺省为${project.artifactId}-${project.version}　-->
-              <include>${project.build.finalName}.jar</include>
-            </resource>
-          </resources>
-        </configuration>
-      </plugin>
+<!--      使用docker-maven-plugin插件-->
+                  <plugin>
+                      <groupId>com.spotify</groupId>
+                      <artifactId>docker-maven-plugin</artifactId>
+                      <version>1.0.0</version>
+                      <!--将插件绑定在某个phase执行-->
+                      <executions>
+                          <execution>
+                              <id>build-image</id>
+                              <!--将插件绑定在package这个phase上。也就是说，
+                              用户只需执行mvn package ，就会自动执行mvn docker:build,Terminal下执行报错,只能在右边手动双击-->
+                              <phase>package</phase>
+                              <goals>
+                                  <goal>build</goal>
+                              </goals>
+                          </execution>
+                      </executions>
+                      <configuration>
+                          <!--指定生成的镜像名,这里是我们的docker镜像名/项目名-->
+                          <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                          <!--指定标签 这里指定的是镜像的版本，我们默认版本是latest-->
+                          <imageTags>
+                              <imageTag>latest</imageTag>
+                          </imageTags>
+                          <!-- 指定我们项目中Dockerfile文件的路径，可不加${project.basedir}-->
+                          <dockerDirectory>${project.basedir}</dockerDirectory>
+
+                          <!--指定远程docker 地址,必须开放端口-，要加http://-->
+                          <!--docker-maven-plugin上传镜像到远程私有仓库https://blog.csdn.net/u013326684/article/details/99350372-->
+                          <dockerHost>http://217.196.49.213:2375</dockerHost>
+                          <!--https://cr.console.aliyun.com/cn-shenzhen/instances/repositories-->
+                          <!-- 这里是复制 jar 包到 docker 容器指定目录配置 -->
+                          <resources>
+                              <resource>
+                                  <targetPath>/</targetPath>
+                                  <!--jar包所在的路径  此处配置的即对应项目中target目录-->
+                                  <directory>${project.build.directory}</directory>
+                                  <!-- 需要包含的 jar包 ，这里对应的是 Dockerfile中添加的文件名,缺省为${project.artifactId}-${project.version}　-->
+                                  <include>${project.build.finalName}.jar</include>
+                              </resource>
+                          </resources>
+                      </configuration>
+                  </plugin>
     </plugins>
   </build>
 

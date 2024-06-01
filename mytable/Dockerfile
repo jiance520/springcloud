@@ -25,5 +25,5 @@ ENTRYPOINT ["java","-jar","/mytable.jar"]
 #COPY ${JAR_FILE} mytable.jar
 #ENTRYPOINT ["java","-jar","/mytable.jar"]
 
-#docker tag f8xn/mytable:latest 106.13.100.117/library/f8xn/mytable:latest
-#docker push 106.13.100.117/library/f8xn/mytable:latest
+#docker tag f8xn/mytable:latest 217.196.49.213/library/f8xn/mytable:latest
+#docker push 217.196.49.213/library/f8xn/mytable:latest

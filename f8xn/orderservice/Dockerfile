@@ -17,7 +17,7 @@ ENTRYPOINT ["java","-jar","/orderservice.jar"]
 #指定容器启动程序及参数   <ENTRYPOINT> "<CMD>"
 #也可以用ENTRYPOINT [ "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/orderservice.jar" ]
 #ADD *.jar orderservice.jar，把本机的D:\workspace\idea\springcloud\orderservice\target\orderservice.jar复制到docker服务器31，并命名为orderservice.jar
-#在centos的/root目录下执行java -jar orderservice.jar运行orderservice.jar包。访问http://10.0.0.31:8761/
+#在centos的/root目录下执行java -jar orderservice.jar运行orderservice.jar包。访问http://217.196.49.213:8761/
 
 #FROM openjdk:8-jdk-alpine
 #VOLUME /tmp
@@ -25,5 +25,5 @@ ENTRYPOINT ["java","-jar","/orderservice.jar"]
 #COPY ${JAR_FILE} orderservice.jar
 #ENTRYPOINT ["java","-jar","/orderservice.jar"]
 
-#docker tag f8xn/orderservice:latest 106.13.100.117/library/f8xn/orderservice:latest
-#docker push 106.13.100.117/library/f8xn/orderservice:latest
+#docker tag f8xn/orderservice:latest 217.196.49.213/library/f8xn/orderservice:latest
+#docker push 217.196.49.213/library/f8xn/orderservice:latest

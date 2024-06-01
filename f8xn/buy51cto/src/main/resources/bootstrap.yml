@@ -34,19 +34,21 @@ spring:
     password: root
   #rabbitmq+控制类注解@RefreshScope用于从git自动更新配置文件bootstrap.xml
   rabbitmq:
-    #host: 10.0.0.11
-    host: 106.13.100.117
+    host: 217.196.49.213
     port: 5672
     username: guest
     password: guest
+    listener:
+      simple:
+        exclusive: false
   redis:
     database: 0
-    host: 106.13.100.117
-    port: 6378
+    host: 217.196.49.213
+    port: 6379
     timeout: 2000
   #zipkin服务所在地址
   zipkin:
-    base-url: http://106.13.100.117:9411
+    base-url: http://217.196.49.213:9411
     sender:
       type: web
       #SpringCloud整合sleuth，使用zipkin时不显示服务,https://www.cnblogs.com/Dandwj/p/11179141.html,需要加
@@ -140,17 +142,20 @@ spring:
     username: root
     password: root
   rabbitmq:
-    host: 106.13.100.117
+    host: 217.196.49.213
     port: 5672
     username: guest
     password: guest
+    listener:
+      simple:
+        exclusive: false
   redis:
     database: 0
-    host: 106.13.100.117
-    port: 6378
+    host: 217.196.49.213
+    port: 6379
     timeout: 2000
   zipkin:
-    base-url: http://106.13.100.117:9411
+    base-url: http://217.196.49.213:9411
     sender:
       type: web
   sleuth:
@@ -174,7 +179,7 @@ mybatis:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://106.13.100.117:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
   instance:
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
     prefer-ip-address: true
@@ -198,22 +203,25 @@ spring:
   datasource:
     name: buy51cto
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://47.107.171.60/buy51cto?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://217.196.49.213/buy51cto?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
     type: com.alibaba.druid.pool.DruidDataSource
     username: root
-    password: autof8Ol10
+    password: root
   rabbitmq:
-    host: 106.13.100.117
+    host: 217.196.49.213
     port: 5672
     username: guest
     password: guest
+    listener:
+      simple:
+        exclusive: false
   redis:
     database: 0
-    host: 106.13.100.117
-    port: 6378
+    host: 217.196.49.213
+    port: 6379
     timeout: 2000
   zipkin:
-    base-url: http://106.13.100.117:9411
+    base-url: http://217.196.49.213:9411
     sender:
       type: web
   sleuth:
@@ -237,7 +245,7 @@ mybatis:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://106.13.100.117:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
   instance:
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
     prefer-ip-address: true

@@ -42,9 +42,7 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.1.13.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.data:spring-data-commons:2.1.15.RELEASE" />
           <element id="library" level="project" name="Maven: org.mongodb:mongo-java-driver:3.10.2" />
-          <element id="archive" name="common-1.0-SNAPSHOT.jar">
-            <element id="module-output" name="common" />
-          </element>
+          <element id="library" level="project" name="Maven: top.f8xn:common:1.0-SNAPSHOT" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-jdbc:2.1.12.RELEASE" />
           <element id="library" level="project" name="Maven: com.zaxxer:HikariCP:3.2.0" />
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.1.13.RELEASE" />

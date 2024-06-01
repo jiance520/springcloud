@@ -8,6 +8,13 @@ server:
     context-path: /
 
 spring:
+  # 安全认证的配置
+#  security:
+#    basic:
+#      enabled: false  # 禁用基本身份验证
+#    user:
+#      name: root  # 用户名
+#      password: root   # 用户密码
   application:
     name: eurekaserver
   profiles:
@@ -65,13 +72,13 @@ mybatis:
 #指定注册中心地址,不在git指定，在boostrap.yml指定
 eureka:
   instance:
-    #指定运行jar包的服务器ip，10.0.0.31或106.13.100.117,或本地localhost。
+    #指定运行jar包的服务器ip，217.196.49.213或217.196.49.213,或本地localhost。
     #注意在注册中心查看局域网IP是VM虚拟机的还是Hyper-V的虚拟IP，显示什么，就用哪个访问。
     #如169.254.114.241:8761。
     #指定网络来固定IP，同样不能内网http访问。如docker run -d -it -p 8761:8761 --network=host --name eurekaserver f8xn/eurekaserver:latest
     #linux容器，有可能读取的不是虚拟机IP，而是容器的子网IP。
     hostname: localhost
-    #hostname: 106.13.100.117
+    #hostname: 217.196.49.213
 
     # 如果项目配置有 server.servlet.context-path 属性，想要被 spring boot admin 监控，当前服务就要配置以下属性
     #metadata-map:
@@ -153,10 +160,10 @@ spring:
   datasource:
     name: shiro
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://106.13.100.117:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://217.196.49.213:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
     type: com.alibaba.druid.pool.DruidDataSource
     username: root
-    password: autof8Ol10
+    password: root
 #  cloud:
 #    inetutils:
 #      timeout-seconds: 10

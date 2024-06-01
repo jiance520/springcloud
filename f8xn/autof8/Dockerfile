@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM openjdk:latest
 #docker pull daocloud.io/library/java:8-jre-alpine
 #docker pull openjdk:8-jdk-alpine
 #docker pull daocloud.io/java:8
@@ -13,11 +13,11 @@ COPY target/autof8.jar autof8.jar
 #bash方式执行，使autof8.jar可访问,加了报错
 EXPOSE 8081
 #声明运行时容器提供服务端口，这只是一个声明，在运行时并不会因为这个声明应用就会开启这个端口的服务,加了之后可以使用-p指定随机端口
-ENTRYPOINT ["java","-jar","/autof8.jar"]
+ENTRYPOINT ["java","-jar","autof8.jar"]
 #指定容器启动程序及参数   <ENTRYPOINT> "<CMD>"
 #也可以用ENTRYPOINT [ "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/autof8.jar" ]
 #ADD *.jar autof8.jar，把本机的D:\workspace\idea\springcloud\autof8\target\autof8.jar复制到docker服务器31，并命名为autof8.jar
-#在centos的/root目录下执行java -jar autof8.jar运行autof8.jar包。访问http://10.0.0.31:8761/
+#在centos的/root目录下执行java -jar autof8.jar运行autof8.jar包。访问http://217.196.49.213:8761/
 
 #FROM openjdk:8-jdk-alpine
 #VOLUME /tmp
@@ -25,5 +25,5 @@ ENTRYPOINT ["java","-jar","/autof8.jar"]
 #COPY ${JAR_FILE} autof8.jar
 #ENTRYPOINT ["java","-jar","/autof8.jar"]
 
-#docker tag f8xn/autof8:latest 106.13.100.117/library/f8xn/autof8:latest
-#docker push 106.13.100.117/library/f8xn/autof8:latest
+#docker tag f8xn/autof8:latest 217.196.49.213/library/f8xn/autof8:latest
+#docker push 217.196.49.213/library/f8xn/autof8:latest

@@ -35,9 +35,9 @@ spring:
 #mongodb配置
   data:
     mongodb:
-      uri: mongodb://47.107.171.60:27017/income
+      uri: mongodb://217.196.49.213:27017/income
       username: root
-      password: autof8Ol10
+      password: root
   mvc:
     static-path-pattern: /**
     favicon:
@@ -91,9 +91,9 @@ spring:
   #mongodb配置
   data:
     mongodb:
-      uri: mongodb://47.107.171.60:27017/income
+      uri: mongodb://217.196.49.213:27017/income
       username: root
-      password: autof8Ol10
+      password: root
 
   mvc:
     static-path-pattern: /**
@@ -132,16 +132,16 @@ spring:
   datasource:
     name: income
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://47.107.171.60:3306/account?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://217.196.49.213:3306/account?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
     type: com.alibaba.druid.pool.DruidDataSource
     username: root
-    password: autof8Ol10
+    password: root
   #mongodb配置
   data:
     mongodb:
-      uri: mongodb://47.107.171.60:27017/income
+      uri: mongodb://217.196.49.213:27017/income
       username: root
-      password: autof8Ol10
+      password: root
 
   mvc:
     static-path-pattern: /**

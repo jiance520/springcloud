@@ -19,7 +19,7 @@ public class JdbcUtil {//工具类，针对不同的数据库，使用同样的j
 	private static String user = "root";
 	private static String password = "root";
 	/*private static String driver = "oracle.jdbc.driver.OracleDriver";//
-	private static String url = "jdbc:oracle:thin:@106.13.100.117:1521:helowin";
+	private static String url = "jdbc:oracle:thin:@217.196.49.213:1521:helowin";
 	private static String user = "mytable";
 	private static String password = "mytable";*/
 	private static Connection conn = null;

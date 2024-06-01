@@ -17,7 +17,7 @@ ENTRYPOINT ["java","-jar","/buy51cto.jar"]
 #指定容器启动程序及参数   <ENTRYPOINT> "<CMD>"
 #也可以用ENTRYPOINT [ "java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/buy51cto.jar" ]
 #ADD *.jar buy51cto.jar，把本机的D:\workspace\idea\springcloud\buy51cto\target\buy51cto.jar复制到docker服务器31，并命名为buy51cto.jar
-#在centos的/root目录下执行java -jar buy51cto.jar运行buy51cto.jar包。访问http://10.0.0.31:8761/
+#在centos的/root目录下执行java -jar buy51cto.jar运行buy51cto.jar包。访问http://217.196.49.213:8761/
 
 #FROM openjdk:8-jdk-alpine
 #VOLUME /tmp
@@ -25,5 +25,5 @@ ENTRYPOINT ["java","-jar","/buy51cto.jar"]
 #COPY ${JAR_FILE} buy51cto.jar
 #ENTRYPOINT ["java","-jar","/buy51cto.jar"]
 
-#docker tag f8xn/buy51cto:latest 106.13.100.117/library/f8xn/buy51cto:latest
-#docker push 106.13.100.117/library/f8xn/buy51cto:latest
+#docker tag f8xn/buy51cto:latest 217.196.49.213/library/f8xn/buy51cto:latest
+#docker push 217.196.49.213/library/f8xn/buy51cto:latest

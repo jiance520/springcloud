@@ -1,0 +1,12 @@
+修改所有mysql密码
+win10创建表springboot
+启动vps安装数据库mysql redis rabbitmq zipkin ,启动win10虚拟机。
+关闭防火墙
+修改eureka服务器地址
+修改ip。清理，按顺序打包。
+修改maven配置
+修改tomcat,如果用的话。
+修改Dockerfile中的dockerHost，开放端口2376
+
+
+

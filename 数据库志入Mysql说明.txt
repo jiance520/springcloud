@@ -1,0 +1,85 @@
+查看我的虚拟机上及工作电脑上的版本是mysql --version：5.7密码root-root
+my.ini默认目录在：D:\Program Files (x86)\mysql-5.7-winx64\my.ini
+无需登陆，推荐使用mysql的.sql文件导入mysql
+CREATE DATABASE springboot;
+CREATE DATABASE account;
+create database branches;
+CREATE DATABASE epet;
+CREATE DATABASE house;
+CREATE DATABASE paycode;
+CREATE DATABASE register;
+CREATE DATABASE shiro;
+CREATE DATABASE smbms;
+CREATE DATABASE xsh;
+CREATE DATABASE zufang;
+CREATE DATABASE milmajordb2012127;
+mysql -u root -p register <d:\OneDrive\mydata\DataBase\mysql\account.sql
+
+
+
+
+设置环境变量;MYSQL_HOME：D:\Program Files (x86)\mysql-5.7-winx64
+path添加：%MYSQL_HOME%\bin;
+mysqld remove
+管理员运行cmd，否则可能Install/Remove of the Service Denied!
+cd D:\Program Files (x86)\mysql-5.7-winx64\bin
+注册mysql服务:mysqld --install MySQL --defaults-file="D:\Program Files (x86)\mysql-5.7-winx64\my.ini"
+初始化数据库(必须)：cmd输入：mysqld --initialize-insecure --user=mysql 
+net start mysql启动MySQL
+mysql -u root -p
+update mysql.user set authentication_string=password('root')where user='root';
+flush privileges;按回车
+GRANT ALL PRIVILEGES ON *.* TO root@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;
+开放端口，关闭防火墙.
+
+
+#!/bin/bash
+
+# MySQL 容器名
+MYSQL_CONTAINER_NAME="mysql"
+
+# MySQL 连接信息
+MYSQL_ROOT_PASSWORD="root"
+MYSQL_HOST="217.196.49.213"
+MYSQL_USER="root"
+
+# SQL 文件目录
+SQL_DIR="/mydata/mysql/sql"
+
+# 检查 Docker 容器是否正在运行
+if ! sudo docker ps --format '{{.Names}}' | grep -q "^${MYSQL_CONTAINER_NAME}$"; then
+    echo "错误：MySQL 容器未运行或不存在。"
+    exit 1
+fi
+
+# 检查 SQL 目录是否为空
+if [ -z "$(ls -A $SQL_DIR/*.sql 2>/dev/null)" ]; then
+    echo "SQL 目录为空，无需导入。"
+    exit 0
+fi
+
+# 遍历目录中的所有 .sql 文件并执行
+for sql_file in ${SQL_DIR}/*.sql; do
+    if [[ -f "$sql_file" ]]; then
+        # 提取文件名作为数据库名
+        db_name=$(basename "$sql_file" .sql)
+        
+        # 创建数据库（如果不存在）
+        echo "正在创建数据库：$db_name（如果不存在）"
+        sudo docker exec -i ${MYSQL_CONTAINER_NAME} mysql -u${MYSQL_USER} -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS \`${db_name}\`;"
+
+
+        # 导入 SQL 文件
+        echo "正在导入文件：$sql_file 到数据库：$db_name"
+        sudo docker exec -i ${MYSQL_CONTAINER_NAME} mysql -u${MYSQL_USER} -p${MYSQL_ROOT_PASSWORD} ${db_name} < "$sql_file"
+        
+        if [[ $? -ne 0 ]]; then
+            echo "错误：导入 $sql_file 失败。"
+            exit 1
+        fi
+    else
+        echo "警告：文件 $sql_file 不存在或不是常规文件。"
+    fi
+done
+
+echo "所有 SQL 文件导入完成。"

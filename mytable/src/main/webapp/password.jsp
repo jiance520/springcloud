@@ -386,7 +386,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             return str10_26;
         }
         //将10进制转38、63等任意进制。
-        var Convert10_strNum = function (num10, strNum) {
+        var Convert10_strNum = function(num10, strNum) {
             var str10_strNum = '';
             var arrStrNum = new Array();
             for (var i = 0; i < strNum.length; i++) {
@@ -395,15 +395,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             if (num10 == 0) {
                 alert('\'请输入大于0的数\'');
             }
-            while (num10 > 0) {
-                var m = num10 % strNum.length;
-                /*取模*/
-                if (m == 0) {
-                    m = strNum.length;
-                }
-                str10_strNum = arrStrNum[m - 1] + str10_strNum;
+            while (num10 > 0) {//num10=249
+                var m = num10 % strNum.length;//3849%16=9,取余
+                /*if (m == 0) {
+                }*/
+                /*console.log('arrStrNum[m]:'+arrStrNum[m]);
+                console.log('str10_strNum2:'+str10_strNum);
+                console.log('num10:'+num10);
+                console.log('m:'+m);*/
+                str10_strNum = arrStrNum[m] + str10_strNum;
                 /*高位数在最左边*/
-                num10 = ((num10 - m) / strNum.length).toFixed(0);
+                num10 = ((num10 - m) / strNum.length).toFixed(0);//取10的整数
                 /*不是取整，是除法，必需加.toFixed(0)，否则除法错误*/
             }
             return str10_strNum;
@@ -444,11 +446,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 for (var j = 0; j < strNum.length; j++) {
                     if (strnum.charAt(i) == strNum.charAt(j)) {/*求出字符串中的每个字符在进制中的排位，排位按10进制计算，(在字符串中的位置或数组中的位置)*/
                         if (strnum.length - i - 1 > 0) {/*非个位数，当i=0时，是最高位，当i=length-1时是最低位个位,要排除*/
-                            strNum_10 = strNum_10 + (j + 1) * Math.pow(strNum.length, strnum.length - i - 1);
+                            strNum_10 = strNum_10 + j  * Math.pow(strNum.length, strnum.length - i - 1);
                             /*j+1数字要比下标大1，最高位下标i=0，它的幂length-1*/
                         }
                         else {
-                            strNum_10 = strNum_10 + (j + 1);
+                            strNum_10 = strNum_10 + j ;
                             /*个位数*/
                         }
                         flag = true;

@@ -45,16 +45,14 @@ spring:
   cloud:
     config:
       server:
-#        native:
-#          search-locations: classpath:/
-        git:
-          uri: https://gitee.com/f8xn/springcloud
-          username: jiance520@163.com
-          password: Ol1983love
-          timeout: 5
-          default-label: master
-#    inetutils:
-#      timeout-seconds: 10
+        native:
+          search-locations: classpath:/
+#        git:
+#          uri: https://gitee.com/f8xn/springcloud
+#          username: jiance520@163.com
+#          password: Ol1983love
+#          timeout: 5
+#          default-label: master
 #    忽略虚拟机网卡，
 #    inetutils:
 #      ignored-interfaces: 'VMware Virtual Ethernet Adapter for VMnet1,VMware Virtual Ethernet Adapter for VMnet8'
@@ -88,99 +86,6 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
   #配置中心访问出错，路径不对：修改所有的注册中心，增加下面配置
-  instance:
-    instance-id: ${spring.cloud.client.ip-address}:${server.port}
-    prefer-ip-address: true
-
----
-
-#测试环境
-server:
-  port: 9100
-
-spring:
-  application:
-    name: configserver
-  profiles: test
-  datasource:
-    name: shiro
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
-    type: com.alibaba.druid.pool.DruidDataSource
-    username: root
-    password: root
-  cloud:
-    config:
-      server:
-#        native:
-#          search-locations: classpath:/
-        git:
-          uri: https://gitee.com/f8xn/springcloud
-          username: jiance520@163.com
-          password: Ol1983love
-          timeout: 5
-          default-label: master
-    inetutils:
-      timeout-seconds: 10
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  configuration:
-    auto-mapping-behavior: full
-    call-setters-on-nulls: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  type-aliases-package: com.entity
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    instance-id: ${spring.cloud.client.ip-address}:${server.port}
-    prefer-ip-address: true
-
----
-
-#生产环境
-server:
-  port: 9100
-
-spring:
-  application:
-    name: configserver
-  profiles: prod
-  datasource:
-    name: shiro
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://217.196.49.213:3306/shiro?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
-    type: com.alibaba.druid.pool.DruidDataSource
-    username: root
-    password: root
-  cloud:
-    config:
-      server:
-#        native:
-#          search-locations: classpath:/
-        git:
-          uri: https://gitee.com/f8xn/springcloud
-          username: jiance520@163.com
-          password: Ol1983love
-          timeout: 5
-          default-label: master
-    inetutils:
-      timeout-seconds: 10
-
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  configuration:
-    auto-mapping-behavior: full
-    call-setters-on-nulls: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  type-aliases-package: com.entity
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
   instance:
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
     prefer-ip-address: true

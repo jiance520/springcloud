@@ -24,6 +24,7 @@ import java.util.*;
 public class CommonController implements ServletContextAware {
     private static String tablenameKey = "tabnamedjj";
     private static String primarynameKey = "pidnamedjj";
+
     @Autowired
     private JdbcUtil jdbcUtil;
     @Autowired
