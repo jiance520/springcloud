@@ -16,6 +16,7 @@ spring:
 
 #开发环境
 #默认端口8080，Edit...配置的VM options:-Dserver.port=8081>git:http://localhost:9100/master/apigateway-dev.yml高于>bootstrap.yml/application.yml
+#启动前，先打包启动EurekaServerApplication，否则报连接数据库错误
 server:
   port: 8081
 

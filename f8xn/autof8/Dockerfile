@@ -1,4 +1,5 @@
-FROM openjdk:latest
+FROM openjdk:8-jdk-alpine
+#FROM openjdk:latest
 #docker pull daocloud.io/library/java:8-jre-alpine
 #docker pull openjdk:8-jdk-alpine
 #docker pull daocloud.io/java:8
