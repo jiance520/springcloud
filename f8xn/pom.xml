@@ -80,7 +80,7 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.47</version>
+      <version>8.0.28</version>
     </dependency>
 <!--    这个开启会导致打开http://localhost:8761/，要输入用户名密码，且必须在所有的yml配置用户名密码-->
 <!--    <dependency>-->
